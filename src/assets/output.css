@@ -554,72 +554,32 @@ video {
   --tw-contain-style:  ;
 }
 
-.font-helvetica-geo-700 {
-  font-family: helvetica-geo-800;
+.absolute {
+  position: absolute;
 }
 
-.font-helvetica-geo-800 {
-  font-family: helvetica-geo-900;
+.relative {
+  position: relative;
 }
 
-.font-helvetica-geo-600 {
-  font-family: helvetica-geo-700;
+.block {
+  display: block;
 }
 
-.font-helvetica-geo-500 {
-  font-family: helvetica-geo-600;
+.flex {
+  display: flex;
 }
 
-.font-helvetica-geo-400 {
-  font-family: helvetica-geo-500;
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
-.font-helvetica-geo-300 {
-  font-family: helvetica-geo-400;
-}
-
-.font-helvetica-geo-200 {
-  font-family: helvetica-geo-300;
+.border {
+  border-width: 1px;
 }
 
 .font-helvetica-geo-100 {
   font-family: helvetica-geo-200;
-}
-
-.font-helvetica-100 {
-  font-family: helvetica-100;
-}
-
-.font-helvetica-200 {
-  font-family: helvetica-200;
-}
-
-.font-helvetica-300 {
-  font-family: helvetica-300;
-}
-
-.font-helvetica-400 {
-  font-family: helvetica-400;
-}
-
-.font-helvetica-500 {
-  font-family: helvetica-500;
-}
-
-.font-helvetica-600 {
-  font-family: helvetica-600;
-}
-
-.font-helvetica-700 {
-  font-family: helvetica-700;
-}
-
-.font-helvetica-800 {
-  font-family: helvetica-800;
-}
-
-.font-helvetica-900 {
-  font-family: helvetica-900;
 }
 
 .text-lg {
