@@ -1,10 +1,10 @@
 import { createI18n } from "vue-i18n";
-import en from "./lang/en";
-import ka from "./lang/ka";
+import en from "@/locale/en";
+import ge from "@/locale/ge";
 
 const messages = {
   en,
-  ka,
+  ge,
 };
 
 const i18n = createI18n({
