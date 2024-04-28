@@ -1,0 +1,16 @@
+{
+  "text_register": "Register",
+  "register_header": "Create an account",
+  "register_sub_header": "Start your journey!",
+  "register_have_an_account_question": "Already have an account?",
+  "text_login": "Log in",
+  "text_sign_up_with_google": "Sign up with Google",
+  "label_name": "Name",
+  "label_email": "Email",
+  "label_password": "Password",
+  "label_password_confirmation": "Confirm Password",
+  "placeholder_name": "Enter your name",
+  "placeholder_email": "Enter your email",
+  "placeholder_password": "Password",
+  "placeholder_password_confirmation": "Password"
+}
