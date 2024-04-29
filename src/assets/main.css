@@ -1,35 +1,73 @@
-@import './base.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+@font-face {
+  font-family: "helvetica-geo-200";
+  src: url("./fonts/helvetica-geo-25.ttf");
+}
+@font-face {
+  font-family: "helvetica-geo-300";
+  src: url("./fonts/helvetica-geo-35.ttf");
+}
+@font-face {
+  font-family: "helvetica-geo-400";
+  src: url("./fonts/helvetica-geo-45.ttf");
+}
+@font-face {
+  font-family: "helvetica-geo-500";
+  src: url("./fonts/helvetica-geo-55.ttf");
+}
+@font-face {
+  font-family: "helvetica-geo-600";
+  src: url("./fonts/helvetica-geo-65.ttf");
+}
+@font-face {
+  font-family: "helvetica-geo-700";
+  src: url("./fonts/helvetica-geo-75.ttf");
+}
+@font-face {
+  font-family: "helvetica-geo-800";
+  src: url("./fonts/helvetica-geo-85.ttf");
+}
+@font-face {
+  font-family: "helvetica-geo-900";
+  src: url("./fonts/helvetica-geo-95.ttf");
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+@font-face {
+  font-family: "helvetica-100";
+  src: url("./fonts/helvetica-100.ttf");
 }
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+@font-face {
+  font-family: "helvetica-200";
+  src: url("./fonts/helvetica-200.otf");
 }
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+@font-face {
+  font-family: "helvetica-300";
+  src: url("./fonts/helvetica-300.ttf");
+}
+@font-face {
+  font-family: "helvetica-400";
+  src: url("./fonts/helvetica-400.otf");
+}
+@font-face {
+  font-family: "helvetica-500";
+  src: url("./fonts/helvetica-500.ttf");
+}
+@font-face {
+  font-family: "helvetica-600";
+  src: url("./fonts/helvetica-600.ttf");
+}
+@font-face {
+  font-family: "helvetica-700";
+  src: url("./fonts/helvetica-700.otf");
+}
+@font-face {
+  font-family: "helvetica-800";
+  src: url("./fonts/helvetica-800.otf");
+}
+@font-face {
+  font-family: "helvetica-900";
+  src: url("./fonts/helvetica-900.otf");
 }
