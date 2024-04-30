@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import AuthBackground from "@/components/layouts/AuthBackground.vue";
-import LoginForm from "@/components/login/LoginForm.vue";
+import ForgotPasswordForm from "@/components/forgot-password/ForgotPasswordForm.vue";
 </script>
 
 <template>
   <AuthBackground>
-    <LoginForm />
+    <ForgotPasswordForm />
   </AuthBackground>
 </template>

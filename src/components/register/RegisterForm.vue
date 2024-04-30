@@ -3,6 +3,9 @@ import ButtonOutline from "@/components/ui/buttons/ButtonOutline.vue";
 import ButtonFilled from "@/components/ui/buttons/ButtonFilled.vue";
 import FormInputText from "@/components/ui/form/FormInputText.vue";
 import FormInputPassword from "@/components/ui/form/FormInputPassword.vue";
+import AuthLayout from "@/components/layouts/AuthLayout.vue";
+import AuthLayoutWrapper from "@/components/shared/AuthLayoutWrapper.vue";
+import AuthNotifiaction from "@/components/shared/AuthNotifiaction.vue";
 import { useForm } from "vee-validate";
 
 const { handleSubmit, resetForm } = useForm({
@@ -16,6 +19,7 @@ const { handleSubmit, resetForm } = useForm({
 
 const onsubmit = handleSubmit((values) => {
   console.log(values);
+
   //send request
   //if email already exists
   resetForm({
@@ -27,42 +31,49 @@ const onsubmit = handleSubmit((values) => {
 </script>
 
 <template>
-  <div
-    class="w-full h-full bg-zinc-800 rounded-none xl:rounded-[10px] px-8 py-16 flex items-center justify-center"
-  >
-    <form
-      @submit="onsubmit"
-      class="flex flex-col items-center w-full max-w-[22.5rem]"
-    >
-      <h1
-        class="text-white text-2xl font-helvetica-500 leading-7 mb-3 xl:text-[2rem]"
+  <AuthLayoutWrapper>
+    <template #form v-if="true">
+      <AuthLayout
+        header_key="form.register_header"
+        sub_header_key="form.register_sub_header"
+        footer_text_key="form.register_have_an_account_question"
+        footer_link="login"
+        footer_link_text_key="form.text_login"
       >
-        {{ $t("form.register_header") }}
-      </h1>
-      <h2 class="font-helvetica-400 text-base text-gray-500">
-        {{ $t("form.register_sub_header") }}
-      </h2>
-      <div class="flex flex-col gap-4 my-8 w-full">
-        <FormInputText name="name" />
-        <FormInputText name="email" />
-        <FormInputPassword name="password" />
-        <FormInputPassword name="password_confirmation" />
-        <ButtonFilled :submit="true" text_key="text_register" class="mt-2" />
-        <ButtonOutline
-          :icon="'IconGmail'"
-          text_key="text_sign_up_with_google"
-          link="auth-gmail"
-        />
-      </div>
+        <form class="flex flex-col gap-4 my-8 w-full" @submit="onsubmit">
+          <FormInputText name="name" />
+          <FormInputText name="email" />
+          <FormInputPassword name="password" />
+          <FormInputPassword name="password_confirmation" />
+          <ButtonFilled :submit="true" text_key="text_register" class="mt-2" />
+          <ButtonOutline
+            :icon="'IconGmail'"
+            text_key="text_sign_up_with_google"
+            link="auth-gmail"
+          />
+        </form>
+      </AuthLayout>
+    </template>
 
-      <p class="font-helvetica-400 text-base text-gray-500">
-        {{ $t("form.register_have_an_account_question") }}
-        <RouterLink
-          :to="{ name: 'login' }"
-          class="ml-1 font-helvetica-400 text-base text-blue-600"
-          >{{ $t("form.text_login") }}</RouterLink
-        >
-      </p>
-    </form>
-  </div>
+    <template #notification v-if="false">
+      <!-- check email notification -->
+
+      <AuthNotifiaction
+        :icon="'IconEmailSent'"
+        header_key="form.notification_success_header"
+        paragraph_key="form.notification_success_email_sent_p"
+        link="login"
+        link_text_key="form.text_go_to_email"
+        :go_back="false"
+      />
+      <!-- email successfully verified notification -->
+      <AuthNotifiaction
+        :icon="'IconEmailVerified'"
+        header_key="form.notification_success_header"
+        paragraph_key="form.notification_success_email_verified_p"
+        link="login"
+        link_text_key="form.text_go_to_login"
+      />
+    </template>
+  </AuthLayoutWrapper>
 </template>

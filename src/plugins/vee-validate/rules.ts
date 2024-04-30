@@ -1,11 +1,17 @@
 import { defineRule } from "vee-validate";
 import * as AllRules from "@vee-validate/rules";
 
-Object.keys(AllRules).forEach((rule) => {
-  defineRule(rule, AllRules[rule]);
+type AllRulesObg = {
+  [key: string]: any;
+};
+
+const rulesObj: AllRulesObg = AllRules;
+
+Object.keys(rulesObj).forEach((rule) => {
+  defineRule(rule, rulesObj[rule]);
 });
 
-defineRule("low_case_and_numeric", (value) => {
+defineRule("low_case_and_numeric", (value: string) => {
   // Field is empty, should pass
   if (!value || !value.length) {
     return true;

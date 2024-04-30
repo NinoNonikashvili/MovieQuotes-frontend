@@ -1,5 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AuthBackground from "@/components/layouts/AuthBackground.vue";
+import ResetPasswordForm from "@/components/reset-password/ResetPasswordForm.vue";
+</script>
 
 <template>
-  <p>reset pass</p>
+  <AuthBackground>
+    <ResetPasswordForm />
+  </AuthBackground>
 </template>

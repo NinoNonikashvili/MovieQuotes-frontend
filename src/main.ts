@@ -5,7 +5,7 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 import i18n from "@/plugins/i18n";
-import "@/plugins/vee-validate/rules.js";
+import "@/plugins/vee-validate/rules.ts";
 import "@/plugins/vee-validate/index";
 
 const app = createApp(App);
