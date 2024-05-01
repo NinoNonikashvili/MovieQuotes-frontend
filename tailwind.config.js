@@ -32,6 +32,7 @@ export default {
         "gray-200": "#A9B4BF",
         "gray-500": "#6C757D",
         "blue-600": "#0D6EFD",
+        "orangge-200": "#DDCCAA",
       },
     },
   },

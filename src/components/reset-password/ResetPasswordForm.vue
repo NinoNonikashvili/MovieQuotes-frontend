@@ -31,7 +31,7 @@ const onSubmit = handleSubmit((values) => {
     <form class="flex flex-col gap-4 my-8 w-full" @submit="onSubmit">
       <FormInputPassword name="password" />
       <FormInputPassword name="password_confirmation" />
-      <ButtonFilled :submit="true" text_key="text_reset_password" class="mt-2" />
+      <ButtonFilled :submit="true" text_key="form.text_reset_password" class="mt-2" />
     </form>
   </AuthLayout>
   </template>

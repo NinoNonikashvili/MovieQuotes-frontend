@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<Prop>(), {
 </script>
 
 <template>
-  <RouterLink v-if="props.link" :to="{ name: props.link }" class="flex">
+  <RouterLink v-if="props.link" :to="{ name: props.link }" class="flex w-full">
     <button
       class="rounded-[4px] flex w-full justify-center"
       :class="[
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<Prop>(), {
       ]"
       :type="submit ? 'submit' : 'button'"
     >
-      {{ $t(`form.${props.text_key}`) }}
+      {{ $t(props.text_key) }}
     </button>
   </RouterLink>
   <button
@@ -45,6 +45,6 @@ const props = withDefaults(defineProps<Prop>(), {
     ]"
     :type="submit ? 'submit' : 'button'"
   >
-    {{ $t(`form.${props.text_key}`) }}
+    {{ $t(props.text_key) }}
   </button>
 </template>

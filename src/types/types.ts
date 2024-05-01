@@ -14,3 +14,5 @@ export type NotificationType = {
   link_text_key: string;
   link: string;
 };
+
+export type  Locales = 'en'|'ge';

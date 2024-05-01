@@ -47,7 +47,7 @@ const onSubmit = handleSubmit((values) => {
           <ButtonFilled :submit="true" text_key="text_sign_in" class="mt-2" />
           <ButtonOutline
             :icon="'IconGmail'"
-            text_key="text_sign_in_with_google"
+            text_key="form.text_sign_in_with_google"
             link="auth-gmail"
           />
         </form>

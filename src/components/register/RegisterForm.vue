@@ -8,6 +8,7 @@ import AuthLayoutWrapper from "@/components/shared/AuthLayoutWrapper.vue";
 import AuthNotifiaction from "@/components/shared/AuthNotifiaction.vue";
 import { useForm } from "vee-validate";
 
+
 const { handleSubmit, resetForm } = useForm({
   validationSchema: {
     name: "required|min:3|max:15|low_case_and_numeric",
@@ -28,9 +29,11 @@ const onsubmit = handleSubmit((values) => {
     },
   });
 });
+
 </script>
 
 <template>
+
   <AuthLayoutWrapper>
     <template #form v-if="true">
       <AuthLayout
@@ -45,10 +48,10 @@ const onsubmit = handleSubmit((values) => {
           <FormInputText name="email" />
           <FormInputPassword name="password" />
           <FormInputPassword name="password_confirmation" />
-          <ButtonFilled :submit="true" text_key="text_register" class="mt-2" />
+          <ButtonFilled :submit="true" text_key="form.text_register" class="mt-2" />
           <ButtonOutline
             :icon="'IconGmail'"
-            text_key="text_sign_up_with_google"
+            text_key="form.text_sign_up_with_google"
             link="auth-gmail"
           />
         </form>

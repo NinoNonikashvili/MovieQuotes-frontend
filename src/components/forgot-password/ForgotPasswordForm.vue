@@ -31,7 +31,7 @@ const onSubmit = handleSubmit((values) => {
           <FormInputText name="email" />
           <ButtonFilled
             :submit="true"
-            text_key="text_send_instructions"
+            text_key="form.text_send_instructions"
             class="mt-2"
           />
         </form>

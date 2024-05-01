@@ -5,6 +5,7 @@
   "register_have_an_account_question": "Already have an account?",
   "text_login": "Log in",
   "text_sign_up_with_google": "Sign up with Google",
+  "text_signup": "Sign up",
   "label_name": "Name",
   "label_email": "Email",
   "label_password": "Password",
@@ -40,5 +41,4 @@
 
   "notification_success_email_verified_p": "Your account has been activated.",
   "text_go_to_login": "Sign in"
-
 }
