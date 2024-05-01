@@ -1,5 +1,5 @@
-import test from "./test.json";
+import form from "./form.json";
 
 export default {
-  test,
+  form,
 };

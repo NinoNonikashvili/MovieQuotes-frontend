@@ -1,0 +1,44 @@
+{
+  "text_register": "Register",
+  "register_header": "Create an account",
+  "register_sub_header": "Start your journey!",
+  "register_have_an_account_question": "Already have an account?",
+  "text_login": "Log in",
+  "text_sign_up_with_google": "Sign up with Google",
+  "label_name": "Name",
+  "label_email": "Email",
+  "label_password": "Password",
+  "label_password_confirmation": "Confirm Password",
+  "placeholder_name": "Enter your name",
+  "placeholder_email": "Enter your email",
+  "placeholder_password": "Password",
+  "placeholder_password_confirmation": "Password",
+
+  "login_header": "Log in to your account",
+  "login_sub_header": "Welcome back! Please enter your details.",
+  "login_footer_text": "Already have an account?",
+  "login_footer_link_text": "Sign Up",
+  "text_forgot_password": "Forgot password?",
+  "text_sign_in": "Sign in",
+  "text_sign_in_with_google": "Sign in with Google",
+  "label_user": "Email or name",
+  "placeholder_user": "Enter your email or name",
+
+  "forgot_password_header": "Forgot password?",
+  "forgot_password_sub_header": "Enter the email and we’ll send an email with instructions to reset your password",
+  "forgot_password_footer_text": "Back to log in",
+  "text_send_instructions": "Send instructions",
+
+  "reset_password_header": "Create new password",
+  "reset_password_sub_header": "Your new password must be different from previous used passwords",
+  "reset_password_footer_text": "Back to log in",
+  "text_reset_password": "Reset password",
+
+  "notification_success_header": "Thank you!",
+  "notification_success_email_sent_p": "Please check your email and follow the instructions to activate your account.",
+  "text_go_to_email": "Go to my email",
+
+  "notification_success_email_verified_p": "Your account has been activated.",
+  "text_go_to_login": "Sign in"
+
+}
