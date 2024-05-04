@@ -16,11 +16,7 @@ const props = withDefaults(defineProps<Prop>(), {
 </script>
 
 <template>
-  <RouterLink
-    v-if="{ name: props.link }"
-    :to="{ name: props.link }"
-    class="flex w-full"
-  >
+  <RouterLink v-if="props.link" :to="{ name: props.link }" class="flex w-full">
     <button
       class="border border-white rounded-[4px] flex gap-2 items-center justify-center w-full"
       :class="[

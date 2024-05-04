@@ -6,8 +6,10 @@ import FormInputText from "@/components/ui/form/FormInputText.vue";
 import FormInputPassword from "@/components/ui/form/FormInputPassword.vue";
 import FormCheckbox from "@/components/ui/form/FormCheckbox.vue";
 import AuthLayoutWrapper from "@/components/shared/AuthLayoutWrapper.vue";
-import AuthNotifiaction from "@/components/shared/AuthNotifiaction.vue";
+import type { LoginUser } from "@/types/types";
+import { login, logout } from "@/services/axios/auth-services";
 import { useForm } from "vee-validate";
+import { ref } from "vue";
 
 const { handleSubmit, resetForm } = useForm({
   validationSchema: {
@@ -15,14 +17,46 @@ const { handleSubmit, resetForm } = useForm({
     password: "required|min:8|max:15|low_case_and_numeric",
   },
 });
+const showNotification = ref<boolean>(false);
 
-const onSubmit = handleSubmit((values) => {
-  console.log(values);
+const onSubmit = handleSubmit(async (values) => {
+  const credentials = ref<LoginUser>({
+    password: "",
+    rememberMe: false,
+  });
+
+  credentials.value.password = values.password;
+
+  if (values.user.includes("@")) {
+    credentials.value.email = values.user;
+  } else {
+    credentials.value.name = values.user;
+  }
+  if (values.rememberMe !== undefined) {
+    credentials.value.rememberMe = values.rememberMe;
+  }
+
+  try {
+    const response = await login(credentials.value);
+    //set user data from response globally in pinia abd redirect to homepage
+  } catch (err: any) {
+    resetForm({
+      errors: {
+        user: err.response?.data.message,
+      },
+    });
+  }
+  console.log(credentials.value);
 });
+
+const logoutFun = async () => {
+  await logout();
+};
 </script>
 
 <template>
-  <AuthLayoutWrapper>
+  <button @click="logoutFun">logout</button>
+  <AuthLayoutWrapper v-if="!showNotification">
     <template #form>
       <AuthLayout
         header_key="form.login_header"
@@ -52,9 +86,6 @@ const onSubmit = handleSubmit((values) => {
           />
         </form>
       </AuthLayout>
-    </template>
-    <template #notification>
-      <!-- Email needs to be verified  || link expired notification -->
     </template>
   </AuthLayoutWrapper>
 </template>

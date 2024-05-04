@@ -10,4 +10,5 @@ export default interface Prop {
   text_key: string;
   icon?: string | boolean;
   submit?: boolean;
+  redirect?: boolean;
 }

@@ -7,7 +7,11 @@ import AuthLayout from "@/components/layouts/AuthLayout.vue";
 import AuthLayoutWrapper from "@/components/shared/AuthLayoutWrapper.vue";
 import AuthNotifiaction from "@/components/shared/AuthNotifiaction.vue";
 import { useForm } from "vee-validate";
-
+import instance from "@/services/axios/instance";
+import type { RegisterUser } from "@/types/types";
+import { register } from "@/services/axios/auth-services";
+import axios, { AxiosError, type AxiosResponse } from "axios";
+import { computed, ref } from "vue";
 
 const { handleSubmit, resetForm } = useForm({
   validationSchema: {
@@ -17,25 +21,43 @@ const { handleSubmit, resetForm } = useForm({
     password_confirmation: "required|confirmed:@password",
   },
 });
+const showNotification = ref<boolean>(false);
+const data = ref<AxiosResponse | null>(null);
 
-const onsubmit = handleSubmit((values) => {
-  console.log(values);
-
-  //send request
-  //if email already exists
-  resetForm({
-    errors: {
-      email: "email already taken",
-    },
-  });
+const emailLink = computed(() => {
+  if (data?.value?.data.data.email.includes("gmail.com")) {
+    return "https://gmail.com";
+  }
+  return "";
 });
 
+const onsubmit = handleSubmit(async (values) => {
+  const formValues = values as RegisterUser;
+  try {
+    data.value = await register(formValues);
+    console.log(data.value?.data.data.email);
+    showNotification.value = true;
+  } catch (error) {
+    const err = error as Error | AxiosError;
+    console.log();
+    if (axios.isAxiosError(err)) {
+      const errors = err.response?.data.errors;
+      Object.keys(errors).forEach((key) => {
+        errors[key] = errors[key][0];
+      });
+      resetForm({
+        errors,
+      });
+    } else {
+      console.log("unexpected error");
+    }
+  }
+});
 </script>
 
 <template>
-
   <AuthLayoutWrapper>
-    <template #form v-if="true">
+    <template #form v-if="!showNotification">
       <AuthLayout
         header_key="form.register_header"
         sub_header_key="form.register_sub_header"
@@ -48,7 +70,11 @@ const onsubmit = handleSubmit((values) => {
           <FormInputText name="email" />
           <FormInputPassword name="password" />
           <FormInputPassword name="password_confirmation" />
-          <ButtonFilled :submit="true" text_key="form.text_register" class="mt-2" />
+          <ButtonFilled
+            :submit="true"
+            text_key="form.text_register"
+            class="mt-2"
+          />
           <ButtonOutline
             :icon="'IconGmail'"
             text_key="form.text_sign_up_with_google"
@@ -58,24 +84,17 @@ const onsubmit = handleSubmit((values) => {
       </AuthLayout>
     </template>
 
-    <template #notification v-if="false">
+    <template #notification v-if="showNotification">
       <!-- check email notification -->
 
       <AuthNotifiaction
         :icon="'IconEmailSent'"
         header_key="form.notification_success_header"
         paragraph_key="form.notification_success_email_sent_p"
-        link="login"
+        :link="emailLink"
         link_text_key="form.text_go_to_email"
         :go_back="false"
-      />
-      <!-- email successfully verified notification -->
-      <AuthNotifiaction
-        :icon="'IconEmailVerified'"
-        header_key="form.notification_success_header"
-        paragraph_key="form.notification_success_email_verified_p"
-        link="login"
-        link_text_key="form.text_go_to_login"
+        :redirect="true"
       />
     </template>
   </AuthLayoutWrapper>

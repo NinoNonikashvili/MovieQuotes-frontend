@@ -3,12 +3,19 @@ import i18n from "@/plugins/i18n";
 import ButtonOutline from "@/components/ui/buttons/ButtonOutline.vue";
 import ButtonFilled from "@/components/ui/buttons/ButtonFilled.vue";
 import { useRoute, useRouter } from "vue-router";
+import { setLocale } from "@vee-validate/i18n";
 
 const { locale } = i18n.global;
 const route = useRoute();
 const router = useRouter();
 
 const setLangInUrl = () => {
+  if (locale.value === "ge") {
+    setLocale("ka");
+  } else{
+    setLocale(locale.value)
+  }
+
   if (route.name) {
     router.push({ name: route.name, params: { lang: locale.value } });
   }
@@ -43,11 +50,11 @@ const setLangInUrl = () => {
           </option>
         </select>
       </div>
-      <div class="w-24 xl:order-2">
-        <ButtonOutline :icon="false" text_key="form.text_login" />
+      <div class="w-[6.5] xl:order-2">
+        <ButtonOutline :icon="false" text_key="form.text_login" link="login" />
       </div>
-      <div class="w-[6.5rem] xl:order-1">
-        <ButtonFilled text_key="form.text_signup" />
+      <div class="w-[7rem] xl:order-1">
+        <ButtonFilled text_key="form.text_signup" link="register" />
       </div>
     </div>
   </div>

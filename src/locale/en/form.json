@@ -40,5 +40,9 @@
   "text_go_to_email": "Go to my email",
 
   "notification_success_email_verified_p": "Your account has been activated.",
-  "text_go_to_login": "Sign in"
+  "text_go_to_login": "Sign in",
+
+  "notification_link_expired_header": "Link expired!",
+  "notification_link_expired_p": "Login link has expired, because you haven’t used it",
+  "notification_link_expired_button_text": "Request another link"
 }

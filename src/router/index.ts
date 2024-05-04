@@ -4,8 +4,10 @@ import RegisterPage from "@/views/RegisterPage.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import ResetPasswordPage from "@/views/ResetPasswordPage.vue";
 import ForgotPasswordPage from "@/views/ForgotPasswordPage.vue";
+import EmailVerifiedPage from "@/views/EmailVerifiedPage.vue";
 import i18n from "@/plugins/i18n";
 import type { Locales } from "@/types/types";
+import { setLocale } from "@vee-validate/i18n";
 
 const { locale } = i18n.global;
 
@@ -26,6 +28,11 @@ const router = createRouter({
       path: "/register/:lang",
       name: "register",
       component: RegisterPage,
+    },
+    {
+      path: "/email/verify/:lang/:id/:hash",
+      name: "email-verified",
+      component: EmailVerifiedPage,
     },
     {
       path: "/login/:lang",
@@ -55,6 +62,11 @@ router.beforeEach((from, to) => {
   //handle refresh and initial redirect
   if (to.fullPath === "/" && from.params.lang) {
     locale.value = from.params.lang as Locales;
+    if (locale.value === "ge") {
+      setLocale("ka");
+    } else {
+      setLocale(locale.value);
+    }
     return;
   }
 });
