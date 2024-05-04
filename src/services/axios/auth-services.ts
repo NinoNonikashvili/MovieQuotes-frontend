@@ -5,6 +5,7 @@ import type {
   ResetPasswordConfig,
 } from "@/types/types";
 import instance from "@/services/axios/instance";
+import type { AxiosRequestConfig } from "axios";
 
 export async function register(user: RegisterUser) {
   return await instance.post("/api/register", user);
@@ -33,4 +34,11 @@ export async function forgot_password(payload: EmailArgument) {
 }
 export async function reset_password(payload: ResetPasswordConfig) {
   return await instance.post("/api/reset-password", payload);
+}
+export async function google_auth_redirect() {
+  return await instance.get("api/auth/redirect");
+}
+
+export async function google_auth_callback(payload: AxiosRequestConfig) {
+  return await instance.get("api/auth/callback", payload);
 }

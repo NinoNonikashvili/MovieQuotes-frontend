@@ -7,11 +7,11 @@ import AuthLayout from "@/components/layouts/AuthLayout.vue";
 import AuthLayoutWrapper from "@/components/shared/AuthLayoutWrapper.vue";
 import AuthNotifiaction from "@/components/shared/AuthNotifiaction.vue";
 import { useForm } from "vee-validate";
-import instance from "@/services/axios/instance";
 import type { RegisterUser } from "@/types/types";
 import { register } from "@/services/axios/auth-services";
 import axios, { AxiosError, type AxiosResponse } from "axios";
 import { computed, ref } from "vue";
+import { useGmail } from "@/composables/google-auth";
 
 const { handleSubmit, resetForm } = useForm({
   validationSchema: {
@@ -76,9 +76,10 @@ const onsubmit = handleSubmit(async (values) => {
             class="mt-2"
           />
           <ButtonOutline
+            @click="useGmail"
             :icon="'IconGmail'"
             text_key="form.text_sign_up_with_google"
-            link="auth-gmail"
+            link=""
           />
         </form>
       </AuthLayout>

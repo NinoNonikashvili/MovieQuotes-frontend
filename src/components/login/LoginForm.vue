@@ -10,6 +10,7 @@ import type { LoginUser } from "@/types/types";
 import { login, logout } from "@/services/axios/auth-services";
 import { useForm } from "vee-validate";
 import { ref } from "vue";
+import { useGmail } from "@/composables/google-auth";
 
 const { handleSubmit, resetForm } = useForm({
   validationSchema: {
@@ -37,7 +38,7 @@ const onSubmit = handleSubmit(async (values) => {
   }
 
   try {
-    const response = await login(credentials.value);
+    await login(credentials.value);
     //set user data from response globally in pinia abd redirect to homepage
   } catch (err: any) {
     resetForm({
@@ -49,13 +50,10 @@ const onSubmit = handleSubmit(async (values) => {
   console.log(credentials.value);
 });
 
-const logoutFun = async () => {
-  await logout();
-};
+
 </script>
 
 <template>
-  <button @click="logoutFun">logout</button>
   <AuthLayoutWrapper v-if="!showNotification">
     <template #form>
       <AuthLayout
@@ -80,6 +78,7 @@ const logoutFun = async () => {
 
           <ButtonFilled :submit="true" text_key="text_sign_in" class="mt-2" />
           <ButtonOutline
+            @click="useGmail"
             :icon="'IconGmail'"
             text_key="form.text_sign_in_with_google"
             link="auth-gmail"
