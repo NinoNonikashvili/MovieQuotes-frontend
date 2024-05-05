@@ -74,14 +74,7 @@ const router = createRouter({
       },
     },
     // TO DO: change component
-    {
-      path: "/auth-gmail/:lang",
-      name: "auth-gmail",
-      component: ResetPasswordPage,
-      meta: {
-        requiresAuth: false,
-      },
-    },
+
     {
       path: "/reset-password/:lang",
       name: "reset-password",

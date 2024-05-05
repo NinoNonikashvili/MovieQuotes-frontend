@@ -30,6 +30,7 @@ export default {
         "zinc-800": "#222030",
         "gray-100": "#CED4DA",
         "gray-200": "#A9B4BF",
+        "gray-300": "#D9D9D9",
         "gray-500": "#6C757D",
         "blue-600": "#0D6EFD",
         "orangge-200": "#DDCCAA",

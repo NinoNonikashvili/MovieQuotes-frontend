@@ -7,7 +7,7 @@ import FormInputPassword from "@/components/ui/form/FormInputPassword.vue";
 import FormCheckbox from "@/components/ui/form/FormCheckbox.vue";
 import AuthLayoutWrapper from "@/components/shared/AuthLayoutWrapper.vue";
 import type { LoginUser } from "@/types/types";
-import { login, logout } from "@/services/axios/auth-services";
+import { login } from "@/services/axios/auth-services";
 import { useForm } from "vee-validate";
 import { ref } from "vue";
 import { useGmail } from "@/composables/google-auth";
@@ -49,8 +49,6 @@ const onSubmit = handleSubmit(async (values) => {
   }
   console.log(credentials.value);
 });
-
-
 </script>
 
 <template>
@@ -81,7 +79,7 @@ const onSubmit = handleSubmit(async (values) => {
             @click="useGmail"
             :icon="'IconGmail'"
             text_key="form.text_sign_in_with_google"
-            link="auth-gmail"
+            link=""
           />
         </form>
       </AuthLayout>
