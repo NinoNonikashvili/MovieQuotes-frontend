@@ -74,7 +74,7 @@ const onSubmit = handleSubmit(async (values) => {
             </RouterLink>
           </div>
 
-          <ButtonFilled :submit="true" text_key="text_sign_in" class="mt-2" />
+          <ButtonFilled :submit="true" text_key="form.text_sign_in" class="mt-2" />
           <ButtonOutline
             @click="useGmail"
             :icon="'IconGmail'"

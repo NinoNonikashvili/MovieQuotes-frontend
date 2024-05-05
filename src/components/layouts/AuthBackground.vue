@@ -13,7 +13,7 @@ const navigateToHome = (e: Event) => {
     <!-- this div will be blured version of landing page served as background -->
 
     <div
-      class="w-screen h-screen fixed hidden xl:block bg-[#08080D] blur-sm"
+      class="w-full h-screen fixed hidden xl:block bg-[#08080D] blur-sm"
       @click="navigateToHome"
     >
       <AppHeader />
@@ -27,7 +27,7 @@ const navigateToHome = (e: Event) => {
       </div>
     </div>
     <div
-      class="w-screen h-screen xl:w-[34rem] xl:h-fit xl:absolute top-[9.375rem] inset-x-0 mx-auto"
+      class="w-full xl:w-[34rem] xl:h-fit xl:absolute top-[9.375rem] inset-x-0 mx-auto"
     >
       <slot></slot>
     </div>

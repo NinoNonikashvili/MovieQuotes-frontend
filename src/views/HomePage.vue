@@ -23,7 +23,7 @@ window.addEventListener("scroll", () => {
 </script>
 
 <template>
-  <div class="w-screen bg-gradient-to-b to-[#11101A] from-[#08080D]">
+  <div class="w-full bg-gradient-to-b to-[#11101A] from-[#08080D]">
     <AppHeader />
     <div
       class="flex flex-col items-center justify-center w-full pt-[14.25rem] pb-[10.25rem] xl:pb-[13.75rem] xl:pt-[17.5rem]"
