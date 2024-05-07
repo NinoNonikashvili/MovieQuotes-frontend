@@ -45,8 +45,8 @@ window.addEventListener("scroll", () => {
     class="w-full flex items-center justify-center h-screen m-auto bg-no-repeat bg-center bg-cover landing1"
   >
     <div class="p-5">
-      <div class="flex items-center gap-2">
-        <IconCite />
+      <div class="flex items-start gap-2">
+        <IconCite width="53" height="2" class="mt-3" />
         <h3 class="font-helvetica-700 text-white text-xl xl:text-[3.125rem]">
           “You have to leave somethig behind to go forward”
         </h3>
@@ -61,8 +61,8 @@ window.addEventListener("scroll", () => {
     class="w-full flex items-center justify-center h-screen m-auto bg-fixed bg-center bg-cover landing2"
   >
     <div class="p-5">
-      <div class="flex items-center gap-2">
-        <IconCite />
+      <div class="flex items-start gap-2">
+        <IconCite width="53" height="2" class="mt-3" />
         <h3 class="font-helvetica-700 text-white text-xl xl:text-[3.125rem]">
           “I think we’re just gonna have to be secretly in love with earch other
           and leave it that”
@@ -77,8 +77,8 @@ window.addEventListener("scroll", () => {
     class="w-full flex items-center justify-center h-screen m-auto bg-fixed bg-center bg-cover landing3"
   >
     <div class="p-5">
-      <div class="flex items-center gap-2">
-        <IconCite />
+      <div class="flex items-start gap-2">
+        <IconCite width="53" height="2" class="mt-3" />
         <h3 class="font-helvetica-700 text-white text-xl xl:text-[3.125rem]">
           “I think we’re just gonna have to be secretly in love with earch other
           and leave it that”
