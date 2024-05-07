@@ -13,10 +13,12 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
+    if (config.url?.includes("/email/verify")) {
+      return config;
+    }
     config.params = {
-      ...(config.params || {}), // Preserve existing params if any
-      lang: locale.value, // Add or update the lang parameter
+      ...(config.params || {}),
+      lang: locale.value,
     };
     return config;
   },
