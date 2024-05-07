@@ -11,11 +11,22 @@ const props = withDefaults(defineProps<Prop>(), {
   line_height: "leading-6",
   link: "",
   submit: false,
+  redirect: false,
 });
+
+const handleRedirect = () => {
+  if (props.redirect && props.link) {
+    window.location.replace(props.link);
+  }
+};
 </script>
 
 <template>
-  <RouterLink v-if="props.link" :to="{ name: props.link }" class="flex">
+  <RouterLink
+    v-if="props.link && !redirect"
+    :to="{ name: props.link }"
+    class="flex w-full"
+  >
     <button
       class="rounded-[4px] flex w-full justify-center"
       :class="[
@@ -29,12 +40,13 @@ const props = withDefaults(defineProps<Prop>(), {
       ]"
       :type="submit ? 'submit' : 'button'"
     >
-      {{ $t(`form.${props.text_key}`) }}
+      {{ $t(props.text_key) }}
     </button>
   </RouterLink>
   <button
     v-else
     class="rounded-[4px] flex w-full justify-center"
+    @click="handleRedirect"
     :class="[
       props.bg,
       props.color,
@@ -45,6 +57,6 @@ const props = withDefaults(defineProps<Prop>(), {
     ]"
     :type="submit ? 'submit' : 'button'"
   >
-    {{ $t(`form.${props.text_key}`) }}
+    {{ $t(props.text_key) }}
   </button>
 </template>

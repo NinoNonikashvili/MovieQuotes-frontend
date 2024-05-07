@@ -7,7 +7,8 @@ export default interface Prop {
   padding_y?: `py-${string}`;
   line_height?: `leading-${string}`;
   link?: string;
-  text_key?: string;
-  icon?: string;
+  text_key: string;
+  icon?: string | boolean;
   submit?: boolean;
+  redirect?: boolean;
 }

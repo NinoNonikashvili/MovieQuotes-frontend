@@ -16,11 +16,7 @@ const props = withDefaults(defineProps<Prop>(), {
 </script>
 
 <template>
-  <RouterLink
-    v-if="{ name: props.link }"
-    :to="{ name: props.link }"
-    class="flex"
-  >
+  <RouterLink v-if="props.link" :to="{ name: props.link }" class="flex w-full">
     <button
       class="border border-white rounded-[4px] flex gap-2 items-center justify-center w-full"
       :class="[
@@ -33,15 +29,15 @@ const props = withDefaults(defineProps<Prop>(), {
       ]"
       :type="submit ? 'submit' : 'button'"
     >
-      <component :is="IconGmail" />
+      <component v-if="props.icon" :is="IconGmail" />
       <p :class="[props.text_size, props.line_height]">
-        {{ $t(`form.${props.text_key}`) }}
+        {{ $t(props.text_key) }}
       </p>
     </button>
   </RouterLink>
   <button
     v-else
-    class="border border-white rounded-[4px] flex gap-2 items-center justify-center"
+    class="border border-white rounded-[4px] flex gap-2 items-center justify-center w-full"
     :class="[
       props.bg,
       props.color,
@@ -54,7 +50,7 @@ const props = withDefaults(defineProps<Prop>(), {
   >
     <component :is="IconGmail" />
     <p :class="[props.text_size, props.line_height]">
-      {{ $t(`form.${props.text_key}`) }}
+      {{ $t(props.text_key) }}
     </p>
   </button>
 </template>

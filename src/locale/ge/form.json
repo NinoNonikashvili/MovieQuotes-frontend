@@ -1,8 +1,12 @@
 {
-  "text_register": "Register",
-  "register_header": "Create an account",
-  "register_sub_header": "Start your journey!",
-  "register_have_an_account_question": "Already have an account?",
-  "text_login": "Log in",
-  "text_sign_up_with_google": "Sign up with Google"
+  "text_register": "რეგისტრაცია",
+  "register_header": "ანგარიშის შექმნა",
+  "register_sub_header": "დაიწყე!",
+  "register_have_an_account_question": "უკვე გაქვს ანგარიში?",
+  "text_login": "შესვლა",
+  "text_sign_up_with_google": "რეგისტრაცია გუგლით",
+
+  "login_header": "ავტორიზაცია",
+  "login_sub_header": "კეთილი იყოს თქვენი დაბრუნება! შიყვანეთ თქვენი მონაცემები",
+  "login_footer_text": "არ გაქვთ ანგარიში?"
 }
