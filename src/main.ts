@@ -6,7 +6,7 @@ import App from "./App.vue";
 
 import i18n from "@/plugins/i18n";
 import router from "./router";
-import "@/plugins/vee-validate/rules.ts";
+import "@/plugins/vee-validate/rules";
 import "@/plugins/vee-validate/index";
 
 const app = createApp(App);
