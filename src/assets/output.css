@@ -641,16 +641,16 @@ video {
   margin-top: 0.5rem;
 }
 
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
 .mt-4 {
   margin-top: 1rem;
 }
 
 .mt-\[17\.5rem\] {
   margin-top: 17.5rem;
-}
-
-.inline {
-  display: inline;
 }
 
 .flex {
@@ -698,10 +698,6 @@ video {
   width: 100%;
 }
 
-.w-screen {
-  width: 100vw;
-}
-
 .max-w-\[22\.5rem\] {
   max-width: 22.5rem;
 }
@@ -712,6 +708,10 @@ video {
 
 .flex-col {
   flex-direction: column;
+}
+
+.items-start {
+  align-items: flex-start;
 }
 
 .items-center {
@@ -750,10 +750,6 @@ video {
   border-radius: 0.125rem;
 }
 
-.rounded-xl {
-  border-radius: 0.75rem;
-}
-
 .border {
   border-width: 1px;
 }
@@ -778,11 +774,6 @@ video {
   background-color: rgb(206 212 218 / var(--tw-bg-opacity));
 }
 
-.bg-purple-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(216 180 254 / var(--tw-bg-opacity));
-}
-
 .bg-red-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(227 18 33 / var(--tw-bg-opacity));
@@ -800,10 +791,6 @@ video {
 .bg-zinc-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(34 32 48 / var(--tw-bg-opacity));
-}
-
-.bg-opacity-50 {
-  --tw-bg-opacity: 0.5;
 }
 
 .bg-gradient-to-b {
@@ -826,21 +813,16 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.from-zinc-800 {
-  --tw-gradient-from: #222030 var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(34 32 48 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
 .from-\[\#181623\] {
   --tw-gradient-from: #181623 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(24 22 35 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.via-\[\] {
-  --tw-gradient-to: rgb(255 255 255 / 0)  var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from),  var(--tw-gradient-via-position), var(--tw-gradient-to);
+.from-zinc-800 {
+  --tw-gradient-from: #222030 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(34 32 48 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
 .via-\[\#191725\] {
@@ -852,20 +834,16 @@ video {
   --tw-gradient-to: #08080D var(--tw-gradient-to-position);
 }
 
+.to-\[\#0D0B14\] {
+  --tw-gradient-to: #0D0B14 var(--tw-gradient-to-position);
+}
+
 .to-\[\#11101A\] {
   --tw-gradient-to: #11101A var(--tw-gradient-to-position);
 }
 
 .to-zinc-700 {
   --tw-gradient-to: #2d2a3f var(--tw-gradient-to-position);
-}
-
-.to-\[\] {
-  --tw-gradient-to:  var(--tw-gradient-to-position);
-}
-
-.to-\[\#0D0B14\] {
-  --tw-gradient-to: #0D0B14 var(--tw-gradient-to-position);
 }
 
 .bg-cover {
@@ -927,14 +905,14 @@ video {
   padding-bottom: 5rem;
 }
 
-.py-6 {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
-
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .pb-\[10\.25rem\] {
@@ -1017,6 +995,11 @@ video {
   color: rgb(13 110 253 / var(--tw-text-opacity));
 }
 
+.text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgb(217 217 217 / var(--tw-text-opacity));
+}
+
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(108 117 125 / var(--tw-text-opacity));
@@ -1035,11 +1018,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-gray-300 {
-  --tw-text-opacity: 1;
-  color: rgb(217 217 217 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1251,14 +1229,14 @@ video {
     background-color: transparent;
   }
 
-  .xl\:px-\[4\.5rem\] {
-    padding-left: 4.5rem;
-    padding-right: 4.5rem;
-  }
-
   .xl\:px-16 {
     padding-left: 4rem;
     padding-right: 4rem;
+  }
+
+  .xl\:px-\[4\.5rem\] {
+    padding-left: 4.5rem;
+    padding-right: 4.5rem;
   }
 
   .xl\:py-4 {
@@ -1274,6 +1252,11 @@ video {
     padding-top: 17.5rem;
   }
 
+  .xl\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
   .xl\:text-\[2rem\] {
     font-size: 2rem;
   }
@@ -1286,20 +1269,7 @@ video {
     font-size: 3.75rem;
   }
 
-  .xl\:text-3xl {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-  }
-
   .xl\:leading-\[5\.625rem\] {
     line-height: 5.625rem;
-  }
-
-  .xl\:text-\[\] {
-    color: ;
-  }
-
-  .xl\:text-\[3xl\] {
-    color: 3xl;
   }
 }
