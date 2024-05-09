@@ -5,7 +5,7 @@ const { locale } = i18n.global;
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
-  timeout: 1000,
+  timeout: 5000,
   headers: { Accept: "application/json" },
   withCredentials: true,
   withXSRFToken: true,
