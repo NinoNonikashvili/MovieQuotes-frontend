@@ -4,7 +4,7 @@ import type {
   EmailArgument,
   ResetPasswordConfig,
 } from "@/types/types";
-import instance from "@/services/axios/instance";
+import instance from "@/plugins/axios/index";
 import type { AxiosRequestConfig } from "axios";
 
 export async function register(user: RegisterUser) {
