@@ -53,7 +53,7 @@ const setLangInUrl = () => {
       <div class="w-[6.5] xl:order-2">
         <ButtonOutline :icon="false" text_key="form.text_login" link="login" />
       </div>
-      <div class="w-[7rem] xl:order-1">
+      <div class=" xl:order-1">
         <ButtonFilled text_key="form.text_signup" link="register" />
       </div>
     </div>

@@ -24,6 +24,7 @@
   "text_sign_in_with_google": "Sign in with Google",
   "label_user": "Email or name",
   "placeholder_user": "Enter your email or name",
+  "remember_me": "Remember me",
 
   "forgot_password_header": "Forgot password?",
   "forgot_password_sub_header": "Enter the email and we’ll send an email with instructions to reset your password",
@@ -34,6 +35,8 @@
   "reset_password_sub_header": "Your new password must be different from previous used passwords",
   "reset_password_footer_text": "Back to log in",
   "text_reset_password": "Reset password",
+  "text_success": "Success!",
+  "notification_success_password_reset_p": "Your Password changed successfully",
 
   "notification_success_header": "Thank you!",
   "notification_success_email_sent_p": "Please check your email and follow the instructions to activate your account.",
