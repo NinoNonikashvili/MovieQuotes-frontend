@@ -25,7 +25,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
             cd apps
-            cd nextjs-folder-structure-example
+            cd front-movie-quotes-nino-nonikashvili
             git pull
             npm ci
             npm run build
