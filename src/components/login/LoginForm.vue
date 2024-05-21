@@ -11,6 +11,9 @@ import { login } from "@/services/axios/auth-services";
 import { useForm } from "vee-validate";
 import { ref } from "vue";
 import { useGmail } from "@/composables/google-auth";
+import { useRouter } from "vue-router";
+import i18n from "@/plugins/i18n";
+import { useUserStore } from "@/stores/user";
 
 const { handleSubmit, resetForm } = useForm({
   validationSchema: {
@@ -19,6 +22,10 @@ const { handleSubmit, resetForm } = useForm({
   },
 });
 const showNotification = ref<boolean>(false);
+const router = useRouter();
+const { locale } = i18n.global;
+const user = useUserStore();
+const { set_auth_user } = user;
 
 const onSubmit = handleSubmit(async (values) => {
   const credentials = ref<LoginUser>({
@@ -40,6 +47,8 @@ const onSubmit = handleSubmit(async (values) => {
   try {
     await login(credentials.value);
     //set user data from response globally in pinia abd redirect to homepage
+    set_auth_user(true);
+    router.push({ name: "profile", params: { lang: locale.value } });
   } catch (err: any) {
     resetForm({
       errors: {
@@ -74,7 +83,11 @@ const onSubmit = handleSubmit(async (values) => {
             </RouterLink>
           </div>
 
-          <ButtonFilled :submit="true" text_key="form.text_sign_in" class="mt-2" />
+          <ButtonFilled
+            :submit="true"
+            text_key="form.text_sign_in"
+            class="mt-2"
+          />
           <ButtonOutline
             @click="useGmail"
             :icon="'IconGmail'"

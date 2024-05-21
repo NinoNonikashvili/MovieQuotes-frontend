@@ -5,7 +5,7 @@ import IconGmail from "@/components/icons/IconGmail.vue";
 const props = withDefaults(defineProps<Prop>(), {
   bg: "transparent",
   color: "text-white",
-  text_size: "text-base",
+  text_size: "text-[0.875rem]",
   font: "font-helvetica-400",
   padding_x: "px-4",
   padding_y: "py-2",

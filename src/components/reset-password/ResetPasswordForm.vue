@@ -7,6 +7,8 @@ import { useRoute } from "vue-router";
 import { useForm } from "vee-validate";
 import type { ResetPasswordConfig } from "@/types/types";
 import { reset_password } from "@/services/axios/auth-services";
+import { ref } from "vue";
+import VerificationMessages from "@/components/shared/VerificationMessages.vue";
 
 const { handleSubmit, resetForm } = useForm({
   validationSchema: {
@@ -14,18 +16,27 @@ const { handleSubmit, resetForm } = useForm({
     password_confirmation: "required|confirmed:@password",
   },
 });
+
 const route = useRoute();
+const showNotification = ref<boolean>(false);
+const isVerified = ref<boolean>(false);
+const email = route.query.email as string;
+
 const onSubmit = handleSubmit(async (values) => {
   let resetPasswordConfig: ResetPasswordConfig = {
     password: values.password,
     password_confirmation: values.password_confirmation,
-    email: route.query.email as string,
+    email: email,
     token: route.query.token as string,
   };
   try {
     const response = await reset_password(resetPasswordConfig);
     console.log(response);
+    showNotification.value = true;
+    isVerified.value = true;
   } catch (err) {
+    showNotification.value = true;
+    isVerified.value = false;
     console.log(err);
   }
 });
@@ -33,7 +44,7 @@ const onSubmit = handleSubmit(async (values) => {
 
 <template>
   <AuthLayoutWrapper>
-    <template #form>
+    <template #form v-if="!showNotification">
       <AuthLayout
         header_key="form.reset_password_header"
         sub_header_key="form.reset_password_sub_header"
@@ -52,8 +63,13 @@ const onSubmit = handleSubmit(async (values) => {
         </form>
       </AuthLayout>
     </template>
-    <template #notification>
-      <!-- password was changed notification -->
+    <template #notification v-if="showNotification">
+
+      <VerificationMessages
+        :isVerified="isVerified"
+        :email="email"
+        handler="handleSendAgainPasswordResset"
+      />
     </template>
   </AuthLayoutWrapper>
 </template>

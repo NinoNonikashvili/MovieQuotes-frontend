@@ -5,8 +5,45 @@
   "register_have_an_account_question": "უკვე გაქვს ანგარიში?",
   "text_login": "შესვლა",
   "text_sign_up_with_google": "რეგისტრაცია გუგლით",
+  "text_signup": "რეგისტრაცია",
+  "label_name": "სახელი",
+  "label_email": "ელ.ფოსტა",
+  "label_password": "პაროლი",
+  "label_password_confirmation": "გაიმეორე აპროლი",
+  "placeholder_name": "შეიყვანე სახელი",
+  "placeholder_email": "შეიყვანე ელ.ფოსტა",
+  "placeholder_password": "პაროლი",
+  "placeholder_password_confirmation": "პაროლი",
 
   "login_header": "ავტორიზაცია",
   "login_sub_header": "კეთილი იყოს თქვენი დაბრუნება! შიყვანეთ თქვენი მონაცემები",
-  "login_footer_text": "არ გაქვთ ანგარიში?"
+  "login_footer_text": "არ გაქვთ ანგარიში?",
+  "login_footer_link_text": "რეგისტრაცია",
+  "text_forgot_password": "დაგავიწყდა პაროლი?",
+  "text_sign_in": "შესვლა",
+  "text_sign_in_with_google": "შესვლა გუგლით",
+  "label_user": "ელ.ფოსტა ან სახელი",
+  "placeholder_user": "შეიყვანე ელ.ფოსტა ან სახელი",
+  "remember_me": "დამახსოვრება",
+
+  "forgot_password_header": "დაგავიწყდა პაროლი?",
+  "forgot_password_sub_header": "შეიყვანეთ ელ.ფოსტა, სადაც მიიღებთ ინსტრუქციებს პაროლის აღსადგენად.",
+  "forgot_password_footer_text": "შესვლა",
+  "text_send_instructions": "ინსტრუქციების გაგზავნა",
+
+  "reset_password_header": "ახალი პაროლის შექმნა",
+  "reset_password_sub_header": "ახალი პაროლი უნდა განსხვავდებოდეს ძველისგან",
+  "reset_password_footer_text": "შესვლა",
+  "text_reset_password": "აღადგინე პაროლი",
+
+  "notification_success_header": "გმადლობთ!",
+  "notification_success_email_sent_p": "გთხოვთ მიყევით ელ.ფოსტაზე გამოგზავნილ ინსტრუქციებს ანგარიშის გასააქტიურებლად.",
+  "text_go_to_email": "ელ.ფოსტის ნახვა",
+
+  "notification_success_email_verified_p": "თქვენი ანგარიში გააქტიურებულია",
+  "text_go_to_login": "შესვლა",
+
+  "notification_link_expired_header": "ბმული ვადაგასულია!",
+  "notification_link_expired_p": "ბმული უნდა გამოიყენოთ გამოგზავნიდან 2სთ-ის განმავლობაში",
+  "notification_link_expired_button_text": "მოითხოვე ახალი ბმული"
 }

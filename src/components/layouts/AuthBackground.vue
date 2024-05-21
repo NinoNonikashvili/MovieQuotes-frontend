@@ -27,7 +27,7 @@ const navigateToHome = (e: Event) => {
       </div>
     </div>
     <div
-      class="w-full xl:w-[34rem] xl:h-fit xl:absolute top-[9.375rem] inset-x-0 mx-auto"
+      class="w-full h-screen xl:w-[34rem] xl:h-fit xl:absolute top-[9.375rem] inset-x-0 mx-auto"
     >
       <slot></slot>
     </div>

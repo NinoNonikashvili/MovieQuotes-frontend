@@ -31,8 +31,8 @@ window.addEventListener("scroll", () => {
       <h1
         class="text-helvetica-700 text-orange-200 text-2xl xl:text-[3.75rem] xl:leading-[5.625rem] text-center"
       >
-        Find any quote in <br />
-        millions of movie lines
+        {{ $t("landing.header_1") }} <br />
+        {{ $t("landing.header_2") }}
       </h1>
       <div class="w-[8.125rem] mt-4">
         <ButtonFilled text_key="general.text_get_started" link="login" />
@@ -42,50 +42,54 @@ window.addEventListener("scroll", () => {
   <section
     ref="elStickySection"
     :class="stickyBgStyle"
-    class="w-full flex items-center justify-center h-screen m-auto bg-no-repeat bg-center bg-cover landing1"
+    class="w-full flex items-center h-screen m-auto bg-no-repeat bg-center bg-cover landing1"
   >
-    <div class="p-5">
-      <div class="flex items-start gap-2">
-        <IconCite width="53" height="2" class="mt-3" />
-        <h3 class="font-helvetica-700 text-white text-xl xl:text-[3.125rem]">
-          “You have to leave somethig behind to go forward”
+    <div class="pl-10 xl:pl-[10rem]">
+      <div class="flex items-start gap-2 mb-4">
+        <IconCite width="53" height="2" class="mt-3 xl:mt-10" />
+        <h3
+          class="font-helvetica-700 text-white text-xl xl:text-[3.125rem] leading-8 xl:leading-[4.75rem] max-w-[20.625rem] xl:max-w-[52rem]"
+        >
+          {{ $t("landing.quote_1") }}
         </h3>
       </div>
       <p class="ml-16 font-helvetica-700 text-base text-gray-300 xl:text-3xl">
-        Interstellar, 2014
+        {{ $t("landing.cite_1") }}
       </p>
     </div>
   </section>
 
   <section
-    class="w-full flex items-center justify-center h-screen m-auto bg-fixed bg-center bg-cover landing2"
+    class="w-full flex items-center h-screen m-auto bg-fixed bg-center bg-cover landing2"
   >
-    <div class="p-5">
-      <div class="flex items-start gap-2">
-        <IconCite width="53" height="2" class="mt-3" />
-        <h3 class="font-helvetica-700 text-white text-xl xl:text-[3.125rem]">
-          “I think we’re just gonna have to be secretly in love with earch other
-          and leave it that”
+    <div class="pl-10 xl:pl-[10rem]">
+      <div class="flex items-start gap-2 mb-4">
+        <IconCite width="53" height="2" class="mt-3 xl:mt-10" />
+        <h3
+          class="font-helvetica-700 text-white text-xl xl:text-[3.125rem] leading-8 xl:leading-[4.75rem] max-w-[20.625rem] xl:max-w-[52rem]"
+        >
+          {{ $t("landing.quote_2") }}
         </h3>
       </div>
       <p class="ml-16 font-helvetica-700 text-base text-gray-300 xl:text-3xl">
-        The Royal Tenenbaums,2001
+        {{ $t("landing.cite_2") }}
       </p>
     </div>
   </section>
   <section
-    class="w-full flex items-center justify-center h-screen m-auto bg-fixed bg-center bg-cover landing3"
+    class="w-full flex items-center h-screen m-auto bg-fixed bg-center bg-cover landing3"
   >
-    <div class="p-5">
-      <div class="flex items-start gap-2">
-        <IconCite width="53" height="2" class="mt-3" />
-        <h3 class="font-helvetica-700 text-white text-xl xl:text-[3.125rem]">
-          “I think we’re just gonna have to be secretly in love with earch other
-          and leave it that”
+    <div class="pl-10 xl:pl-[10rem]">
+      <div class="flex items-start gap-2 mb-4">
+        <IconCite width="53" height="2" class="mt-3 xl:mt-10" />
+        <h3
+          class="font-helvetica-700 text-white text-xl xl:text-[3.125rem] leading-8 xl:leading-[4.75rem] max-w-[20.625rem] xl:max-w-[52rem]"
+        >
+          {{ $t("landing.quote_3") }}
         </h3>
       </div>
       <p class="ml-16 font-helvetica-700 text-base text-gray-300 xl:text-3xl">
-        The Royal Tenenbaums,2001
+        {{ $t("landing.cite_3") }}
       </p>
     </div>
   </section>

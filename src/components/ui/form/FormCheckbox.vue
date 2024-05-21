@@ -28,6 +28,6 @@ const { checked, handleChange } = useField(() => props.name, undefined, {
         <IconInputSuccess v-if="checked" />
       </div>
     </div>
-    <p class="font-helvetica-400 text-base text-white">Remember me</p>
+    <p class="font-helvetica-400 text-base text-white">{{ $t("form.remember_me") }}</p>
   </label>
 </template>

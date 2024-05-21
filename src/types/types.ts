@@ -36,6 +36,7 @@ export type LoginUser = {
 export type VerificationMessageProps = {
   isVerified: boolean;
   email: string;
+  handler: string;
 };
 
 export type EmailArgument = {
