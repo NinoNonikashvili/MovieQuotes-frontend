@@ -5,7 +5,7 @@ import LoginPage from "@/views/LoginPage.vue";
 import ResetPasswordPage from "@/views/ResetPasswordPage.vue";
 import ForgotPasswordPage from "@/views/ForgotPasswordPage.vue";
 import EmailVerifiedPage from "@/views/EmailVerifiedPage.vue";
-import ProfilePage from "@/views/ProfilePage.vue";
+import NewsFeedPage from "@/views/NewsFeedPage.vue";
 import i18n from "@/plugins/i18n";
 import type { Locales } from "@/types/types";
 import { setLocale } from "@vee-validate/i18n";
@@ -13,6 +13,8 @@ import HandleGmailAuthPage from "@/views/HandleGmailAuthPage.vue";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { checkAuthState } from "@/services/axios/auth-services";
+import ProfilePage from "@/views/ProfilePage.vue";
+import MoviesPage from "@/views/MoviesPage.vue";
 
 const { locale } = i18n.global;
 
@@ -92,9 +94,25 @@ const router = createRouter({
       },
     },
     {
-      path: "/profile",
+      path: "/news-feed/:lang",
+      name: "news-feed",
+      component: NewsFeedPage,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: "/profile/:lang",
       name: "profile",
       component: ProfilePage,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: "/movies/:lang",
+      name: "movies",
+      component: MoviesPage,
       meta: {
         requiresAuth: true,
       },
@@ -135,15 +153,15 @@ router.beforeEach(async (to, from) => {
     } else {
       if (from.name !== "login") {
         return {
-          path: "/login/en",
+          name: "login", params:{lang:locale.value}
         };
       }
     }
   } else {
-    if (auth_user.value && from.name !== "profile") {
+    if (auth_user.value && from.name !== "news-feed") {
       //to profile
       return {
-        name: "profile",
+        name: "news-feed", params:{lang:locale.value}
       };
     } else {
       return;

@@ -4,5 +4,5 @@ import HeaderAuth from "@/components/shared/HeaderAuth.vue";
 
 <template>
   <HeaderAuth />
-  Profile
+  News feed
 </template>

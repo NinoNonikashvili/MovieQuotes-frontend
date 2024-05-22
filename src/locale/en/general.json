@@ -1,4 +1,18 @@
 {
-    "site_name": "MOVIE QUOTES",
-    "text_get_started": "Get started"
+  "site_name": "MOVIE QUOTES",
+  "text_get_started": "Get started",
+  "text_edit_profile": "Edit your profile",
+  "text_news_feed": "News feed",
+  "text_list_of_movies": "List of movies",
+  "text_logout": "Logout",
+  "text_search": "Search",
+  "text_enter": "Enter ",
+  "search_movie_instructions": " to search movies",
+  "search_quote_instructions": " to search quotes ",
+  "text_notifications": "Notifications",
+  "text_mark_all_read": "Mark all as read",
+  "text_new": "New",
+  "quote_reaction_message": "Reacted to your quote",
+  "quote_comment_message": "Commented to your quote",
+  "time_elapsed" : "min ago"
 }

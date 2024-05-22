@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppHeader from "@/components/shared/AppHeader.vue";
+import HeaderApp from "@/components/shared/HeaderApp.vue";
 import AppFooter from "@/components/shared/AppFooter.vue";
 import ButtonFilled from "@/components/ui/buttons/ButtonFilled.vue";
 import IconCite from "@/components/icons/IconCite.vue";
@@ -24,7 +24,7 @@ window.addEventListener("scroll", () => {
 
 <template>
   <div class="w-full bg-gradient-to-b to-[#11101A] from-[#08080D]">
-    <AppHeader />
+    <HeaderApp />
     <div
       class="flex flex-col items-center justify-center w-full pt-[14.25rem] pb-[10.25rem] xl:pb-[13.75rem] xl:pt-[17.5rem]"
     >

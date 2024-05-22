@@ -53,3 +53,22 @@ export type ResetPasswordConfig = {
   email: string;
   token: string;
 };
+export type IconProps = {
+  color: string;
+};
+
+export type AuthUserData = {
+  //add profile photo after it is ready in backend
+  id: number;
+  name: string;
+  email: string;
+  email_verified_at?: string;
+  created_at: string;
+  updated_at: string;
+  google_id?: string;
+};
+
+export type CompoundSearchResults = {
+  name: string;
+  //add more later
+};
