@@ -2,40 +2,36 @@
 import IconBurger from "@/components/icons/IconBurger.vue";
 import IconSearch from "@/components/icons/IconSearch.vue";
 import IconBell from "@/components/icons/IconBell.vue";
-import IconHouse from "@/components/icons/IconHouse.vue";
-import IconMovie from "@/components/icons/IconMovie.vue";
 import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
 import IconHeart from "@/components/icons/IconHeart.vue";
 import IconComment from "@/components/icons/IconComment.vue";
-import ButtonOutline from "@/components/ui/buttons/ButtonOutline.vue";
-import { useLogout } from "@/composables/logout";
 import { ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import i18n from "@/plugins/i18n";
-import { useRoute, useRouter } from "vue-router";
-import { setLocale } from "@vee-validate/i18n";
+import { useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import type { CompoundSearchResults } from "@/types/types";
 import { loadMoviesAndQuotes } from "@/services/axios/search-services";
+import HeaderAuthNavigation from "@/components/shared/HeaderAuthNavigation.vue";
+import HeaderAuthLangAndLogout from "@/components/shared/HeaderAuthLangAndLogout.vue";
 
 const { locale } = i18n.global;
 const route = useRoute();
-const router = useRouter();
 const { auth_user_data } = useUserStore();
 
-const setLangInUrl = () => {
-  if (locale.value === "ge") {
-    setLocale("ka");
-  } else {
-    setLocale(locale.value);
-  }
+// const setLangInUrl = () => {
+//   if (locale.value === "ge") {
+//     setLocale("ka");
+//   } else {
+//     setLocale(locale.value);
+//   }
 
-  if (route.name) {
-    router.push({ name: route.name, params: { lang: locale.value } });
-  }
-};
+//   if (route.name) {
+//     router.push({ name: route.name, params: { lang: locale.value } });
+//   }
+// };
 
-const { logoutFun } = useLogout();
+// const { logoutFun } = useLogout();
 
 const isBurgerMenuVisible = ref<boolean>(false);
 const isSearchVisible = ref<boolean>(false);
@@ -103,101 +99,25 @@ const callUpdateDebounce = (e: Event) => {
   >
     <!-- BURGER MENU -->
     <IconBurger @click="isBurgerMenuVisible = true" class="xl:hidden" />
-    <RouterLink :to="{ name: 'news-feed', params: { lang: locale } }">
+    <RouterLink
+      :to="{ name: 'news-feed', params: { lang: locale } }"
+      class="hidden xl:block"
+    >
       <h3 class="font-helvetica-500 text-base text-[#DDCCAA]">
         {{ $t("general.site_name") }}
       </h3>
     </RouterLink>
 
+    <!-- BURGER MODAL -->
     <div
       class="max-w-[23.75rem] h-[41rem] bg-[#11101A] absolute top-0 left-0 p-[2.8125rem]"
       ref="burgerRef"
       v-if="isBurgerMenuVisible"
     >
-      <nav class="flex flex-col gap-10 items-start">
-        <li class="list-none">
-          <RouterLink
-            :to="{ name: 'profile', params: { lang: locale } }"
-            class="group flex gap-5 items-center"
-          >
-            <img
-              src=""
-              alt="user photo"
-              class="w-10 h-10 rounded-full group-[.router-link-active]:border group-[.router-link-active]:border-[#E31221]"
-            />
-            <div>
-              <p
-                class="font-helvetica-400 text-white text-xl leading-[1.875rem]"
-              >
-                {{ auth_user_data?.name }}
-              </p>
-              <p class="font-helvetica-400 text-[#CED4DA] text-sm">
-                {{ $t("general.text_edit_profile") }}
-              </p>
-            </div>
-          </RouterLink>
-        </li>
-        <li class="list-none">
-          <RouterLink
-            :to="{ name: 'news-feed', params: { lang: locale } }"
-            class="group flex gap-[1.875rem] items-center"
-          >
-            <div class="relative w-fit">
-              <IconHouse color="#ffffff" />
-              <IconHouse
-                color="#E31221"
-                class="absolute top-0 left-0 hidden group-[.router-link-active]:block"
-              />
-            </div>
-
-            <p class="font-helvetica-400 text-white text-xl leading-[1.875rem]">
-              {{ $t("general.text_news_feed") }}
-            </p>
-          </RouterLink>
-        </li>
-        <li class="list-none">
-          <RouterLink
-            :to="{ name: 'movies', params: { lang: locale } }"
-            class="group flex gap-[1.875rem] items-center"
-          >
-            <div class="relative w-fit">
-              <IconMovie color="#ffffff" />
-              <IconMovie
-                color="#E31221"
-                class="absolute top-0 left-0 hidden group-[.router-link-active]:block"
-              />
-            </div>
-
-            <p class="font-helvetica-400 text-white text-xl leading-[1.875rem]">
-              {{ $t("general.text_list_of_movies") }}
-            </p>
-          </RouterLink>
-        </li>
-        <div class="w-24">
-          <ButtonOutline
-            @click="logoutFun"
-            text_key="general.text_logout"
-            icon=""
-          />
-        </div>
-
-        <div class="locale-changer bg-transparent">
-          <select
-            v-model="$i18n.locale"
-            @change="setLangInUrl"
-            class="bg-transparent text-white focus:outline-none"
-          >
-            <option
-              class="bg-[#11101A]"
-              v-for="locale in $i18n.availableLocales"
-              :key="`locale-${locale}`"
-              :value="locale"
-            >
-              {{ locale }}
-            </option>
-          </select>
-        </div>
-      </nav>
+      <div class="flex flex-col gap-10 items-start">
+        <HeaderAuthNavigation :lang="locale" :name="auth_user_data?.name" />
+        <HeaderAuthLangAndLogout />
+      </div>
     </div>
 
     <div class="flex gap-4 items-center">
@@ -303,30 +223,7 @@ const callUpdateDebounce = (e: Event) => {
       </div>
       <!-- LANG SWITCHER AND LOGOUT BTN FOR DESKTOP -->
 
-      <div class="locale-changer bg-transparent px-4 py-2 hidden xl:block">
-        <select
-          v-model="$i18n.locale"
-          @change="setLangInUrl"
-          class="bg-transparent text-white focus:outline-none"
-        >
-          <option
-            class="bg-[#11101A]"
-            v-for="locale in $i18n.availableLocales"
-            :key="`locale-${locale}`"
-            :value="locale"
-          >
-            {{ locale }}
-          </option>
-        </select>
-      </div>
-
-      <div class="w-24 hidden xl:block">
-        <ButtonOutline
-          @click="logoutFun"
-          text_key="general.text_logout"
-          icon=""
-        />
-      </div>
+      <HeaderAuthLangAndLogout visibility="hidden xl:block" />
     </div>
   </div>
 </template>

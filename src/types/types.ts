@@ -72,3 +72,9 @@ export type CompoundSearchResults = {
   name: string;
   //add more later
 };
+
+export type HeaderNavProps = {
+  lang: string,
+  name?: string;
+  // add user image later
+}
