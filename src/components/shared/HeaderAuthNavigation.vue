@@ -14,7 +14,7 @@ const props = defineProps<HeaderNavProps>();
         class="group flex gap-5 items-center"
       >
         <img
-          src=""
+          :src="props.image"
           alt="user photo"
           class="w-10 h-10 rounded-full group-[.router-link-active]:border group-[.router-link-active]:border-[#E31221]"
         />

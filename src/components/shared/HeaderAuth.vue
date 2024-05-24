@@ -14,10 +14,12 @@ import type { CompoundSearchResults } from "@/types/types";
 import { loadMoviesAndQuotes } from "@/services/axios/search-services";
 import HeaderAuthNavigation from "@/components/shared/HeaderAuthNavigation.vue";
 import HeaderAuthLangAndLogout from "@/components/shared/HeaderAuthLangAndLogout.vue";
+import { storeToRefs } from "pinia";
 
 const { locale } = i18n.global;
 const route = useRoute();
-const { auth_user_data } = useUserStore();
+const user = useUserStore();
+const { auth_user_data } = storeToRefs(user);
 
 // const setLangInUrl = () => {
 //   if (locale.value === "ge") {
@@ -115,7 +117,11 @@ const callUpdateDebounce = (e: Event) => {
       v-if="isBurgerMenuVisible"
     >
       <div class="flex flex-col gap-10 items-start">
-        <HeaderAuthNavigation :lang="locale" :name="auth_user_data?.name" />
+        <HeaderAuthNavigation
+          :lang="locale"
+          :name="auth_user_data?.name"
+          :image="auth_user_data?.image"
+        />
         <HeaderAuthLangAndLogout :visibility="null" />
       </div>
     </div>

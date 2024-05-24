@@ -8,8 +8,8 @@ export const useUserStore = defineStore("user", () => {
   function set_auth_user(state: boolean) {
     auth_user.value = state;
   }
-  function set_auth_user_data(state: AuthUserData) {
-    auth_user_data.value = state;
+  function set_auth_user_data(payload: AuthUserData) {
+    auth_user_data.value = payload;
   }
 
   return { auth_user, auth_user_data, set_auth_user, set_auth_user_data };
