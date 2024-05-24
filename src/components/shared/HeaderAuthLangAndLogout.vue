@@ -5,7 +5,7 @@ import i18n from "@/plugins/i18n";
 import { useRoute, useRouter } from "vue-router";
 import { setLocale } from "@vee-validate/i18n";
 
-const props = defineProps<{ visibility: string } | null>();
+const props = defineProps<{ visibility: string | null }>();
 const { locale } = i18n.global;
 const route = useRoute();
 const router = useRouter();
@@ -28,7 +28,7 @@ const { logoutFun } = useLogout();
 <template>
   <div
     class="locale-changer bg-transparent px-4 py-2"
-    :class="props.visibility"
+    :class="props?.visibility"
   >
     <select
       v-model="$i18n.locale"
@@ -45,7 +45,7 @@ const { logoutFun } = useLogout();
       </option>
     </select>
   </div>
-  <div class="w-24" :class="props.visibility">
+  <div class="w-24" :class="props?.visibility">
     <ButtonOutline @click="logoutFun" text_key="general.text_logout" icon="" />
   </div>
 </template>

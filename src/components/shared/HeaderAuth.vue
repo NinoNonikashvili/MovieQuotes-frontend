@@ -116,7 +116,7 @@ const callUpdateDebounce = (e: Event) => {
     >
       <div class="flex flex-col gap-10 items-start">
         <HeaderAuthNavigation :lang="locale" :name="auth_user_data?.name" />
-        <HeaderAuthLangAndLogout />
+        <HeaderAuthLangAndLogout :visibility="null" />
       </div>
     </div>
 
