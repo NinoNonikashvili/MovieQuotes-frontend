@@ -7,5 +7,9 @@
   "text_cancel": "Cancel",
   "text_confirm": "Confirm",
   "text_my_profile": "My Profile",
-  "text_save_changes": "Save changes"
+  "text_save_changes": "Save changes",
+  "password_hint_header": "Passwords should contain:",
+  "password_hint_1": "must contain min 8chars",
+  "password_hint_2": "must contain max 15 chars",
+  "password_hint_3": "only lowercase letters and numbers"
 }

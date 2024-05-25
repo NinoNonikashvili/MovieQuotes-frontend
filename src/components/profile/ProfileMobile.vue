@@ -158,13 +158,13 @@ const cancelChanges = () => {
       class="absolute top-[15rem] left-0 right-0 mx-auto max-w-[26.75rem]"
     >
       <form class="rounded-xl bg-[#24222F] px-8 py-16">
-        <FormInputText name="name" :class="{ 'opacity-0 h-0': !isEditName }" />
+        <FormInputText name="name" :class="{ 'opacity-0 h-0': !isEditName }" :required="false"/>
         <div
           class="flex flex-col gap-2"
           :class="{ 'opacity-0 h-0': !isEditPassword }"
         >
-          <FormInputPassword name="password" />
-          <FormInputPassword name="password_confirmation" />
+          <FormInputPassword name="password" :required="false"/>
+          <FormInputPassword name="password_confirmation" :required="false"/>
         </div>
       </form>
       <div

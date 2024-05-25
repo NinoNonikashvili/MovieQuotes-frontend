@@ -73,10 +73,10 @@ const onSubmit = handleSubmit(async (values) => {
         :go_back="false"
       >
         <form class="flex flex-col gap-4 my-8 w-full" @submit="onSubmit">
-          <FormInputText name="user" />
-          <FormInputPassword name="password" />
+          <FormInputText name="user" :required="true"/>
+          <FormInputPassword name="password" :required="true"/>
           <div class="flex w-full justify-between items-center">
-            <FormCheckbox name="rememberMe" :checkedValue="true" />
+            <FormCheckbox name="rememberMe" :checkedValue="true" :required="true"/>
             <RouterLink
               :to="{ name: 'forgot-password' }"
               class="ml-1 font-helvetica-400 text-base text-blue-600 underline"

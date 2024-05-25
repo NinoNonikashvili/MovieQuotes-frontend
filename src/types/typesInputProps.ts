@@ -3,4 +3,5 @@ export default interface InputProp {
   checkedValue?: string | boolean;
   disabled?: boolean;
   value?: string;
+  required: boolean;
 }

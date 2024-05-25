@@ -31,7 +31,7 @@ const validationListeners = {
     <label :for="props.name" class="flex flex-col gap-2">
       <p class="font-helvetica-400 text-base text-white">
         {{ $t(`form.label_${$props.name}`) }}
-        <span class="text-red-400">*</span>
+        <span class="text-red-400" v-if="props.required">*</span>
       </p>
       <div class="relative">
         <input
@@ -40,7 +40,6 @@ const validationListeners = {
           v-model="value"
           v-on="validationListeners"
           type="text"
-          
           :id="props.name"
           class="peer w-full px-3 py-2 bg-gray-100 rounded-[4px] focus:outline-none focus:ring-[#0D6EFD]/25 focus:ring-2 font-helvetica-400 text-base text-gray-500 placeholder:text-gray-500"
           :class="

@@ -62,11 +62,7 @@ const onSubmit = handleSubmit(async (values) => {
   if (values.new_name) {
     updatedValues.append("name", values.new_name);
   }
-  console.log(
-    values.new_name,
-    values.new_password,
-    values.new_password_confirmation,
-  );
+
   if (values.new_password) {
     updatedValues.append("password", values.new_password);
   }
@@ -151,7 +147,7 @@ const { locale } = i18n.global;
           />
         </div>
         <div class="flex items-center gap-4 mb-[3.5rem]">
-          <FormInputText name="name" :disabled="true" class="w-[33rem]" />
+          <FormInputText name="name" :disabled="true" class="w-[33rem]" :required="false" />
           <button
             class="border-0 bg-transparent font-helvetica-400 text-base text-[#CED4DA] mt-4"
             type="button"
@@ -165,18 +161,21 @@ const { locale } = i18n.global;
           name="new_name"
           v-if="isUpdateName"
           class="w-[33rem] mb-[3.5rem]"
+          :required="false"
         />
         <FormInputText
           name="email"
           :disabled="true"
           class="w-[33rem] mb-[3.5rem]"
+          :required="false"
         />
         <div v-if="!auth_user_data?.google_id">
-          <div class="flex items-center gap-4 mb-[3.5rem]">
+          <div class="flex items-center gap-4 mb-8">
             <FormInputPassword
               name="password"
               :disabled="true"
               class="w-[33rem]"
+              :required="false"
             />
             <button
               class="border-0 bg-transparent font-helvetica-400 text-base text-[#CED4DA] mt-4"
@@ -188,14 +187,35 @@ const { locale } = i18n.global;
           </div>
 
           <div v-if="isUpdatePassword">
-            <div></div>
+            <div
+              class="p-6 rounded-[0.25rem] border border-[#CED4DA] w-[33rem] mb-8"
+            >
+              <h3 class="font-helvetica-400 text-base text-white mb-4">
+                {{ $t("profile.password_hint_header") }}
+              </h3>
+              <div>
+                <li class="font-helvetica-400 text-sm text-white">
+                  {{ $t("profile.password_hint_1") }}
+                </li>
+
+                <li class="font-helvetica-400 text-sm text-white">
+                  {{ $t("profile.password_hint_2") }}
+                </li>
+
+                <li class="font-helvetica-400 text-sm text-white">
+                  {{ $t("profile.password_hint_3") }}
+                </li>
+              </div>
+            </div>
             <FormInputPassword
               name="new_password"
               class="w-[33rem] mb-[3.5rem]"
+              :required="false"
             />
             <FormInputPassword
               name="new_password_confirmation"
               class="w-[33rem] mb-[3.5rem]"
+              :required="false"
             />
           </div>
         </div>
