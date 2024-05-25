@@ -6,7 +6,7 @@ import FormInputText from "@/components/ui/form/FormInputText.vue";
 import FormInputPassword from "@/components/ui/form/FormInputPassword.vue";
 import FormCheckbox from "@/components/ui/form/FormCheckbox.vue";
 import AuthLayoutWrapper from "@/components/shared/AuthLayoutWrapper.vue";
-import type { LoginUser } from "@/types/types";
+import type { AuthUserData, LoginUser } from "@/types/types";
 import { login } from "@/services/axios/auth-services";
 import { useForm } from "vee-validate";
 import { ref } from "vue";
@@ -25,7 +25,7 @@ const showNotification = ref<boolean>(false);
 const router = useRouter();
 const { locale } = i18n.global;
 const user = useUserStore();
-const { set_auth_user } = user;
+const { set_auth_user, set_auth_user_data } = user;
 
 const onSubmit = handleSubmit(async (values) => {
   const credentials = ref<LoginUser>({
@@ -45,10 +45,12 @@ const onSubmit = handleSubmit(async (values) => {
   }
 
   try {
-    await login(credentials.value);
+    const data = await login(credentials.value);
     //set user data from response globally in pinia abd redirect to homepage
+    console.log(data.data.user_data)
     set_auth_user(true);
-    router.push({ name: "profile", params: { lang: locale.value } });
+    set_auth_user_data(data.data.user_data as AuthUserData)
+    router.push({ name: "news-feed", params: { lang: locale.value } });
   } catch (err: any) {
     resetForm({
       errors: {
@@ -56,7 +58,6 @@ const onSubmit = handleSubmit(async (values) => {
       },
     });
   }
-  console.log(credentials.value);
 });
 </script>
 
@@ -72,10 +73,10 @@ const onSubmit = handleSubmit(async (values) => {
         :go_back="false"
       >
         <form class="flex flex-col gap-4 my-8 w-full" @submit="onSubmit">
-          <FormInputText name="user" />
-          <FormInputPassword name="password" />
+          <FormInputText name="user" :required="true"/>
+          <FormInputPassword name="password" :required="true"/>
           <div class="flex w-full justify-between items-center">
-            <FormCheckbox name="rememberMe" :checkedValue="true" />
+            <FormCheckbox name="rememberMe" :checkedValue="true" :required="true"/>
             <RouterLink
               :to="{ name: 'forgot-password' }"
               class="ml-1 font-helvetica-400 text-base text-blue-600 underline"

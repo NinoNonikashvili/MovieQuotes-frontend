@@ -1,4 +1,5 @@
 import type { AxiosRequestConfig } from "axios";
+import type { Url } from "url";
 
 export type AuthLayoutType = {
   header_key: string;
@@ -52,4 +53,33 @@ export type ResetPasswordConfig = {
   password_confirmation: string;
   email: string;
   token: string;
+};
+export type IconProps = {
+  color: string;
+};
+
+export type AuthUserData = {
+  //add profile photo after it is ready in backend
+  id: number;
+  name: string;
+  email: string;
+  image: string;
+  google_id?: string;
+};
+
+export type CompoundSearchResults = {
+  name: string;
+  //add more later
+};
+
+export type HeaderNavProps = {
+  lang: string;
+  name?: string;
+  image?: Url;
+};
+export type ProfileUpdateValues = {
+  name?: string;
+  password?: string;
+  password_confirmation?: string;
+  image?: string;
 };

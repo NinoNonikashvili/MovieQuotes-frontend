@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppHeader from "@/components/shared/AppHeader.vue";
+import HeaderApp from "@/components/shared/HeaderApp.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -16,7 +16,7 @@ const navigateToHome = (e: Event) => {
       class="w-full h-screen fixed hidden xl:block bg-[#08080D] blur-sm"
       @click="navigateToHome"
     >
-      <AppHeader />
+      <HeaderApp />
       <div class="flex justify-center w-full h-full">
         <h1
           class="text-helvetica-700 text-orange-200 text-[60px] leading-[90px] text-center mt-[17.5rem]"

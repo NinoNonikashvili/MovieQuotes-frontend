@@ -1,4 +1,8 @@
 {
   "site_name": "ციტატები ფილმებიდან",
-  "text_get_started": "დაიწყე"
+  "text_get_started": "დაიწყე",
+  "text_edit_profile": "შეცვალე პროფილი",
+  "text_news_feed": "სიახლეები",
+  "text_list_of_movies": "ფილმები",
+  "text_logout": "გასვლა"
 }

@@ -12,8 +12,8 @@ const router = useRouter();
 const setLangInUrl = () => {
   if (locale.value === "ge") {
     setLocale("ka");
-  } else{
-    setLocale(locale.value)
+  } else {
+    setLocale(locale.value);
   }
 
   if (route.name) {
@@ -51,9 +51,9 @@ const setLangInUrl = () => {
         </select>
       </div>
       <div class="w-[6.5] xl:order-2">
-        <ButtonOutline :icon="false" text_key="form.text_login" link="login" />
+        <ButtonOutline icon="" text_key="form.text_login" link="login" />
       </div>
-      <div class=" xl:order-1">
+      <div class="xl:order-1">
         <ButtonFilled text_key="form.text_signup" link="register" />
       </div>
     </div>

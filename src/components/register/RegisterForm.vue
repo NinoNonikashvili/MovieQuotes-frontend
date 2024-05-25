@@ -66,10 +66,10 @@ const onsubmit = handleSubmit(async (values) => {
         footer_link_text_key="form.text_login"
       >
         <form class="flex flex-col gap-4 my-8 w-full" @submit="onsubmit">
-          <FormInputText name="name" />
-          <FormInputText name="email" />
-          <FormInputPassword name="password" />
-          <FormInputPassword name="password_confirmation" />
+          <FormInputText name="name" :required="true"/>
+          <FormInputText name="email" :required="true"/>
+          <FormInputPassword name="password" :required="true"/>
+          <FormInputPassword name="password_confirmation" :required="true"/>
           <ButtonFilled
             :submit="true"
             text_key="form.text_register"

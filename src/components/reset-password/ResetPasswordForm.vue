@@ -53,8 +53,8 @@ const onSubmit = handleSubmit(async (values) => {
         :go_back="true"
       >
         <form class="flex flex-col gap-4 my-8 w-full" @submit="onSubmit">
-          <FormInputPassword name="password" />
-          <FormInputPassword name="password_confirmation" />
+          <FormInputPassword name="password" :required="true"/>
+          <FormInputPassword name="password_confirmation" :required="true"/>
           <ButtonFilled
             :submit="true"
             text_key="form.text_reset_password"
