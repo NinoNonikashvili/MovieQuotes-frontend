@@ -35,6 +35,9 @@ export default {
         "blue-600": "#0D6EFD",
         "orangge-200": "#DDCCAA",
       },
+      screens: {
+        desktop: "1920px",
+      },
     },
   },
   plugins: [],

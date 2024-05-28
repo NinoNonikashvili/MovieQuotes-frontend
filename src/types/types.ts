@@ -83,3 +83,11 @@ export type ProfileUpdateValues = {
   password_confirmation?: string;
   image?: string;
 };
+export type MoviesData = {
+  id:number;
+  name: string;
+  year: string;
+  image: string;
+  director: string;
+  genres: string[];
+};

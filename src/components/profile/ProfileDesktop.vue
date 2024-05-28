@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import HeaderAuthNavigation from "@/components/shared/HeaderAuthNavigation.vue";
 import i18n from "@/plugins/i18n";
 import { useForm } from "vee-validate";
 import { useUserStore } from "@/stores/user";
