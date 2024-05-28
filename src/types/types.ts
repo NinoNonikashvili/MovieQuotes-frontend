@@ -91,3 +91,9 @@ export type MoviesData = {
   director: string;
   genres: string[];
 };
+export type Quote = {
+  movie_id: number,
+  quote_en: string,
+  quote_ge: string,
+  image: File
+}

@@ -110,7 +110,16 @@ const handleWriteQuoteClick = () => {
       </section>
     </template>
   </LayoutUsersPages>
-  <div class="max-w-[60rem] absolute top-[7.375rem] left-0 right-0 mx-auto" v-if="isAddQuoteModal">
-    <QuoteAdd :closeModal="closeAddQuote" :user_name="auth_user_data?.name" :user_avatar="auth_user_data?.image"/>
+  <div
+    class="max-w-[60rem] absolute top-[7.375rem] left-0 right-0 mx-auto"
+    v-if="isAddQuoteModal"
+  >
+    <QuoteAdd
+      :closeModal="closeAddQuote"
+      :user_name="auth_user_data?.name"
+      :user_avatar="auth_user_data?.image"
+    />
+    
+    
   </div>
 </template>

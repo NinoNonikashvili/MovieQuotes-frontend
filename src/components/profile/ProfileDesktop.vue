@@ -6,12 +6,12 @@ import { ref } from "vue";
 import FormInputText from "@/components/ui/form/FormInputText.vue";
 import FormInputPassword from "@/components/ui/form/FormInputPassword.vue";
 import ButtonFilled from "@/components/ui/buttons/ButtonFilled.vue";
-import IconCross from "@/components/icons/IconCross.vue";
-import IconCheckpoint from "@/components/icons/IconCheckpoint.vue";
 import type { AuthUserData } from "@/types/types";
 import { getUpdatedUser, updateProfile } from "@/services/axios/user-services";
 import { storeToRefs } from "pinia";
 import LayoutUsersPages from "@/components/layouts/LayoutUserPages.vue";
+import ErrorNotification from "@/components/shared/ErrorNotification.vue";
+import SuccessNotification from "@/components/shared/SuccessNotification.vue";
 
 const user = useUserStore();
 
@@ -118,159 +118,145 @@ const handleFileInput = (e: Event) => {
 const { locale } = i18n.global;
 </script>
 <template>
-
-    <LayoutUsersPages
-      :name="auth_user_data?.name"
-      :lang="locale"
-      :image="auth_user_data?.image"
-    >
-      <template v-slot:content>
-        <section>
-          <h1 class="mb-[7.5rem] font-helvetica-500 text-2xl text-white">
-            {{ $t("profile.text_my_profile") }}
-          </h1>
-          <form
-            class="max-w-[62.5rem] relative p-[12.125rem] bg-[#11101A] rounded-md"
+  <LayoutUsersPages
+    :name="auth_user_data?.name"
+    :lang="locale"
+    :image="auth_user_data?.image"
+  >
+    <template v-slot:content>
+      <section>
+        <h1 class="mb-[7.5rem] font-helvetica-500 text-2xl text-white">
+          {{ $t("profile.text_my_profile") }}
+        </h1>
+        <form
+          class="max-w-[62.5rem] relative p-[12.125rem] bg-[#11101A] rounded-md"
+        >
+          <div
+            class="mb-16 w-[13rem] absolute left-0 right-0 mx-auto -top-12 flex flex-col items-center"
           >
-            <div
-              class="mb-16 w-[13rem] absolute left-0 right-0 mx-auto -top-12 flex flex-col items-center"
+            <img :src="imageRef" alt="" class="w-full rounded-full mb-2" />
+            <p class="font-helvetica-400 text-xl text-white">
+              {{ $t("profile.text_upload_photo") }}
+            </p>
+            <input
+              @input="handleFileInput"
+              type="file"
+              class="opacity-0 absolute top-0 left-0 w-full h-full cursor-pointer"
+            />
+          </div>
+          <div class="flex items-center gap-4 mb-[3.5rem]">
+            <FormInputText
+              name="name"
+              :disabled="true"
+              class="w-[33rem]"
+              :required="false"
+            />
+            <button
+              class="border-0 bg-transparent font-helvetica-400 text-base text-[#CED4DA] mt-4"
+              type="button"
+              @click="openUpdateName"
             >
-              <img :src="imageRef" alt="" class="w-full rounded-full mb-2" />
-              <p class="font-helvetica-400 text-xl text-white">
-                {{ $t("profile.text_upload_photo") }}
-              </p>
-              <input
-                @input="handleFileInput"
-                type="file"
-                class="opacity-0 absolute top-0 left-0 w-full h-full cursor-pointer"
-              />
-            </div>
-            <div class="flex items-center gap-4 mb-[3.5rem]">
-              <FormInputText
-                name="name"
+              {{ $t("profile.text_edit") }}
+            </button>
+          </div>
+
+          <FormInputText
+            name="new_name"
+            v-if="isUpdateName"
+            class="w-[33rem] mb-[3.5rem]"
+            :required="false"
+          />
+          <FormInputText
+            name="email"
+            :disabled="true"
+            class="w-[33rem] mb-[3.5rem]"
+            :required="false"
+          />
+          <div v-if="!auth_user_data?.google_id">
+            <div class="flex items-center gap-4 mb-8">
+              <FormInputPassword
+                name="password"
                 :disabled="true"
                 class="w-[33rem]"
                 :required="false"
               />
               <button
                 class="border-0 bg-transparent font-helvetica-400 text-base text-[#CED4DA] mt-4"
+                @click="openUpdatePassword"
                 type="button"
-                @click="openUpdateName"
               >
                 {{ $t("profile.text_edit") }}
               </button>
             </div>
 
-            <FormInputText
-              name="new_name"
-              v-if="isUpdateName"
-              class="w-[33rem] mb-[3.5rem]"
-              :required="false"
-            />
-            <FormInputText
-              name="email"
-              :disabled="true"
-              class="w-[33rem] mb-[3.5rem]"
-              :required="false"
-            />
-            <div v-if="!auth_user_data?.google_id">
-              <div class="flex items-center gap-4 mb-8">
-                <FormInputPassword
-                  name="password"
-                  :disabled="true"
-                  class="w-[33rem]"
-                  :required="false"
-                />
-                <button
-                  class="border-0 bg-transparent font-helvetica-400 text-base text-[#CED4DA] mt-4"
-                  @click="openUpdatePassword"
-                  type="button"
-                >
-                  {{ $t("profile.text_edit") }}
-                </button>
-              </div>
+            <div v-if="isUpdatePassword">
+              <div
+                class="p-6 rounded-[0.25rem] border border-[#CED4DA] w-[33rem] mb-8"
+              >
+                <h3 class="font-helvetica-400 text-base text-white mb-4">
+                  {{ $t("profile.password_hint_header") }}
+                </h3>
+                <div>
+                  <li class="font-helvetica-400 text-sm text-white">
+                    {{ $t("profile.password_hint_1") }}
+                  </li>
 
-              <div v-if="isUpdatePassword">
-                <div
-                  class="p-6 rounded-[0.25rem] border border-[#CED4DA] w-[33rem] mb-8"
-                >
-                  <h3 class="font-helvetica-400 text-base text-white mb-4">
-                    {{ $t("profile.password_hint_header") }}
-                  </h3>
-                  <div>
-                    <li class="font-helvetica-400 text-sm text-white">
-                      {{ $t("profile.password_hint_1") }}
-                    </li>
+                  <li class="font-helvetica-400 text-sm text-white">
+                    {{ $t("profile.password_hint_2") }}
+                  </li>
 
-                    <li class="font-helvetica-400 text-sm text-white">
-                      {{ $t("profile.password_hint_2") }}
-                    </li>
-
-                    <li class="font-helvetica-400 text-sm text-white">
-                      {{ $t("profile.password_hint_3") }}
-                    </li>
-                  </div>
+                  <li class="font-helvetica-400 text-sm text-white">
+                    {{ $t("profile.password_hint_3") }}
+                  </li>
                 </div>
-                <FormInputPassword
-                  name="new_password"
-                  class="w-[33rem] mb-[3.5rem]"
-                  :required="false"
-                />
-                <FormInputPassword
-                  name="new_password_confirmation"
-                  class="w-[33rem] mb-[3.5rem]"
-                  :required="false"
-                />
               </div>
-            </div>
-          </form>
-          <div
-            class="ml-auto mt-[4rem] flex items-center justify-end gap-4 py-4 px-5"
-            v-if="isUpdateActivated"
-          >
-            <button
-              class="border-0 bg-transparent font-helvetica-400 text-base text-[#CED4DA]"
-              @click="cancelChanges"
-            >
-              {{ $t("profile.text_cancel") }}
-            </button>
-            <div class="w-[9rem]">
-              <ButtonFilled
-                :submit="true"
-                text_key="profile.text_save_changes"
-                @click="onSubmit"
+              <FormInputPassword
+                name="new_password"
+                class="w-[33rem] mb-[3.5rem]"
+                :required="false"
+              />
+              <FormInputPassword
+                name="new_password_confirmation"
+                class="w-[33rem] mb-[3.5rem]"
+                :required="false"
               />
             </div>
           </div>
-        </section>
-      </template>
-    </LayoutUsersPages>
+        </form>
+        <div
+          class="ml-auto mt-[4rem] flex items-center justify-end gap-4 py-4 px-5"
+          v-if="isUpdateActivated"
+        >
+          <button
+            class="border-0 bg-transparent font-helvetica-400 text-base text-[#CED4DA]"
+            @click="cancelChanges"
+          >
+            {{ $t("profile.text_cancel") }}
+          </button>
+          <div class="w-[9rem]">
+            <ButtonFilled
+              :submit="true"
+              text_key="profile.text_save_changes"
+              @click="onSubmit"
+            />
+          </div>
+        </div>
+      </section>
+    </template>
+  </LayoutUsersPages>
   <!-- SUCCESS NOTIFICATION -->
-  <div
+
+  <SuccessNotification
+    text_key="profile.success_general_update"
     v-if="isSuccessNotificationVisible"
-    class="bg-[#BADBCC] rounded-[0.25rem] p-4 flex items-center justify-between absolute top-[10rem] right-[12rem] w-[25rem]"
-  >
-    <div class="flex items-center gap-2">
-      <IconCheckpoint />
-      <p class="text-[#0F5132] text-base font-helvetica-400">
-        Changes updated succsessfully
-      </p>
-    </div>
-    <IconCross
-      @click="isSuccessNotificationVisible = false"
-      class="cursor-pointer"
-    />
-  </div>
+    @close-notification="isSuccessNotificationVisible = false"
+  />
+
   <!-- ERROR NOTIFICATION -->
-  <div
+
+  <ErrorNotification
+    text_key="profile.error_profile_update"
     v-if="isErrorNotification"
-    class="bg-red-200 rounded-[0.25rem] p-4 flex items-center justify-between absolute right-[12rem] mx-auto w-[25rem]"
-  >
-    <div class="flex items-center gap-2">
-      <p class="text-red-500 text-base font-helvetica-400">
-        Profile could not be updated.
-      </p>
-    </div>
-    <IconCross @click="isErrorNotification = false" class="cursor-pointer" />
-  </div>
+    @close-notification="isErrorNotification = false"
+  />
 </template>

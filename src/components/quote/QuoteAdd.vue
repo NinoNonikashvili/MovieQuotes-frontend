@@ -9,8 +9,10 @@ import { useI18n } from "vue-i18n";
 import QuoteChosenMovie from "@/components/quote/QuoteChosenMovie.vue";
 import { useMoviesStore } from "@/stores/movies";
 import { storeToRefs } from "pinia";
-import type { MoviesData } from "@/types/types";
-
+import type { MoviesData, Quote } from "@/types/types";
+import { createQuote } from "@/services/axios/quote-services";
+import SuccessNotification from "@/components/shared/SuccessNotification.vue";
+import ErrorNotification from "@/components/shared/ErrorNotification.vue";
 const moviesStore = useMoviesStore();
 const { movies } = storeToRefs(moviesStore);
 
@@ -30,8 +32,9 @@ const { t } = useI18n();
 const img = ref<File | null>(null);
 const quote_en = ref<string | null>(null);
 const quote_ge = ref<string | null>(null);
-const movie = ref<string | null>(null);
 const chosenMovieData = ref<MoviesData | undefined>();
+const addQuoteSuccess = ref<boolean>(false)
+const addQuoteFailure = ref<boolean>(false)
 const errors = ref<{
   img: string | null;
   quote_en: string | null;
@@ -62,7 +65,9 @@ const catchQuote = (text: string, elementRef: string) => {
   elementRef === "quote_en" ? (quote_en.value = text) : (quote_ge.value = text);
 };
 
-const handleSubmitClick = () => {
+
+
+const handleSubmitClick = async () => {
   if (!img.value) {
     errors.value.img = t("quote.required", { element: "image" });
   } else {
@@ -89,6 +94,20 @@ const handleSubmitClick = () => {
   }
   if (img.value && quote_en.value && quote_ge.value && chosenMovieData.value) {
     console.log("submit");
+    try{
+      const data: Quote = {
+        movie_id: chosenMovieData.value.id,
+        quote_en: quote_en.value,
+        quote_ge: quote_ge.value,
+        image: img.value
+      }
+      // const response = await createQuote(data)
+      addQuoteSuccess.value = true
+    }catch(err) {
+      console.log(err)
+      addQuoteFailure.value = true
+      return 
+    }
   }
 };
 </script>
@@ -173,4 +192,14 @@ const handleSubmitClick = () => {
       </form>
     </div>
   </div>
+  <SuccessNotification
+      text_key="quote.success_quote_added"
+      v-if="addQuoteSuccess"
+      @close-notification="addQuoteSuccess = false"
+    />
+    <ErrorNotification
+      text_key="quote.error_quote_added"
+      v-if="addQuoteFailure"
+      @close-notification="addQuoteFailure = false"
+    />
 </template>

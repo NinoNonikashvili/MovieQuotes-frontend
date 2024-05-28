@@ -5,8 +5,6 @@ import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
 import { ref } from "vue";
 import ProfileMobileUserDatum from "@/components/profile/ProfileMobileUserDatum.vue";
 import ButtonFilled from "@/components/ui/buttons/ButtonFilled.vue";
-import IconCheckpoint from "@/components/icons/IconCheckpoint.vue";
-import IconCross from "@/components/icons/IconCross.vue";
 import { useForm } from "vee-validate";
 import FormInputText from "../ui/form/FormInputText.vue";
 import FormInputPassword from "../ui/form/FormInputPassword.vue";
@@ -14,11 +12,13 @@ import { updateProfile } from "@/services/axios/user-services";
 import { getUpdatedUser } from "@/services/axios/user-services";
 import type { AuthUserData } from "@/types/types";
 import { storeToRefs } from "pinia";
+import ErrorNotification from "@/components/shared/ErrorNotification.vue";
+import SuccessNotification from "@/components/shared/SuccessNotification.vue";
 
 const { locale } = i18n.global;
 const user = useUserStore();
 const { set_auth_user_data } = user;
-const {auth_user_data} = storeToRefs(user);
+const { auth_user_data } = storeToRefs(user);
 const isProfileInfo = ref<boolean>(true);
 const isEditName = ref<boolean>(false);
 const isEditPassword = ref<boolean>(false);
@@ -154,17 +154,27 @@ const cancelChanges = () => {
     </div>
     <!-- EDIT DATA -->
     <div
-      :class="{ 'opacity-0 h-0': !isEditName && !isEditPassword }"
+      :class="{ 'hide': !isEditName && !isEditPassword }"
       class="absolute top-[15rem] left-0 right-0 mx-auto max-w-[26.75rem]"
     >
       <form class="rounded-xl bg-[#24222F] px-8 py-16">
-        <FormInputText name="name" :class="{ 'opacity-0 h-0': !isEditName }" :required="false"/>
+        <FormInputText
+          name="name"
+          :class="{ 'hide': !isEditName }"
+          :required="false"
+        />
         <div
           class="flex flex-col gap-2"
-          :class="{ 'opacity-0 h-0': !isEditPassword }"
+          :class="{ 'hide': !isEditPassword }"
         >
-          <FormInputPassword name="password" :required="false"/>
-          <FormInputPassword name="password_confirmation" :required="false"/>
+          <FormInputPassword
+            name="password"
+            :required="false"
+          />
+          <FormInputPassword
+            name="password_confirmation"
+            :required="false"
+          />
         </div>
       </form>
       <div
@@ -207,28 +217,24 @@ const cancelChanges = () => {
     </div>
   </div>
   <!-- SUCCESS NOTIFICATION -->
-  <div
+
+  <SuccessNotification
+    text_key="profile.success_general_update"
     v-if="isSuccessNotification"
-    class="bg-[#BADBCC] rounded-[0.25rem] p-4 flex items-center justify-between absolute top-[10rem] left-0 right-0 mx-auto w-[25rem]"
-  >
-    <div class="flex items-center gap-2">
-      <IconCheckpoint />
-      <p class="text-[#0F5132] text-base font-helvetica-400">
-        Changes updated succsessfully
-      </p>
-    </div>
-    <IconCross @click="isSuccessNotification = false" class="cursor-pointer" />
-  </div>
+    @close-notification="isSuccessNotification = false"
+  />
+
   <!-- ERROR NOTIFICATION -->
-  <div
+
+  <ErrorNotification
+    text_key="profile.error_profile_update"
     v-if="isErrorNotification"
-    class="bg-red-200 rounded-[0.25rem] p-4 flex items-center justify-between absolute top-[10rem] left-0 right-0 mx-auto w-[25rem]"
-  >
-    <div class="flex items-center gap-2">
-      <p class="text-red-500 text-base font-helvetica-400">
-        Profile could not be updated.
-      </p>
-    </div>
-    <IconCross @click="isErrorNotification = false" class="cursor-pointer" />
-  </div>
+    @close-notification="isErrorNotification = false"
+  />
 </template>
+<style scoped>
+.hide * {
+  opacity: 0;
+  height: 0;
+}
+</style>

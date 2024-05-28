@@ -7,5 +7,7 @@
   "drag_n_drop_file": "Drag & drop your image here or",
   "text_post": "Post",
   "required": "{element} is required!",
-  "text_director": "Director"
+  "text_director": "Director",
+  "error_quote_added": "Quote could not be added",
+  "success_quote_added": "Quote added successfully"
 }
