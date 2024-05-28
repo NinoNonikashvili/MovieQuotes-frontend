@@ -5,6 +5,14 @@ const props = defineProps<{
   lang: string;
 }>();
 
+const emit = defineEmits<{
+  (e:'send-text', text:string, element:string):void
+}>()
+
+const sendText = (e: Event) => {
+  const target = e.target as HTMLInputElement
+  emit("send-text", target.value, props.name)
+}
 
 </script>
 
@@ -14,6 +22,7 @@ const props = defineProps<{
       <textarea
         :name="$t(props.name)"
         :placeholder="$t(props.placeholder_key)"
+        @input="sendText"
         class="w-full py-2 px-3 border border-white pr-2 bg-transparent focus:outline-none placeholder:text-[#6C757D] placeholder:italic text-white font-helvetica-400 text-2xl"
       ></textarea>
       <span

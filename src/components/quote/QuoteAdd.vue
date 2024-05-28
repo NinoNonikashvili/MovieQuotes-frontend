@@ -38,6 +38,7 @@ const errors = ref<{
   quote_ge: string | null;
   movie: string | null;
 }>({ img: null, quote_en: null, quote_ge: null, movie: null });
+
 const handleSelectedImg = (image: File) => {
   img.value = image;
 };
@@ -45,6 +46,7 @@ const catchChosenMovie = (chosenMovie: string) => {
   chosenMovieData.value = movies.value?.filter(
     (movie) => movie.name === chosenMovie,
   ) as MoviesData | undefined;
+  // TESTING ONLY
   if (!chosenMovieData.value) {
     chosenMovieData.value = {
       id: 1,
@@ -56,25 +58,36 @@ const catchChosenMovie = (chosenMovie: string) => {
     };
   }
 };
+const catchQuote = (text: string, elementRef: string) => {
+  elementRef === "quote_en" ? (quote_en.value = text) : (quote_ge.value = text);
+};
 
 const handleSubmitClick = () => {
   if (!img.value) {
     errors.value.img = t("quote.required", { element: "image" });
+  } else {
+    errors.value.img = null;
   }
   if (!quote_en.value) {
     errors.value.quote_en = t("quote.required", {
       element: "quote text in english",
     });
+  } else {
+    errors.value.quote_en = null;
   }
   if (!quote_ge.value) {
     errors.value.quote_ge = t("quote.required", {
       element: "quote text in georgian",
     });
+  } else {
+    errors.value.quote_ge = null;
   }
-  if (!movie.value) {
+  if (!chosenMovieData.value) {
     errors.value.movie = t("quote.required", { element: "movie" });
+  } else {
+    errors.value.movie = null;
   }
-  if (img.value && quote_en.value && quote_ge.value && movie.value) {
+  if (img.value && quote_en.value && quote_ge.value && chosenMovieData.value) {
     console.log("submit");
   }
 };
@@ -108,6 +121,7 @@ const handleSubmitClick = () => {
             name="quote_en"
             placeholder_key="quote.placeholder_add_quote_content"
             lang="Eng"
+            @send-text="catchQuote"
           />
           <p
             class="font-helvetica-400 text-base text-red-400 mt-2"
@@ -118,9 +132,10 @@ const handleSubmitClick = () => {
         </div>
         <div class="mb-6 w-full">
           <FormTextarea
-            name="quote_geo"
+            name="quote_ge"
             placeholder_key="quote.placeholder_add_quote_content"
             lang="Geo"
+            @send-text="catchQuote"
           />
           <p
             class="font-helvetica-400 text-base text-red-400 mt-2"
