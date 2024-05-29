@@ -8,6 +8,11 @@ import IconWrite from "../icons/IconWrite.vue";
 import IconSearch from "../icons/IconSearch.vue";
 import { ref } from "vue";
 import QuoteAdd from "@/components/quote/QuoteAdd.vue";
+import { useQuotesStore } from "@/stores/quotes";
+
+// QUOTES
+const quoteStore = useQuotesStore();
+const { quotes } = storeToRefs(quoteStore);
 
 const { locale } = i18n.global;
 const longBtn = ref<string>("writeQuote");
@@ -15,18 +20,7 @@ const isAddQuoteModal = ref<boolean>(false);
 
 const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
-const comments = [
-  {
-    comment_author_name: "Nino",
-    comment_author_image: auth_user_data?.value?.image,
-    comment_text: "Nino says it is great movie quote.",
-  },
-  {
-    comment_author_name: "Elene",
-    comment_author_image: auth_user_data?.value?.image,
-    comment_text: "Elene says it is great movie quote.",
-  },
-];
+
 
 /**
  * 1. display write quote modal and save on click
@@ -95,16 +89,9 @@ const handleWriteQuoteClick = () => {
         <!-- QUOTES LIST -->
         <div>
           <NewsFeedQuote
-            :author_avatar="auth_user_data?.image"
-            :user_avatar="auth_user_data?.image"
-            author_name="Nino Noni"
-            quote_text="all you need is love"
-            :quote_image="auth_user_data?.image"
-            quote_year="1999"
-            quote_director="Nelson Mandela"
-            :comment_number="12"
-            :react_number="2"
-            :comments="comments"
+            v-for="(quote, index) in quotes"
+            :key="index"
+            :quote="quote"
           />
         </div>
       </section>
@@ -119,7 +106,5 @@ const handleWriteQuoteClick = () => {
       :user_name="auth_user_data?.name"
       :user_avatar="auth_user_data?.image"
     />
-    
-    
   </div>
 </template>

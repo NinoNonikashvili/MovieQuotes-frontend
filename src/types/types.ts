@@ -97,3 +97,19 @@ export type Quote = {
   "quote.ge": string;
   image: File;
 };
+export type NewsFeedQuote = {
+  author_avatar?: string;
+  user_avatar?: string;
+  author_name: string;
+  quote_text: string;
+  quote_image?: string;
+  quote_year: string;
+  quote_director: string;
+  comment_number: number;
+  react_number: number;
+  comments: Array<{
+    comment_author_name: string;
+    comment_author_image?: string;
+    comment_text: string;
+  }>;
+}

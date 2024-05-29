@@ -9,7 +9,7 @@ import { useI18n } from "vue-i18n";
 import QuoteChosenMovie from "@/components/quote/QuoteChosenMovie.vue";
 import { useMoviesStore } from "@/stores/movies";
 import { storeToRefs } from "pinia";
-import type { MoviesData, Quote } from "@/types/types";
+import type { MoviesData } from "@/types/types";
 import { createQuote } from "@/services/axios/quote-services";
 import { getMovies } from "@/services/axios/movie-services";
 import SuccessNotification from "@/components/shared/SuccessNotification.vue";
