@@ -14,7 +14,7 @@ const props = defineProps<{
     />
     <div>
       <h3 class="fomt-helvetica-500 text-[#DDCCAA] text-2xl mt-3 mb-5">
-        {{ props.movieData.name }} ({{ props.movieData.year }})
+        {{ props.movieData.title }} ({{ props.movieData.year }})
       </h3>
       <div class="w-full overflow-hidden flex gap-2 mb-5">
         <div
@@ -22,7 +22,7 @@ const props = defineProps<{
           :key="index"
           class="font-helvetica-700 text-white text-lg bg-[#6C757D] px-3 py-2 rounded-[0.25rem]"
         >
-          {{ genre }}
+          {{ genre.title }}
         </div>
       </div>
       <p class="font-helvetica-700 text-white text-lg">

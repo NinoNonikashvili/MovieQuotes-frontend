@@ -11,15 +11,25 @@ import { useMoviesStore } from "@/stores/movies";
 import { storeToRefs } from "pinia";
 import type { MoviesData, Quote } from "@/types/types";
 import { createQuote } from "@/services/axios/quote-services";
+import { getMovies } from "@/services/axios/movie-services";
 import SuccessNotification from "@/components/shared/SuccessNotification.vue";
 import ErrorNotification from "@/components/shared/ErrorNotification.vue";
+
 const moviesStore = useMoviesStore();
+const { set_movies } = useMoviesStore();
 const { movies } = storeToRefs(moviesStore);
 
-onMounted(() => {
+onMounted(async () => {
   //fetch movies if not fetched yet
-  if (!movies) {
-    console.log("fetch movies");
+  console.log("mounted", movies.value);
+  if (!movies.value) {
+    try {
+      const response = await getMovies();
+      console.log(response.data);
+      set_movies(response.data.data);
+    } catch (err) {
+      return;
+    }
   }
 });
 
@@ -33,8 +43,8 @@ const img = ref<File | null>(null);
 const quote_en = ref<string | null>(null);
 const quote_ge = ref<string | null>(null);
 const chosenMovieData = ref<MoviesData | undefined>();
-const addQuoteSuccess = ref<boolean>(false)
-const addQuoteFailure = ref<boolean>(false)
+const addQuoteSuccess = ref<boolean>(false);
+const addQuoteFailure = ref<boolean>(false);
 const errors = ref<{
   img: string | null;
   quote_en: string | null;
@@ -46,67 +56,59 @@ const handleSelectedImg = (image: File) => {
   img.value = image;
 };
 const catchChosenMovie = (chosenMovie: string) => {
-  chosenMovieData.value = movies.value?.filter(
-    (movie) => movie.name === chosenMovie,
-  ) as MoviesData | undefined;
-  // TESTING ONLY
-  if (!chosenMovieData.value) {
-    chosenMovieData.value = {
-      id: 1,
-      name: "blabla",
-      image: "",
-      year: "1999",
-      director: "Nino Richiie",
-      genres: ["bla", "bla", "blue"],
-    };
-  }
+  console.log(chosenMovie);
+  chosenMovieData.value = movies.value?.find(
+    (movie) => movie.title === chosenMovie,
+  );
 };
 const catchQuote = (text: string, elementRef: string) => {
   elementRef === "quote_en" ? (quote_en.value = text) : (quote_ge.value = text);
 };
 
-
-
 const handleSubmitClick = async () => {
   if (!img.value) {
-    errors.value.img = t("quote.required", { element: "image" });
+    errors.value.img = t("quote.image_label") + " " + t("quote.required");
   } else {
     errors.value.img = null;
   }
   if (!quote_en.value) {
-    errors.value.quote_en = t("quote.required", {
-      element: "quote text in english",
-    });
+    errors.value.quote_en =
+      t("quote.quote_label") + " " + t("quote.required_in_en");
+  } else if (!quote_en.value?.match(/^[a-zA-Z0-9.,?!@#$%^&*()"" -_|]+$/gm)) {
+    errors.value.quote_en = t("quote.only_en");
   } else {
     errors.value.quote_en = null;
   }
+
   if (!quote_ge.value) {
-    errors.value.quote_ge = t("quote.required", {
-      element: "quote text in georgian",
-    });
+    errors.value.quote_ge =
+      t("quote.quote_label") + " " + t("quote.required_in_ge");
+  } else if (!quote_ge.value?.match(/^[ა-ჰ0-9.,?!@#$%^&*()"" -_|]+$/gm)) {
+    errors.value.quote_ge = t("quote.only_ge");
   } else {
     errors.value.quote_ge = null;
   }
+
   if (!chosenMovieData.value) {
-    errors.value.movie = t("quote.required", { element: "movie" });
+    errors.value.movie = t("quote.movie_label") + " " + t("quote.required");
   } else {
     errors.value.movie = null;
   }
   if (img.value && quote_en.value && quote_ge.value && chosenMovieData.value) {
     console.log("submit");
-    try{
-      const data: Quote = {
-        movie_id: chosenMovieData.value.id,
-        quote_en: quote_en.value,
-        quote_ge: quote_ge.value,
-        image: img.value
-      }
-      // const response = await createQuote(data)
-      addQuoteSuccess.value = true
-    }catch(err) {
-      console.log(err)
-      addQuoteFailure.value = true
-      return 
+    try {
+      const data = new FormData();
+      data.append('movie_id', String(chosenMovieData.value.id))
+      data.append('quote_en', quote_en.value)
+      data.append('quote_ge', quote_ge.value)
+      data.append('image', img.value)
+
+      console.log('data:', data)
+      await createQuote(data);
+      addQuoteSuccess.value = true;
+    } catch (err) {
+      addQuoteFailure.value = true;
+      return;
     }
   }
 };
@@ -176,10 +178,7 @@ const handleSubmitClick = async () => {
           <QuoteChosenMovie :movieData="chosenMovieData" />
         </div>
         <div class="mb-6 w-full">
-          <FormDropDownWithIcon
-            :movies="[{ name: 'Avatar' }, { name: 'blossom' }]"
-            @send-chosen-movie="catchChosenMovie"
-          />
+          <FormDropDownWithIcon @send-chosen-movie="catchChosenMovie" />
           <p
             class="font-helvetica-400 text-base text-red-400 mt-2"
             v-if="errors.movie"
@@ -193,13 +192,13 @@ const handleSubmitClick = async () => {
     </div>
   </div>
   <SuccessNotification
-      text_key="quote.success_quote_added"
-      v-if="addQuoteSuccess"
-      @close-notification="addQuoteSuccess = false"
-    />
-    <ErrorNotification
-      text_key="quote.error_quote_added"
-      v-if="addQuoteFailure"
-      @close-notification="addQuoteFailure = false"
-    />
+    text_key="quote.success_quote_added"
+    v-if="addQuoteSuccess"
+    @close-notification="addQuoteSuccess = false"
+  />
+  <ErrorNotification
+    text_key="quote.error_quote_added"
+    v-if="addQuoteFailure"
+    @close-notification="addQuoteFailure = false"
+  />
 </template>

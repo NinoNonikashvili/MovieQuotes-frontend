@@ -6,8 +6,15 @@
   "text_choose_movie": "Choose movie",
   "drag_n_drop_file": "Drag & drop your image here or",
   "text_post": "Post",
-  "required": "{element} is required!",
+  "required_in_en": "is required in english!",
+  "required_in_ge": "is required in georgian!",
+  "required": "is required!",
   "text_director": "Director",
   "error_quote_added": "Quote could not be added",
-  "success_quote_added": "Quote added successfully"
+  "success_quote_added": "Quote added successfully",
+  "quote_label": "Quote text",
+  "image_label": "Image",
+  "movie_label": "Movie",
+  "only_ge":"only georgian letters",
+  "only_en": "only latin letters"
 }

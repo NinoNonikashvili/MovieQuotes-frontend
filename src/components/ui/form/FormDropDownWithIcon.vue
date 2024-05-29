@@ -7,8 +7,8 @@ import { useMoviesStore } from "@/stores/movies";
 import { storeToRefs } from "pinia";
 
 const movieStore = useMoviesStore();
-// const { movies } = storeToRefs(movieStore);
-const movies = [{ name: "bla" }, { name: "ssds" }];
+const { movies } = storeToRefs(movieStore);
+// const movies = [{ name: "bla" }, { name: "ssds" }];
 const emit = defineEmits<{
   (e: "send-chosen-movie", movie: string): void;
 }>();
@@ -50,7 +50,7 @@ const dropdownHandler: OnClickOutsideHandler = (event) => {
         class="font-helvetica-400 text-white text-xl hover:text-2xl"
         @click="sendChosenMovie"
       >
-        {{ movie.name }}
+        {{ movie.title }}
       </p>
     </div>
   </div>

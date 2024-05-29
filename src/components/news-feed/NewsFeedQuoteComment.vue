@@ -18,7 +18,7 @@ const props = defineProps<{
         {{ props.name }}
       </p>
     </div>
-    <p class="pb-6 pt-3 xl:pt-0 border-b border-b-white xl:ml-[4.5rem]">
+    <p class="pb-6 pt-3 xl:pt-0 border-b border-b-white xl:ml-[4.5rem] font-helvetica-400 text-xl text-white">
       {{ props.comment }}
     </p>
   </div>

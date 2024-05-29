@@ -663,6 +663,10 @@ video {
   top: 9.375rem;
 }
 
+.right-\[\] {
+  right: ;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -1870,6 +1874,10 @@ video {
 @media (min-width: 1280px) {
   .xl\:absolute {
     position: absolute;
+  }
+
+  .xl\:right-\[12rem\] {
+    right: 12rem;
   }
 
   .xl\:order-1 {

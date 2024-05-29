@@ -84,16 +84,16 @@ export type ProfileUpdateValues = {
   image?: string;
 };
 export type MoviesData = {
-  id:number;
-  name: string;
+  id: number;
+  title: string;
   year: string;
   image: string;
   director: string;
-  genres: string[];
+  genres: { title: string; id: number }[];
 };
 export type Quote = {
-  movie_id: number,
-  quote_en: string,
-  quote_ge: string,
-  image: File
-}
+  movie_id: number;
+  "quote.en": string;
+  "quote.ge": string;
+  image: File;
+};
