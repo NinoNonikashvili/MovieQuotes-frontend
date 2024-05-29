@@ -112,7 +112,7 @@ const callUpdateDebounce = (e: Event) => {
 
     <!-- BURGER MODAL -->
     <div
-      class="max-w-[23.75rem] h-[41rem] bg-[#11101A] absolute top-0 left-0 p-[2.8125rem]"
+      class="max-w-[23.75rem] h-[41rem] bg-[#11101A] absolute top-0 left-0 p-[2.8125rem] z-10"
       ref="burgerRef"
       v-if="isBurgerMenuVisible"
     >
@@ -135,7 +135,7 @@ const callUpdateDebounce = (e: Event) => {
       />
       <!-- SEARCH MODAL -->
       <div
-        class="w-full h-screen bg-[#12101A] absolute top-0 left-0"
+        class="w-full h-screen bg-[#12101A] absolute top-0 left-0 z-10"
         v-if="isSearchVisible"
       >
         <div class="py-4 px-6 flex gap-4 items-center">

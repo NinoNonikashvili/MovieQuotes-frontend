@@ -11,5 +11,7 @@
   "password_hint_header": "Passwords should contain:",
   "password_hint_1": "must contain min 8chars",
   "password_hint_2": "must contain max 15 chars",
-  "password_hint_3": "only lowercase letters and numbers"
+  "password_hint_3": "only lowercase letters and numbers",
+  "error_profile_update": "Profile could not be updated.",
+  "success_general_update": "Changes updated succsessfully"
 }

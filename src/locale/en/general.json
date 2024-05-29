@@ -14,5 +14,8 @@
   "text_new": "New",
   "quote_reaction_message": "Reacted to your quote",
   "quote_comment_message": "Commented to your quote",
-  "time_elapsed" : "min ago"
+  "time_elapsed": "min ago",
+  "text_movie": "movie",
+  "text_write_new_quote": "Write new quote",
+  "text_search_by": "Search by"
 }

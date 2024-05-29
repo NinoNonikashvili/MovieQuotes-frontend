@@ -3,7 +3,7 @@
     width="24"
     height="24"
     viewBox="0 0 24 24"
-    fill="none"
+    fill="green"
     xmlns="http://www.w3.org/2000/svg"
   >
     <g clip-path="url(#clip0_660_31095)">

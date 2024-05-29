@@ -1,0 +1,15 @@
+{
+  "text_username": "სახელი",
+  "text_email": "ელ.ფოსტა",
+  "text_password": "პაროლი",
+  "text_edit": "შეცვლა",
+  "text_upload_photo": "ატვირთე ფოტო",
+  "text_cancel": "გაუქმება",
+  "text_confirm": "დადასტურება",
+  "text_my_profile": "ჩემი პროფილი",
+  "text_save_changes": "შეინახე ცვლილებები",
+  "password_hint_header": "პაროლი უნდა შეიცავდეს",
+  "password_hint_1": "მინიმუმ 8 სუმბოლო",
+  "password_hint_2": "მაქსიმუმ 15 სიმბოლო",
+  "password_hint_3": "მხოლოდ დაბალი რეგისტრის ასოები და ციფრები"
+}
