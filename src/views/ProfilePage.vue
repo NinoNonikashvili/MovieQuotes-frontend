@@ -6,7 +6,9 @@ import ProfileDesktop from "@/components/profile/ProfileDesktop.vue";
 
 <template>
   <HeaderAuth />
-  <!-- MOBILE -->
   <ProfileMobile  />
-  <ProfileDesktop />
+  <div class="hidden xl:flex">
+    <ProfileDesktop />
+  </div>
+  
 </template>

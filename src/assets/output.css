@@ -762,6 +762,10 @@ video {
   margin-top: 1rem;
 }
 
+.mt-8 {
+  margin-top: 2rem;
+}
+
 .mt-\[17\.5rem\] {
   margin-top: 17.5rem;
 }
@@ -808,6 +812,10 @@ video {
 
 .h-\[12\.5rem\] {
   height: 12.5rem;
+}
+
+.h-\[18\.875rem\] {
+  height: 18.875rem;
 }
 
 .h-\[3\.25rem\] {
@@ -872,6 +880,14 @@ video {
 
 .w-\[14\.625rem\] {
   width: 14.625rem;
+}
+
+.w-\[14rem\] {
+  width: 14rem;
+}
+
+.w-\[22\.375rem\] {
+  width: 22.375rem;
 }
 
 .w-\[22rem\] {
@@ -984,6 +1000,10 @@ video {
   flex-direction: column;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .items-start {
   align-items: flex-start;
 }
@@ -1010,6 +1030,10 @@ video {
 
 .gap-10 {
   gap: 2.5rem;
+}
+
+.gap-12 {
+  gap: 3rem;
 }
 
 .gap-2 {
@@ -1108,6 +1132,10 @@ video {
 .border-\[\#CED4DA\] {
   --tw-border-opacity: 1;
   border-color: rgb(206 212 218 / var(--tw-border-opacity));
+}
+
+.border-transparent {
+  border-color: transparent;
 }
 
 .border-white {
@@ -1425,12 +1453,20 @@ video {
   padding-bottom: 3rem;
 }
 
+.pl-0 {
+  padding-left: 0px;
+}
+
 .pl-10 {
   padding-left: 2.5rem;
 }
 
 .pr-2 {
   padding-right: 0.5rem;
+}
+
+.pr-4 {
+  padding-right: 1rem;
 }
 
 .pt-3 {
@@ -1838,6 +1874,15 @@ video {
   display: none;
 }
 
+.has-\[\:focus\]\:w-\[18rem\]:has(:focus) {
+  width: 18rem;
+}
+
+.has-\[\:focus\]\:border-b-white:has(:focus) {
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(255 255 255 / var(--tw-border-opacity));
+}
+
 @media (min-width: 1280px) {
   .xl\:absolute {
     position: absolute;
@@ -1879,6 +1924,10 @@ video {
     display: none;
   }
 
+  .xl\:h-\[23\.25rem\] {
+    height: 23.25rem;
+  }
+
   .xl\:h-\[31\.25rem\] {
     height: 31.25rem;
   }
@@ -1896,6 +1945,10 @@ video {
     width: 3.5rem;
   }
 
+  .xl\:w-\[27\.5rem\] {
+    width: 27.5rem;
+  }
+
   .xl\:w-\[34rem\] {
     width: 34rem;
   }
@@ -1906,6 +1959,10 @@ video {
 
   .xl\:max-w-\[52rem\] {
     max-width: 52rem;
+  }
+
+  .xl\:flex-row {
+    flex-direction: row;
   }
 
   .xl\:rounded-\[10px\] {
@@ -1945,6 +2002,10 @@ video {
 
   .xl\:pt-0 {
     padding-top: 0px;
+  }
+
+  .xl\:pt-8 {
+    padding-top: 2rem;
   }
 
   .xl\:pt-\[17\.5rem\] {

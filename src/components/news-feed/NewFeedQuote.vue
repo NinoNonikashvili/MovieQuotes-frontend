@@ -16,7 +16,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="w-full xl:w-[58rem] xl:p-6 px-9 py-7 bg-[#12101A] rounded-xl">
+  <div class="w-full xl:w-[58rem] xl:p-6 px-9 py-7 bg-[#12101A] rounded-xl mb-8">
     <!--    QUOTE AUTHOR -->
     <div class="flex gap-3 items-center w-fit">
       <img

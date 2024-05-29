@@ -90,6 +90,7 @@ export type MoviesData = {
   image: string;
   director: string;
   genres: { title: string; id: number }[];
+  quote_num: string;
 };
 export type Quote = {
   movie_id: number;
@@ -112,4 +113,4 @@ export type NewsFeedQuote = {
     comment_author_image?: string;
     comment_text: string;
   }>;
-}
+};

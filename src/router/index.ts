@@ -15,6 +15,7 @@ import { storeToRefs } from "pinia";
 import { checkAuthState } from "@/services/axios/auth-services";
 import ProfilePage from "@/views/ProfilePage.vue";
 import MoviesPage from "@/views/MoviesPage.vue";
+import MoviePage from "@/views/MoviePage.vue";
 
 const { locale } = i18n.global;
 
@@ -117,6 +118,14 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
+    {
+      path: "/movie/:lang/:id",
+      name: "movie",
+      component: MoviePage,
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 });
 
@@ -153,7 +162,8 @@ router.beforeEach(async (to, from) => {
     } else {
       if (from.name !== "login") {
         return {
-          name: "login", params:{lang:locale.value}
+          name: "login",
+          params: { lang: locale.value },
         };
       }
     }
@@ -161,7 +171,8 @@ router.beforeEach(async (to, from) => {
     if (auth_user.value && from.name !== "news-feed") {
       //to profile
       return {
-        name: "news-feed", params:{lang:locale.value}
+        name: "news-feed",
+        params: { lang: locale.value },
       };
     } else {
       return;
