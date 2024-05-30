@@ -89,6 +89,7 @@ export type MoviesData = {
   year: string;
   image: string;
   director: string;
+  description: string;
   genres: { title: string; id: number }[];
   quote_num: string;
 };
@@ -113,4 +114,12 @@ export type NewsFeedQuote = {
     comment_author_image?: string;
     comment_text: string;
   }>;
+};
+
+export type SingleMovieQuote = {
+  id: string;
+  image: string;
+  quote: string;
+  comment_number: string;
+  heart_number: string;
 };

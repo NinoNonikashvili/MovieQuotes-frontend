@@ -4,14 +4,12 @@ import IconSearch from "@/components/icons/IconSearch.vue";
 import IconBell from "@/components/icons/IconBell.vue";
 import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
 import IconHeart from "@/components/icons/IconHeart.vue";
-import IconComment from "@/components/icons/IconComment.vue";
 import { ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import i18n from "@/plugins/i18n";
 import { useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import type { CompoundSearchResults } from "@/types/types";
-import { loadMoviesAndQuotes } from "@/services/axios/search-services";
 import HeaderAuthNavigation from "@/components/shared/HeaderAuthNavigation.vue";
 import HeaderAuthLangAndLogout from "@/components/shared/HeaderAuthLangAndLogout.vue";
 import { storeToRefs } from "pinia";
@@ -21,19 +19,7 @@ const route = useRoute();
 const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
 
-// const setLangInUrl = () => {
-//   if (locale.value === "ge") {
-//     setLocale("ka");
-//   } else {
-//     setLocale(locale.value);
-//   }
 
-//   if (route.name) {
-//     router.push({ name: route.name, params: { lang: locale.value } });
-//   }
-// };
-
-// const { logoutFun } = useLogout();
 
 const isBurgerMenuVisible = ref<boolean>(false);
 const isSearchVisible = ref<boolean>(false);

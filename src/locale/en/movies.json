@@ -1,5 +1,10 @@
 {
-    "page_header": "My list of movies",
-    "text_total": "Total",
-    "text_add_movie": "Add movie"
+  "page_header": "My list of movies",
+  "text_total": "Total",
+  "text_add_movie": "Add movie",
+  "text_movie_description": "Movie description",
+  "text_all_quotes": "All quotes",
+  "text_view_quote": "View quote",
+  "text_edit": "Edit",
+  "text_delete": "Delete"
 }

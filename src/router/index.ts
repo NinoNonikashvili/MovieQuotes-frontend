@@ -16,6 +16,7 @@ import { checkAuthState } from "@/services/axios/auth-services";
 import ProfilePage from "@/views/ProfilePage.vue";
 import MoviesPage from "@/views/MoviesPage.vue";
 import MoviePage from "@/views/MoviePage.vue";
+import MovieContainer from "@/views/MovieContainer.vue";
 
 const { locale } = i18n.global;
 
@@ -113,19 +114,31 @@ const router = createRouter({
     {
       path: "/movies/:lang",
       name: "movies",
-      component: MoviesPage,
+      redirect: { name: "movies-all", params: { lang: locale.value } },
+      component: MovieContainer,
       meta: {
         requiresAuth: true,
       },
+      children: [
+        {
+          path: "/movies/:lang/all",
+          name: "movies-all",
+          component: MoviesPage,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "/movies/:lang/single/:id",
+          name: "movie",
+          component: MoviePage,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+      ],
     },
-    {
-      path: "/movie/:lang/:id",
-      name: "movie",
-      component: MoviePage,
-      meta: {
-        requiresAuth: true,
-      },
-    },
+
   ],
 });
 

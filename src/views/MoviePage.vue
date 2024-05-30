@@ -1,15 +1,28 @@
 <script setup lang="ts">
+import { getSingleMovieQuotes } from "@/services/axios/quote-services";
+import MovieContent from "@/components/movies/MovieContent.vue";
 import { onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { useQuotesStore } from "@/stores/quotes";
+import HeaderAuth from "@/components/shared/HeaderAuth.vue";
 
 const route = useRoute();
+const { set_movie_quotes } = useQuotesStore();
 
-onMounted(() => {
+onMounted(async () => {
   console.log(route.params.id);
-// load movie quotes
+  // load movie quotes
+  try {
+    const id = route.params.id as string;
+    const response = await getSingleMovieQuotes({ id: id });
+    set_movie_quotes(response.data.quotes);
+  } catch (err) {
+    err;
+  }
 });
 </script>
 
 <template>
-  <div>single movie</div>
+  <HeaderAuth />
+  <MovieContent :id="route.params.id as string" />
 </template>

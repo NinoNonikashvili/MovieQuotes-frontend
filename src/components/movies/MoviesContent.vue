@@ -14,6 +14,7 @@ const { movies } = storeToRefs(movieStore);
 console.log(movies.value);
 </script>
 <template>
+  
   <div class="w-full px-10 py-4 xl:px-16 xl:pt-8 pb-[15rem] flex bg-[#181724]">
     <LayoutUsersPages
       class="hidden xl:flex"
@@ -26,6 +27,7 @@ console.log(movies.value);
         <div class="flex gap-2 flex-col xl:flex-row w-fit">
           <h1 class="font-helvetica-500 text-2xl text-white">
             {{ $t("movies.page_header") }}
+            
           </h1>
           <p class="font-helvetica-500 text-2xl text-white">
             {{ $t("movies.text_total") }}
@@ -52,16 +54,15 @@ console.log(movies.value);
         </div>
       </header>
       <div class="mt-8 flex flex-wrap gap-12" v-if="movies">
-        
-          <MoviesListComponent
-            v-for="(movie, index) in movies"
-            :id="movie.id"
-            :key="index"
-            :title="movie.title"
-            :image="movie.image"
-            :year="movie.year"
-            :quotes_num="movie.quote_num"
-          />
+        <MoviesListComponent
+          v-for="(movie, index) in movies"
+          :id="movie.id"
+          :key="index"
+          :title="movie.title"
+          :image="movie.image"
+          :year="movie.year"
+          :quotes_num="movie.quote_num"
+        />
       </div>
     </section>
   </div>
