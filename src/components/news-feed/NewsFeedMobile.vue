@@ -32,7 +32,7 @@ const handleWriteQuoteClick = () => {
 </script>
 
 <template>
-  <section class="bg-[#181724] pt-8 xl:hidden">
+  <section class="bg-[#181724] pt-8 xl:hidden" :class="{'blur-sm pointer-events-none': isAddQuoteModal}">
     <!-- WRITE QUOTE BTN  -->
     <button
       class="flex items-center gap-2 py-3 px-4 mb-6 ml-9 w-fit"

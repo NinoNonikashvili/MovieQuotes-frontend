@@ -6,6 +6,7 @@ import { useMoviesStore } from "@/stores/movies";
 import { storeToRefs } from "pinia";
 import ButtonFilled from "../ui/buttons/ButtonFilled.vue";
 import MoviesListComponent from "@/components/movies/MoviesListComponent.vue";
+import AddMovie from "./AddMovie.vue";
 import { ref } from "vue";
 
 const user = useUserStore();
@@ -14,6 +15,9 @@ const movieStore = useMoviesStore();
 const { movies } = storeToRefs(movieStore);
 
 const isAddMovie = ref<boolean>(false);
+const closeAddMovie = () => {
+  isAddMovie.value = false;
+};
 </script>
 <template>
   <div
@@ -72,4 +76,9 @@ const isAddMovie = ref<boolean>(false);
   </div>
 
   <!-- ADD MOVIE FORM -->
+  <AddMovie
+    :closeModal="closeAddMovie"
+    v-if="isAddMovie"
+    :user_id="auth_user_data?.id"
+  />
 </template>

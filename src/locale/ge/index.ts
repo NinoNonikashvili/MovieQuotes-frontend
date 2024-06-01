@@ -4,6 +4,7 @@ import landing from "./landing.json";
 import profile from "./profile.json";
 import quote from "./quote.json";
 import movies from "./movies.json";
+import validations from './validations.json'
 
 export default {
   form,
@@ -12,4 +13,5 @@ export default {
   profile,
   quote,
   movies,
+  validations
 };

@@ -6,7 +6,8 @@ import { useI18n } from "vue-i18n";
 const props = defineProps<{
   name: string;
   placeholder_key?: string;
-  lang: Language;
+  lang?: Language;
+  validate_year?: boolean;
   required: boolean;
   label?: string;
   default_value?: string;
@@ -37,6 +38,13 @@ const sendText = (e: Event) => {
   ) {
     error.value = t("validations.only_en");
     emit("send-text", null, props.name);
+  } else if (
+    props.validate_year &&
+    target.value?.length !== 4 &&
+    !target.value?.match(/^[1-2][0-9][0-9][0-9]/gm)
+  ) {
+    error.value = t("validations.year_format");
+    emit("send-text", null, props.name);
   } else {
     error.value = null;
     emit("send-text", target.value, props.name);
@@ -53,7 +61,7 @@ const sendText = (e: Event) => {
         v-if="props.label"
         class="shrink-0 mt-[0.125rem] w-fit bg-transparent"
         :class="inputEl ? 'text-base text-[#6C757D]' : ' text-xl text-white '"
-        >{{ $t(props.label) }}
+        >{{ props.label }}
       </label>
       <span
         v-if="props.label"
@@ -61,13 +69,13 @@ const sendText = (e: Event) => {
         :class="inputEl ? 'text-base text-[#6C757D]' : ' text-xl text-white '"
         >:</span
       >
-      <textarea
+      <input
         :name="$t(props.name)"
-        :placeholder="props.placeholder_key ? $t(props.placeholder_key) : ''"
+        :placeholder="props.placeholder_key ?? ''"
         v-model="inputEl"
         @input="sendText"
         class="peer w-full h-auto bg-transparent focus:outline-none placeholder:text-[#242e36] placeholder:italic text-white font-helvetica-400 text-2xl"
-      ></textarea>
+      />
       <span
         class="absolute top-2 right-2 text-white font-helvetica-400 text-2xl"
       >

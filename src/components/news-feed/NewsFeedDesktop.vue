@@ -33,7 +33,7 @@ const handleWriteQuoteClick = () => {
 </script>
 
 <template>
-  <div class="hidden w-full px-16 pt-8 pb-[15rem] xl:flex bg-[#181724]">
+  <div class="hidden w-full px-16 pt-8 pb-[15rem] xl:flex bg-[#181724]" :class="{'blur-sm pointer-events-none': isAddQuoteModal}">
     <LayoutUsersPages
       :name="auth_user_data?.name"
       :image="auth_user_data?.image"

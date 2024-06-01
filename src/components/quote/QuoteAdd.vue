@@ -60,7 +60,7 @@ const catchChosenMovie = (chosenMovie: string) => {
     (movie) => movie.title === chosenMovie,
   );
 };
-const catchQuote = (text: string, elementRef: string) => {
+const catchQuote = (text: string | null, elementRef: string) => {
   elementRef === "quote_en" ? (quote_en.value = text) : (quote_ge.value = text);
 };
 
