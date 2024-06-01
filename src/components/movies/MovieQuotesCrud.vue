@@ -2,15 +2,22 @@
 import { ref } from "vue";
 import IconDots from "../icons/IconDots.vue";
 import IconShowPassword from "@/components/icons/IconShowPassword.vue";
-import IconHidePassword from "@/components/icons/IconHidePassword.vue";
 import IconTrash from "../icons/IconTrash.vue";
 import IconEditPencil from "../icons/IconEditPencil.vue";
 
 const dropdown = ref(false);
+const emit = defineEmits<{
+  (e:'triggerViewQuote'):void
+  (e:'triggerEditQuote'):void
+  (e:'triggerDeleteQuote'):void
+}>()
 
 const props = defineProps<{
   location: string;
 }>();
+
+
+
 </script>
 
 <template>
@@ -28,14 +35,16 @@ const props = defineProps<{
       >
         <button
           class="bg-transparent border-0 w-fit p-4 flex items-center gap-3 mb-1"
+          @click="emit('triggerViewQuote')"
         >
-          <IconShowPassword class="shrink-0" />
+          <IconShowPassword class="shrink-0" color="#ffffff" />
           <p class="font-helvetica-500 text-base text-white shrink-0">
             {{ $t("movies.text_view_quote") }}
           </p>
         </button>
         <button
           class="bg-transparent border-0 w-fit p-4 flex items-center gap-3 mb-1"
+          @click="emit('triggerEditQuote')"
         >
           <IconEditPencil class="shrink-0" />
           <p class="font-helvetica-500 text-base text-white">
@@ -44,6 +53,7 @@ const props = defineProps<{
         </button>
         <button
           class="bg-transparent border-0 w-fit p-4 flex items-center gap-3"
+          @click="emit('triggerDeleteQuote')"
         >
           <IconTrash class="shrink-0" />
           <p class="font-helvetica-500 text-base text-white">

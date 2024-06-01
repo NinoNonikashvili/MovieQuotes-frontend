@@ -1,5 +1,6 @@
 import type { AxiosRequestConfig } from "axios";
 import type { Url } from "url";
+import { InputLanguages } from "./constants";
 
 export type AuthLayoutType = {
   header_key: string;
@@ -123,3 +124,5 @@ export type SingleMovieQuote = {
   comment_number: string;
   heart_number: string;
 };
+
+export type Language = typeof InputLanguages[number];

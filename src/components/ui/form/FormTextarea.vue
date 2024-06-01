@@ -1,19 +1,40 @@
 <script setup lang="ts">
+import type { Language } from "@/types/types";
+import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+
 const props = defineProps<{
   name: string;
   placeholder_key: string;
-  lang: string;
+  lang: Language;
+  required: boolean;
 }>();
+const error = ref<string | null>();
+const { t } = useI18n();
 
 const emit = defineEmits<{
-  (e:'send-text', text:string, element:string):void
-}>()
+  (e: "send-text", text: string, element: string): void;
+}>();
 
 const sendText = (e: Event) => {
-  const target = e.target as HTMLInputElement
-  emit("send-text", target.value, props.name)
-}
-
+  const target = e.target as HTMLInputElement;
+  if (!target.value) {
+    error.value = t("quote.quote_label") + " " + t("quote.required");
+  } else if (
+    props.lang === "Geo" &&
+    !target.value?.match(/^[ა-ჰ0-9.,?!@#$%^&*()"" -_|]+$/gm)
+  ) {
+    error.value = t("quote.only_ge");
+  } else if (
+    props.lang === "Eng" &&
+    !target.value?.match(/^[a-zA-Z0-9.,?!@#$%^&*()"" -_|]+$/gm)
+  ) {
+    error.value = t("quote.only_en");
+  } else {
+    error.value = null;
+    emit("send-text", target.value, props.name);
+  }
+};
 </script>
 
 <template>
@@ -31,6 +52,8 @@ const sendText = (e: Event) => {
         {{ lang }}
       </span>
     </div>
-
   </div>
+  <p class="font-helvetica-400 text-base text-red-400 mt-2" v-if="error">
+    {{ error }}
+  </p>
 </template>

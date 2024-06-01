@@ -7,6 +7,19 @@ import IconHeartOutline from "../icons/IconHeartOutline.vue";
 const props = defineProps<{
   quote: SingleMovieQuote;
 }>();
+const emit = defineEmits<{
+  (e: "triggerForm", quote_id: string, action: string): void;
+}>();
+
+const viewQuote = () => {
+  emit("triggerForm", props.quote.id, "view");
+};
+const editQuote = () => {
+  emit("triggerForm", props.quote.id, "edit");
+};
+const deleteQuote = () => {
+  emit("triggerForm", props.quote.id, "delete");
+};
 </script>
 
 <template>
@@ -19,10 +32,10 @@ const props = defineProps<{
         alt=""
         class="w-[22.5rem] h-[8.75rem] xl:w-[14.125rem] rounded-sm object-cover"
       />
-        <q class="font-helvetica-400 text-2xl text-[#CED4DA] italic my-0 xl-h-fit xl:my-auto ">{{
-        props.quote.quote
-      }}</q>
-      
+      <q
+        class="font-helvetica-400 text-2xl text-[#CED4DA] italic my-0 xl-h-fit xl:my-auto"
+        >{{ props.quote.quote }}</q
+      >
     </div>
     <!-- QUOTE REACT/COMMENTS -->
     <div class="flex gap-4 mt-5">
@@ -39,7 +52,11 @@ const props = defineProps<{
         <IconHeartOutline />
       </div>
     </div>
-    <MovieQuotesCrud location="bottom-4 xl:top-6 right-8" />
+    <MovieQuotesCrud
+      location="bottom-4 xl:top-6 right-8"
+      @triggerEditQuote="editQuote"
+      @triggerViewQuote="viewQuote"
+      @triggerDeleteQuote="deleteQuote"
+    />
   </div>
-  
 </template>

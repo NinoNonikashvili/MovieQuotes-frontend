@@ -6,16 +6,20 @@ import { useMoviesStore } from "@/stores/movies";
 import { storeToRefs } from "pinia";
 import ButtonFilled from "../ui/buttons/ButtonFilled.vue";
 import MoviesListComponent from "@/components/movies/MoviesListComponent.vue";
+import { ref } from "vue";
 
 const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
 const movieStore = useMoviesStore();
 const { movies } = storeToRefs(movieStore);
-console.log(movies.value);
+
+const isAddMovie = ref<boolean>(false);
 </script>
 <template>
-  
-  <div class="w-full px-10 py-4 xl:px-16 xl:pt-8 pb-[15rem] flex bg-[#181724]">
+  <div
+    class="w-full px-10 py-4 xl:px-16 xl:pt-8 pb-[15rem] flex bg-[#181724]"
+    :class="{ 'pointer-events-none blur-sm': isAddMovie }"
+  >
     <LayoutUsersPages
       class="hidden xl:flex"
       :name="auth_user_data?.name"
@@ -27,7 +31,6 @@ console.log(movies.value);
         <div class="flex gap-2 flex-col xl:flex-row w-fit">
           <h1 class="font-helvetica-500 text-2xl text-white">
             {{ $t("movies.page_header") }}
-            
           </h1>
           <p class="font-helvetica-500 text-2xl text-white">
             {{ $t("movies.text_total") }}
@@ -50,6 +53,7 @@ console.log(movies.value);
           <ButtonFilled
             text_key="movies.text_add_movie"
             icon="IconPlusBoardered"
+            @click="isAddMovie = true"
           />
         </div>
       </header>
@@ -66,4 +70,6 @@ console.log(movies.value);
       </div>
     </section>
   </div>
+
+  <!-- ADD MOVIE FORM -->
 </template>

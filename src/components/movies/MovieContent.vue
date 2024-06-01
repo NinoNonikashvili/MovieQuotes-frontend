@@ -7,6 +7,7 @@ import { storeToRefs } from "pinia";
 import EditDelete from "@/components/shared/EditDelete.vue";
 import ButtonFilled from "../ui/buttons/ButtonFilled.vue";
 import MovieQuotesComponent from "./MovieQuotesComponent.vue";
+import { computed, ref } from "vue";
 
 const user = useUserStore();
 const movieStore = useMoviesStore();
@@ -21,10 +22,46 @@ const props = defineProps<{
 }>();
 
 const movie = movies.value?.find((movie) => movie.id === parseInt(props.id));
+// display form variables
+
+const isEditMovie = ref<boolean>(false);
+const isDeleteMovie = ref<boolean>(false);
+const isAddQuote = ref<boolean>(false);
+const isEditQuote = ref<boolean>(false);
+const isViewQuote = ref<boolean>(false);
+const isDeleteQuote = ref<boolean>(false);
+const isFormVIsible = computed(() => {
+  return (
+    isEditQuote.value ||
+    isViewQuote.value ||
+    isAddQuote.value ||
+    isEditMovie.value ||
+    isDeleteMovie.value ||
+    isDeleteQuote.value
+  );
+});
+
+const handleTriggerForm = (id: String, action: string) => {
+  console.log("id and action", id, action);
+  switch (action) {
+    case "edit":
+      isEditQuote.value = true;
+      break;
+    case "view":
+      isViewQuote.value = true;
+      break;
+    case "delete":
+      isDeleteQuote.value = true;
+      break;
+  }
+};
 </script>
 
 <template>
-  <div class="w-full px-10 py-4 xl:px-16 xl:pt-8 pb-[15rem] flex bg-[#181724]">
+  <div
+    class="w-full px-10 py-4 xl:px-16 xl:pt-8 pb-[15rem] flex bg-[#181724]"
+    :class="{ 'pointer-events-none blur-sm': isFormVIsible }"
+  >
     <LayoutUserPages
       class="hidden xl:flex"
       :name="auth_user_data?.name"
@@ -62,8 +99,8 @@ const movie = movies.value?.find((movie) => movie.id === parseInt(props.id));
             {{ movie.description }}
           </p>
           <EditDelete
-            :edit="editMovie"
-            :delete="deleteMovie"
+            @editMovie="isEditMovie=true"
+            @deleteMovie="isDeleteMovie= true"
             location="top-0 right-0"
           />
         </div>
@@ -85,8 +122,9 @@ const movie = movies.value?.find((movie) => movie.id === parseInt(props.id));
         ></div>
         <div class="max-w-[9.5rem]">
           <ButtonFilled
-            text_key="movies.text_add_movie"
+            text_key="movies.text_add_quote"
             icon="IconPlusBoardered"
+            @click="isAddQuote = true"
           />
         </div>
       </div>
@@ -96,8 +134,14 @@ const movie = movies.value?.find((movie) => movie.id === parseInt(props.id));
           v-for="(quote, index) in movie_quotes"
           :key="index"
           :quote="quote"
+          @triggerForm="handleTriggerForm"
         />
       </div>
     </section>
   </div>
+
+  <!-- EDIT MOVIE FORM -->
+  <!-- VIEW QUOTE FORM -->
+  <!-- ADD QUOTE FORM -->
+  <!-- EDIT QUOTE FORM -->
 </template>
