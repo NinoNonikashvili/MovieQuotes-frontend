@@ -7,21 +7,59 @@ import { storeToRefs } from "pinia";
 import EditDelete from "@/components/shared/EditDelete.vue";
 import ButtonFilled from "../ui/buttons/ButtonFilled.vue";
 import MovieQuotesComponent from "./MovieQuotesComponent.vue";
+import type { MoviesData } from "@/types/types";
 import { computed, ref } from "vue";
+import { deleteMovie } from "@/services/axios/movie-services";
+import { useRouter, useRoute } from "vue-router";
+import EditMovie from "./EditMovie.vue";
+import { getSingleMovieQuotes } from "@/services/axios/quote-services";
 
 const user = useUserStore();
 const movieStore = useMoviesStore();
+const { set_movies } = useMoviesStore();
+const { set_movie_quotes } = useQuotesStore();
 const quoteStore = useQuotesStore();
 const { movie_quotes } = storeToRefs(quoteStore);
 const { auth_user_data } = storeToRefs(user);
 const { movies } = storeToRefs(movieStore);
-const editMovie = () => {};
-const deleteMovie = () => {};
+import { useNotificationStore } from "@/stores/crud-notifications";
+
+const router = useRouter();
+const route = useRoute();
 const props = defineProps<{
   id: string;
 }>();
 
-const movie = movies.value?.find((movie) => movie.id === parseInt(props.id));
+const current_movie = movies.value?.find(
+  (movie) => movie.id === parseInt(props.id),
+);
+const movie = ref<MoviesData | undefined>(current_movie);
+const { set_status } = useNotificationStore();
+
+const handleEditMovie = () => {
+  isEditMovie.value = true;
+  console.log("edit movie");
+};
+const handleDeleteMovie = async () => {
+  isDeleteMovie.value = true;
+  console.log("delete movie", movie.value?.id);
+  if (movie.value) {
+    let id = movie.value.id;
+    try {
+      await deleteMovie(id);
+      console.log("delelted successfully");
+      set_status("MOVIE_DELETED");
+      router.push({ name: "movies" });
+    } catch (err) {
+      return;
+    }
+  }
+};
+
+const closeEditMovie = () => {
+  isEditMovie.value = false;
+};
+
 // display form variables
 
 const isEditMovie = ref<boolean>(false);
@@ -41,18 +79,25 @@ const isFormVIsible = computed(() => {
   );
 });
 
-const handleTriggerForm = (id: String, action: string) => {
+const handleTriggerForm = async (id: String, action: string) => {
   console.log("id and action", id, action);
-  switch (action) {
-    case "edit":
-      isEditQuote.value = true;
-      break;
-    case "view":
-      isViewQuote.value = true;
-      break;
-    case "delete":
-      isDeleteQuote.value = true;
-      break;
+  // switch (action) {
+  //   case "edit":
+  //     isEditQuote.value = true;
+  //     break;
+  //   case "view":
+  //     isViewQuote.value = true;
+  //     break;
+  //   case "delete":
+  //     isDeleteQuote.value = true;
+  //     break;
+  // }
+  try {
+    const id = route.params.id as string;
+    const response = await getSingleMovieQuotes({ id: id });
+    set_movie_quotes(response.data.quotes);
+  } catch (err) {
+    err;
   }
 };
 </script>
@@ -99,8 +144,8 @@ const handleTriggerForm = (id: String, action: string) => {
             {{ movie.description }}
           </p>
           <EditDelete
-            @editMovie="isEditMovie=true"
-            @deleteMovie="isDeleteMovie= true"
+            @editMovie="handleEditMovie"
+            @deleteMovie="handleDeleteMovie"
             location="top-0 right-0"
           />
         </div>
@@ -141,6 +186,12 @@ const handleTriggerForm = (id: String, action: string) => {
   </div>
 
   <!-- EDIT MOVIE FORM -->
+  <EditMovie
+    v-if="isEditMovie && auth_user_data && movie"
+    :user_id="auth_user_data.id"
+    :closeModal="closeEditMovie"
+    :movie_id="movie.id"
+  />
   <!-- VIEW QUOTE FORM -->
   <!-- ADD QUOTE FORM -->
   <!-- EDIT QUOTE FORM -->

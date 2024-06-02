@@ -26,6 +26,8 @@ declare module "vue-router" {
   }
 }
 
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -112,8 +114,9 @@ const router = createRouter({
       },
     },
     {
-      path: "/movies/:lang",
+      path: "/movies/",
       name: "movies",
+      // beforeEnter: [loadMovies],
       redirect: { name: "movies-all", params: { lang: locale.value } },
       component: MovieContainer,
       meta: {
@@ -138,7 +141,6 @@ const router = createRouter({
         },
       ],
     },
-
   ],
 });
 

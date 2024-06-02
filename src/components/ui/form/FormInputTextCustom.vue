@@ -18,7 +18,11 @@ const { t } = useI18n();
 const emit = defineEmits<{
   (e: "send-text", text: string | null, element: string): void;
 }>();
-const inputEl = ref<string | undefined>(props?.default_value);
+const inputEl = ref<string | undefined>();
+if(props.default_value){
+  
+  inputEl.value = props.default_value
+}
 
 const sendText = (e: Event) => {
   const target = e.target as HTMLInputElement;

@@ -2,8 +2,16 @@
 import IconCross from "@/components/icons/IconCross.vue";
 import IconCamera from "@/components/icons/IconCamera.vue";
 import { ref } from "vue";
+import { isMetaProperty } from "typescript";
 
-const imgPreview = ref<string | null>(null);
+const props = defineProps<{
+  default_value?: string;
+}>();
+
+const imgPreview = ref<string | undefined | null>();
+if (props.default_value) {
+  imgPreview.value = props.default_value;
+}
 const imgFile = ref<File | null>(null);
 const dropZone = ref<HTMLElement | null>(null);
 const allowedTypes = ["image/webp", "image/jpeg", "image/jpg", "image/png"];

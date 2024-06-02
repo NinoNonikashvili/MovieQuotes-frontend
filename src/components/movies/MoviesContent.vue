@@ -3,16 +3,22 @@ import LayoutUsersPages from "@/components/layouts/LayoutUserPages.vue";
 import IconSearch from "@/components/icons/IconSearch.vue";
 import { useUserStore } from "@/stores/user";
 import { useMoviesStore } from "@/stores/movies";
+import { useNotificationStore } from "@/stores/crud-notifications";
 import { storeToRefs } from "pinia";
 import ButtonFilled from "../ui/buttons/ButtonFilled.vue";
 import MoviesListComponent from "@/components/movies/MoviesListComponent.vue";
 import AddMovie from "./AddMovie.vue";
+import SuccessNotification from "../shared/SuccessNotification.vue";
+
 import { ref } from "vue";
 
 const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
 const movieStore = useMoviesStore();
 const { movies } = storeToRefs(movieStore);
+const notificationsStore = useNotificationStore();
+const { status } = storeToRefs(notificationsStore);
+const { set_status } = useNotificationStore();
 
 const isAddMovie = ref<boolean>(false);
 const closeAddMovie = () => {
@@ -81,4 +87,6 @@ const closeAddMovie = () => {
     v-if="isAddMovie"
     :user_id="auth_user_data?.id"
   />
+  <SuccessNotification v-if="status" :text_key="'movies.'+status" @close-notification="set_status(null)"/>
+
 </template>

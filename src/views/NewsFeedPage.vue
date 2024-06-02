@@ -2,7 +2,7 @@
 import HeaderAuth from "@/components/shared/HeaderAuth.vue";
 import NewsFeedDesktop from "@/components/news-feed/NewsFeedDesktop.vue";
 import NewsFeedMobile from "@/components/news-feed/NewsFeedMobile.vue";
-import { onMounted } from "vue";
+import { onBeforeUnmount, onMounted } from "vue";
 import { getQuotes } from "@/services/axios/quote-services";
 import { useQuotesStore } from "@/stores/quotes";
 import type { NewsFeedQuote } from "@/types/types";
@@ -16,6 +16,10 @@ onMounted(async () => {
     return;
   }
 });
+
+onBeforeUnmount(()=>{
+  console.log('news feed unmounted')
+})
 </script>
 
 <template>

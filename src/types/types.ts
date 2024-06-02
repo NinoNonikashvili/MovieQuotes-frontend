@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from "axios";
 import type { Url } from "url";
-import { InputLanguages } from "./constants";
+import { crudNotifications, InputLanguages } from "./constants";
 
 export type AuthLayoutType = {
   header_key: string;
@@ -91,8 +91,17 @@ export type MoviesData = {
   image: string;
   director: string;
   description: string;
-  genres: { title: string; id: number }[];
+  genres: { title: string; id: string }[];
   quote_num: string;
+};
+export type MoviesDataBilingual = {
+  id: number;
+  title: { en: string; ge: string };
+  year: string;
+  image: string;
+  director: { en: string; ge: string };
+  description: { en: string; ge: string };
+  genres: { title: string; id: number }[];
 };
 export type Quote = {
   movie_id: number;
@@ -125,4 +134,5 @@ export type SingleMovieQuote = {
   heart_number: string;
 };
 
-export type Language = typeof InputLanguages[number];
+export type Language = (typeof InputLanguages)[number];
+// export type NotificationStatus = (typeof crudNotifications);

@@ -8,5 +8,12 @@
   "text_edit": "Edit",
   "text_delete": "Delete",
   "text_add_quote": "Add quote",
-  "text_genres": "Genres"
+  "text_genres": "Genres",
+  "text_edit_movie": "Edit movie",
+  "MOVIE_ADDED": "Movie added successfully",
+  "MOVIE_UPDATED": "Movie edited successfully",
+  "MOVIE_DELETED": "Movie deleted successfully",
+  "QUOTE_ADDED": "Movie added successfully",
+  "QUOTE_UPDATED": "Movie edited successfully",
+  "QUOTE_DELETED": "Movie deleted successfully"
 }

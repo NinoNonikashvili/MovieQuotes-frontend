@@ -10,8 +10,8 @@ const route = useRoute();
 const { set_movie_quotes } = useQuotesStore();
 
 onMounted(async () => {
-  console.log(route.params.id);
   // load movie quotes
+  console.log('movie mounted')
   try {
     const id = route.params.id as string;
     const response = await getSingleMovieQuotes({ id: id });

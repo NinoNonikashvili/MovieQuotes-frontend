@@ -6,17 +6,21 @@ import { ref } from "vue";
 const props = defineProps<{
   options: { title: string; id: string }[];
   label_key: string;
+  default_value?: { title: string; id: number }[]
 }>();
 
-const chosenValues = ref<{ title: string; id: string }[]>([]);
+const chosenValues = ref<{ title: string; id: number }[]>([]);
+if(props.default_value){
+  chosenValues.value = props.default_value
+}
 
 const emit = defineEmits<{
-  (e: "send-chosen-values", values: string[]): void;
+  (e: "send-chosen-values", values: number[]): void;
 }>();
 const removeChosenItem = (e: Event) => {
   const target = e.target as HTMLElement;
   chosenValues.value = chosenValues.value.filter((obj) => {
-    return obj.id !== target.dataset["id"];
+    return obj.id !== Number(target.dataset["id"]);
   });
   let genre_ids = chosenValues.value.map((genre) => genre.id);
   emit("send-chosen-values", genre_ids);
@@ -27,12 +31,12 @@ const updateChosenList = (e: Event) => {
   const target = e.target as HTMLElement;
   console.log(target.innerText, target.dataset["id"]);
   let includes = chosenValues.value?.find(
-    (val) => val.id === target.dataset["id"],
+    (val) => val.id === Number(target.dataset["id"]),
   );
   if (!includes && target.dataset["id"]) {
     chosenValues.value?.push({
       title: target.innerHTML,
-      id: target.dataset["id"],
+      id: Number(target.dataset["id"]),
     });
     let genre_ids = chosenValues.value.map((genre) => genre.id);
     emit("send-chosen-values", genre_ids);
