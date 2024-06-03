@@ -12,8 +12,5 @@
   "text_edit_movie": "Edit movie",
   "MOVIE_ADDED": "Movie added successfully",
   "MOVIE_UPDATED": "Movie edited successfully",
-  "MOVIE_DELETED": "Movie deleted successfully",
-  "QUOTE_ADDED": "Movie added successfully",
-  "QUOTE_UPDATED": "Movie edited successfully",
-  "QUOTE_DELETED": "Movie deleted successfully"
+  "MOVIE_DELETED": "Movie deleted successfully"
 }

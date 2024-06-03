@@ -14,8 +14,8 @@ import { useRouter } from "vue-router";
 import { useNotificationStore } from "@/stores/crud-notifications";
 
 const movieStores = useMoviesStore();
-const { set_genres, set_movies } = useMoviesStore();
-const { genres, movies } = storeToRefs(movieStores);
+const { set_genres } = useMoviesStore();
+const { genres } = storeToRefs(movieStores);
 const router = useRouter();
 const {set_status} = useNotificationStore()
 

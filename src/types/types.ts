@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from "axios";
 import type { Url } from "url";
-import { crudNotifications, InputLanguages } from "./constants";
+import {  InputLanguages } from "./constants";
 
 export type AuthLayoutType = {
   header_key: string;
@@ -135,4 +135,3 @@ export type SingleMovieQuote = {
 };
 
 export type Language = (typeof InputLanguages)[number];
-// export type NotificationStatus = (typeof crudNotifications);

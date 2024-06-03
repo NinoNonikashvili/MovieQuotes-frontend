@@ -1,6 +1,7 @@
 {
   "text_write_new_quote": "Write New Quote",
   "placeholder_add_quote_content": "Start create new quote",
+  "placeholder_text_quote": "Quote",
   "drag_image": "Drag & drop your image here or",
   "text_choose_file": "Choose file",
   "text_choose_movie": "Choose movie",
@@ -15,6 +16,11 @@
   "quote_label": "Quote text",
   "image_label": "Image",
   "movie_label": "Movie",
-  "only_ge":"only georgian letters",
-  "only_en": "only latin letters"
+  "text_view_quote": "View quote",
+  "text_save_changes": "Save changes",
+  "text_edit_quote": "Edit Quote",
+  "text_change_photo": "Change photo",
+  "QUOTE_ADDED": "Quote added successfully",
+  "QUOTE_UPDATED": "Quote edited successfully",
+  "QUOTE_DELETED": "Quote deleted successfully"
 }

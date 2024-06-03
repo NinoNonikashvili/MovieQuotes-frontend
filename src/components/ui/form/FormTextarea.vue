@@ -50,7 +50,7 @@ const sendText = (e: Event) => {
 <template>
   <div>
     <div
-      class="relative w-full flex gap-1 items-start border border-white py-2 px-3 pr-2 font-helvetica-400"
+      class="relative w-full flex gap-1 items-start border border-white py-2 px-3  font-helvetica-400"
     >
       <label
         v-if="props.label"
@@ -69,7 +69,7 @@ const sendText = (e: Event) => {
         :placeholder="props.placeholder_key ? $t(props.placeholder_key) : ''"
         v-model="inputEl"
         @input="sendText"
-        class="peer w-full h-auto bg-transparent focus:outline-none placeholder:text-[#242e36] placeholder:italic text-white font-helvetica-400 text-2xl"
+        class="peer w-full pr-12 h-auto bg-transparent focus:outline-none placeholder:text-[#242e36] placeholder:italic text-white font-helvetica-400 text-2xl"
       ></textarea>
       <span
         class="absolute top-2 right-2 text-white font-helvetica-400 text-2xl"

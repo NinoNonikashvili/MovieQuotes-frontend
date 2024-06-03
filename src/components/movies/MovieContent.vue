@@ -3,6 +3,7 @@ import LayoutUserPages from "@/components/layouts/LayoutUserPages.vue";
 import { useUserStore } from "@/stores/user";
 import { useMoviesStore } from "@/stores/movies";
 import { useQuotesStore } from "@/stores/quotes";
+import { useNotificationStore } from "@/stores/crud-notifications";
 import { storeToRefs } from "pinia";
 import EditDelete from "@/components/shared/EditDelete.vue";
 import ButtonFilled from "../ui/buttons/ButtonFilled.vue";
@@ -12,17 +13,24 @@ import { computed, ref } from "vue";
 import { deleteMovie } from "@/services/axios/movie-services";
 import { useRouter, useRoute } from "vue-router";
 import EditMovie from "./EditMovie.vue";
-import { getSingleMovieQuotes } from "@/services/axios/quote-services";
+import {
+  deleteQuote,
+  getSingleMovieQuotes,
+} from "@/services/axios/quote-services";
+import SuccessNotification from "../shared/SuccessNotification.vue";
+import QuoteView from "../quote/QuoteView.vue";
+import QuoteEdit from "../quote/QuoteEdit.vue";
+import QuoteAddFromMovie from "../quote/QuoteAddFromMovie.vue";
 
+const notificationsStore = useNotificationStore();
+const { status } = storeToRefs(notificationsStore);
 const user = useUserStore();
 const movieStore = useMoviesStore();
-const { set_movies } = useMoviesStore();
-const { set_movie_quotes } = useQuotesStore();
 const quoteStore = useQuotesStore();
+const { set_movie_quotes } = useQuotesStore();
 const { movie_quotes } = storeToRefs(quoteStore);
 const { auth_user_data } = storeToRefs(user);
 const { movies } = storeToRefs(movieStore);
-import { useNotificationStore } from "@/stores/crud-notifications";
 
 const router = useRouter();
 const route = useRoute();
@@ -55,9 +63,40 @@ const handleDeleteMovie = async () => {
     }
   }
 };
-
+const handleDeleteQuote = async () => {
+  if (selectedQuoteId.value) {
+    try {
+      await deleteQuote(selectedQuoteId.value);
+      //close all the forsm from where delte can be triggered and reload quotes
+      isViewQuote.value = false;
+      isEditQuote.value = false;
+      try {
+        const id = route.params.id as string;
+        const response = await getSingleMovieQuotes({ id: id });
+        set_movie_quotes(response.data.quotes);
+        set_status("QUOTE_DELETED");
+      } catch (err) {
+        err;
+      }
+    } catch (err) {
+      return;
+    }
+  }
+};
 const closeEditMovie = () => {
   isEditMovie.value = false;
+};
+const closeViewQuote = () => {
+  selectedQuoteId.value = null;
+  isViewQuote.value = false;
+};
+const closeAddQuote = () => {
+  selectedQuoteId.value = null;
+  isAddQuote.value = false;
+};
+const closeEditQuote = () => {
+  selectedQuoteId.value = null;
+  isEditQuote.value = false;
 };
 
 // display form variables
@@ -67,37 +106,31 @@ const isDeleteMovie = ref<boolean>(false);
 const isAddQuote = ref<boolean>(false);
 const isEditQuote = ref<boolean>(false);
 const isViewQuote = ref<boolean>(false);
-const isDeleteQuote = ref<boolean>(false);
+const selectedQuoteId = ref<string | null>(null);
 const isFormVIsible = computed(() => {
   return (
     isEditQuote.value ||
     isViewQuote.value ||
     isAddQuote.value ||
     isEditMovie.value ||
-    isDeleteMovie.value ||
-    isDeleteQuote.value
+    isDeleteMovie.value
   );
 });
 
-const handleTriggerForm = async (id: String, action: string) => {
+const handleTriggerForm = async (id: string, action: string) => {
   console.log("id and action", id, action);
-  // switch (action) {
-  //   case "edit":
-  //     isEditQuote.value = true;
-  //     break;
-  //   case "view":
-  //     isViewQuote.value = true;
-  //     break;
-  //   case "delete":
-  //     isDeleteQuote.value = true;
-  //     break;
-  // }
-  try {
-    const id = route.params.id as string;
-    const response = await getSingleMovieQuotes({ id: id });
-    set_movie_quotes(response.data.quotes);
-  } catch (err) {
-    err;
+  selectedQuoteId.value = id;
+  switch (action) {
+    case "edit":
+      isViewQuote.value = false;
+      isEditQuote.value = true;
+      break;
+    case "view":
+      isViewQuote.value = true;
+      break;
+    case "delete":
+      handleDeleteQuote();
+      break;
   }
 };
 </script>
@@ -144,8 +177,8 @@ const handleTriggerForm = async (id: String, action: string) => {
             {{ movie.description }}
           </p>
           <EditDelete
-            @editMovie="handleEditMovie"
-            @deleteMovie="handleDeleteMovie"
+            @edit="handleEditMovie"
+            @delete="handleDeleteMovie"
             location="top-0 right-0"
           />
         </div>
@@ -193,6 +226,31 @@ const handleTriggerForm = async (id: String, action: string) => {
     :movie_id="movie.id"
   />
   <!-- VIEW QUOTE FORM -->
+
+  <QuoteView
+    :closeModal="closeViewQuote"
+    :quote_id="selectedQuoteId"
+    v-if="isViewQuote && selectedQuoteId"
+    @triggerForm="handleTriggerForm"
+  />
   <!-- ADD QUOTE FORM -->
+  <QuoteAddFromMovie
+    v-if="movie && isAddQuote"
+    :close-modal="closeAddQuote"
+    :movie="movie"
+  />
   <!-- EDIT QUOTE FORM -->
+  <QuoteEdit
+    v-if="isEditQuote && selectedQuoteId && movie"
+    :close-modal="closeEditQuote"
+    :quote_id="selectedQuoteId"
+    :movie_id="movie.id"
+    @triggerForm="handleTriggerForm"
+  />
+
+  <SuccessNotification
+    v-if="status"
+    :text_key="'quote.' + status"
+    @close-notification="set_status(null)"
+  />
 </template>

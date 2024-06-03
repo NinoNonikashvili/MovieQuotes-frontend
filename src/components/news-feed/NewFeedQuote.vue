@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import IconHeartOutline from "@/components/icons/IconHeartOutline.vue";
-import IconCommentRectangular from "@/components/icons/IconCommentRectangular.vue";
+
 import NewsFeedQuoteComment from "@/components/news-feed/NewsFeedQuoteComment.vue";
-import type {NewsFeedQuote} from '@/types/types'
+import type { NewsFeedQuote } from "@/types/types";
+import QuoteNotificationsCount from "../shared/QuoteNotificationsCount.vue";
+import i18n from "@/plugins/i18n";
+
 
 const props = defineProps<{
-  quote: NewsFeedQuote
+  quote: NewsFeedQuote;
 }>();
+
+const {t} = i18n.global
 
 /**
  * 1. add functionality to increase quote reactions by one on heart click
@@ -16,7 +20,9 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="w-full xl:w-[58rem] xl:p-6 px-9 py-7 bg-[#12101A] rounded-xl mb-8">
+  <div
+    class="w-full xl:w-[58rem] xl:p-6 px-9 py-7 bg-[#12101A] rounded-xl mb-8"
+  >
     <!--    QUOTE AUTHOR -->
     <div class="flex gap-3 items-center w-fit">
       <img
@@ -50,20 +56,11 @@ const props = defineProps<{
       />
     </div>
     <!-- QUOTE REACT/COMMENTS -->
-    <div class="flex gap-4">
-      <div class="flex gap-2 items-center">
-        <span class="font-helvetica-400 text-xl text-white">{{
-          props.quote.comment_number
-        }}</span>
-        <IconCommentRectangular />
-      </div>
-      <div class="flex gap-2 items-center">
-        <span class="font-helvetica-400 text-xl text-white">{{
-          props.quote.react_number
-        }}</span>
-        <IconHeartOutline />
-      </div>
-    </div>
+
+    <QuoteNotificationsCount
+      :comment_count="props.quote.comment_number"
+      :react_count="props.quote.react_number"
+    />
     <!-- DIVIDER -->
     <div class="h-[0.0625rem] w-full bg-white my-4"></div>
     <!-- COMMENTS LIST -->
@@ -83,7 +80,7 @@ const props = defineProps<{
       />
       <textarea
         name="comment"
-        placeholder="write a comment"
+        :placeholder="t('general.text_write_comment')"
         class="bg-[#24222F] rounded-[0.625rem] py-2 px-4 font-helvetica-400 text-base text-white focus:outline-none w-full h-[3.25rem]"
       ></textarea>
     </div>

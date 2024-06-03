@@ -9,7 +9,6 @@ import { storeToRefs } from "pinia";
 import { addMovie, getGenres, getMovies } from "@/services/axios/movie-services";
 import FormDragDrop from "../ui/form/FormDragDrop.vue";
 import ButtonFilled from "../ui/buttons/ButtonFilled.vue";
-import { useRouter } from "vue-router";
 import { useNotificationStore } from "@/stores/crud-notifications";
 import type { MoviesData } from "@/types/types";
 
@@ -17,7 +16,6 @@ const { set_status } = useNotificationStore();
 const movieStores = useMoviesStore();
 const { set_genres,set_movies } = useMoviesStore();
 const { genres } = storeToRefs(movieStores);
-const router = useRouter();
 
 onMounted(async () => {
   if (!genres.value) {

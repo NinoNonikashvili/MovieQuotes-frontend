@@ -30,7 +30,7 @@ const props = defineProps<{
         <IconDots />
       </button>
       <div
-        class="absolute xl:top-[2rem] bottom-[2rem] xl:bottom-0 right-[0.875rem] xl:left-[0.875rem] bg-[#24222F] px-10 py-8 rounded-[0.625rem] z-10 w-[14rem]"
+        class="absolute h-fit xl:top-[2rem] bottom-[2rem] xl:bottom-0 right-[0.875rem] xl:left-[0.875rem] bg-[#24222F] px-10 py-8 rounded-[0.625rem] z-10 w-[14rem]"
         v-if="dropdown"
       >
         <button

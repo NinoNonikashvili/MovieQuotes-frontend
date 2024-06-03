@@ -9,6 +9,7 @@ const { auth_user_data } = storeToRefs(user);
 const props = defineProps<{
   closeModal: CallableFunction;
   header_key: string;
+  hideOnMobile?: boolean;
 }>();
 </script>
 
@@ -19,7 +20,10 @@ const props = defineProps<{
     <div class="bg-[#11101A] rounded-xl w-full">
       <!-- HEADER -->
       <div class="px-10 py-11 border-b border-b-white flex items-center">
-        <h2 class="font-helvetica-500 text-2xl text-white mx-auto">
+        <h2
+          class="font-helvetica-500 text-2xl text-white mx-auto"
+          :class="{ 'opacity-0 xl:opacity-100': props.hideOnMobile }"
+        >
           {{ $t(props.header_key) }}
         </h2>
         <div @click="props.closeModal" class="p-2 cursor-pointer">
