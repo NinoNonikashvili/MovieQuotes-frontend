@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type Prop from "@/types/typesButtonProps";
+import IconPlusBoardered from "@/components/icons/IconPlusBordered.vue";
 
 const props = withDefaults(defineProps<Prop>(), {
   bg: "bg-red-600",
@@ -28,7 +29,7 @@ const handleRedirect = () => {
     class="flex w-full"
   >
     <button
-      class="rounded-[4px] flex w-full justify-center"
+      class="rounded-[4px] flex w-full justify-center items-center gap-1"
       :class="[
         props.bg,
         props.color,
@@ -40,12 +41,13 @@ const handleRedirect = () => {
       ]"
       :type="submit ? 'submit' : 'button'"
     >
+      <component v-if="props.icon" :is="IconPlusBoardered" class="shrink-0" />
       {{ $t(props.text_key) }}
     </button>
   </RouterLink>
   <button
     v-else
-    class="rounded-[4px] flex w-full justify-center"
+    class="rounded-[4px] flex w-full justify-center items-center gap-1"
     @click="handleRedirect"
     :class="[
       props.bg,
@@ -57,6 +59,7 @@ const handleRedirect = () => {
     ]"
     :type="submit ? 'submit' : 'button'"
   >
+    <component v-if="props.icon" :is="IconPlusBoardered" class="shrink-0" />
     {{ $t(props.text_key) }}
   </button>
 </template>

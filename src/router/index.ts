@@ -15,6 +15,8 @@ import { storeToRefs } from "pinia";
 import { checkAuthState } from "@/services/axios/auth-services";
 import ProfilePage from "@/views/ProfilePage.vue";
 import MoviesPage from "@/views/MoviesPage.vue";
+import MoviePage from "@/views/MoviePage.vue";
+import MovieContainer from "@/views/MovieContainer.vue";
 
 const { locale } = i18n.global;
 
@@ -23,6 +25,8 @@ declare module "vue-router" {
     requiresAuth: boolean;
   }
 }
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -110,12 +114,32 @@ const router = createRouter({
       },
     },
     {
-      path: "/movies/:lang",
+      path: "/movies/",
       name: "movies",
-      component: MoviesPage,
+      // beforeEnter: [loadMovies],
+      redirect: { name: "movies-all", params: { lang: locale.value } },
+      component: MovieContainer,
       meta: {
         requiresAuth: true,
       },
+      children: [
+        {
+          path: "/movies/:lang/all",
+          name: "movies-all",
+          component: MoviesPage,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "/movies/:lang/single/:id",
+          name: "movie",
+          component: MoviePage,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+      ],
     },
   ],
 });
@@ -153,7 +177,8 @@ router.beforeEach(async (to, from) => {
     } else {
       if (from.name !== "login") {
         return {
-          name: "login", params:{lang:locale.value}
+          name: "login",
+          params: { lang: locale.value },
         };
       }
     }
@@ -161,7 +186,8 @@ router.beforeEach(async (to, from) => {
     if (auth_user.value && from.name !== "news-feed") {
       //to profile
       return {
-        name: "news-feed", params:{lang:locale.value}
+        name: "news-feed",
+        params: { lang: locale.value },
       };
     } else {
       return;

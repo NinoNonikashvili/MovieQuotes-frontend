@@ -1,5 +1,6 @@
 import type { AxiosRequestConfig } from "axios";
 import type { Url } from "url";
+import {  InputLanguages } from "./constants";
 
 export type AuthLayoutType = {
   header_key: string;
@@ -89,6 +90,17 @@ export type MoviesData = {
   year: string;
   image: string;
   director: string;
+  description: string;
+  genres: { title: string; id: string }[];
+  quote_num: string;
+};
+export type MoviesDataBilingual = {
+  id: number;
+  title: { en: string; ge: string };
+  year: string;
+  image: string;
+  director: { en: string; ge: string };
+  description: { en: string; ge: string };
   genres: { title: string; id: number }[];
 };
 export type Quote = {
@@ -97,3 +109,29 @@ export type Quote = {
   "quote.ge": string;
   image: File;
 };
+export type NewsFeedQuote = {
+  author_avatar?: string;
+  user_avatar?: string;
+  author_name: string;
+  quote_text: string;
+  quote_image?: string;
+  quote_year: string;
+  quote_director: string;
+  comment_number: number;
+  react_number: number;
+  comments: Array<{
+    comment_author_name: string;
+    comment_author_image?: string;
+    comment_text: string;
+  }>;
+};
+
+export type SingleMovieQuote = {
+  id: string;
+  image: string;
+  quote: string;
+  comment_number: string;
+  heart_number: string;
+};
+
+export type Language = (typeof InputLanguages)[number];

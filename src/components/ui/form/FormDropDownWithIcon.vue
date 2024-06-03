@@ -13,6 +13,7 @@ const emit = defineEmits<{
   (e: "send-chosen-movie", movie: string): void;
 }>();
 const sendChosenMovie = (e: Event) => {
+  dropdown.value = false;
   const target = e.target as HTMLElement;
   console.log(target.innerText);
   emit("send-chosen-movie", target.innerText);

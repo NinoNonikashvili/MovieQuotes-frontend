@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import IconCross from "@/components/icons/IconCross.vue";
 import IconCamera from "@/components/icons/IconCamera.vue";
 import { ref } from "vue";
-import { isMetaProperty } from "typescript";
 
 const props = defineProps<{
   default_value?: string;
 }>();
 
-const imgPreview = ref<string | undefined | null>();
+const imgPreview = ref<string | undefined | null>('https://tse4.mm.bing.net/th?id=OIP.1b-GpcCf6-Nm3xvKeO8w4AHaEl&pid=Api&P=0&h=220');
 if (props.default_value) {
   imgPreview.value = props.default_value;
 }
@@ -22,8 +20,7 @@ const emit = defineEmits<{
 
 const onDrop = (e: DragEvent) => {
   console.log(e);
-  imgFile.value = null;
-  imgPreview.value = null;
+
   const data = e.dataTransfer?.files;
   if (data && data[0] && allowedTypes.includes(data[0].type)) {
     imgFile.value = data[0];
@@ -37,8 +34,7 @@ const onDrop = (e: DragEvent) => {
 };
 const onFileInput = (e: Event) => {
   console.log("file chosen manually");
-  imgFile.value = null;
-  imgPreview.value = null;
+
   const target = e.target as HTMLInputElement;
   if (
     target.files &&
@@ -55,42 +51,37 @@ const onFileInput = (e: Event) => {
   }
 };
 
-const deleteSelectedImg = () => {
-  imgPreview.value = null;
-  imgFile.value = null;
-};
+
 </script>
 
 <template>
-  <div class="w-full min-h-[5.25rem] h-auto border border-white">
-    <div v-if="imgPreview" class="flex items-center gap-3 px-4 py-6">
-      <img :src="imgPreview" alt="" class="w-12 h-12 rounded-full" />
-      <IconCross @click="deleteSelectedImg" color="#ffffff" />
-    </div>
-    <div
-      v-else
-      class="flex gap-3 items-center px-4 py-6"
-      ref="dropZone"
-      @dragover.prevent
-      @dragenter.prevent
-      @drop.prevent.stop="onDrop"
-    >
-      <IconCamera />
-      <p class="font-helvetica-400 text-xl text-white">
-        {{ $t("quote.drag_n_drop_file") }}
-      </p>
-      <div class="relative">
-        <input
-          type="file"
-          class="opacity-0 w-[8rem] h-12"
-          @input="onFileInput"
-        />
-        <button
-          type="button"
-          class="absolute top-0 left-0 cursor-pointer pointer-events-none focus:outline-none bg-[#9747FF] p-[0.625rem] font-helvetica-400 text-xl text-white"
-        >
-          {{ $t("quote.text_choose_file") }}
-        </button>
+  <div class="w-fit ">
+    <div v-if="imgPreview" class="relative">
+      <img
+        :src="imgPreview"
+        alt=""
+        class="object-cover w-[22.375rem] h-[18.875rem] xl:w-[56rem] xl:h-[32rem] rounded-[0.25rem]"
+      />
+      <div class="absolute top-0 left-0 right-0 bottom-0 m-auto w-fit h-fit">
+        <div class="relative">
+          <input
+            type="file"
+            class="opacity-0 w-[12rem] h-[5.35rem]"
+            @input="onFileInput"
+          />
+          <div
+            class="pointer-events-none cursor-pointer absolute top-0 left-0 flex flex-col gap-3 items-center justify-center bg-[#181623]/70 p-4 rounded-md w-full"
+            ref="dropZone"
+            @dragover.prevent
+            @dragenter.prevent
+            @drop.prevent.stop="onDrop"
+          >
+            <IconCamera />
+            <p class="font-helvetica-400 text-xl text-white text-center">
+              {{ $t("quote.text_change_photo") }}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
