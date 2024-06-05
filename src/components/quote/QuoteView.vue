@@ -9,12 +9,12 @@ import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import i18n from "@/plugins/i18n";
 
-
 const props = defineProps<{
   closeModal: CallableFunction;
   quote_id: string;
 }>();
 const quote = ref<{
+  quote_id: string;
   quote_text: { en: string; ge: string };
   quote_image: string;
   comment_number: number;
@@ -24,8 +24,9 @@ const quote = ref<{
     comment_author_image: string;
     comment_text: string;
   }[];
+  has_user_loved: boolean;
 }>();
-const {t} = i18n.global
+const { t } = i18n.global;
 
 onMounted(async () => {
   try {
@@ -37,7 +38,7 @@ onMounted(async () => {
 });
 
 const userStore = useUserStore();
-const {auth_user_data} = storeToRefs(userStore)
+const { auth_user_data } = storeToRefs(userStore);
 
 const emit = defineEmits<{
   (e: "triggerForm", quote_id: string, action: string): void;
@@ -49,8 +50,6 @@ const editQuote = () => {
 const deleteQuote = () => {
   emit("triggerForm", props.quote_id, "delete");
 };
-
-
 </script>
 
 <template>
@@ -67,7 +66,9 @@ const deleteQuote = () => {
     />
     <div v-if="quote">
       <div class="mb-6 w-full">
-        <div class="relative border border-[#6C757D] rounded-[0.25rem] py-2 px-3 pr-12">
+        <div
+          class="relative border border-[#6C757D] rounded-[0.25rem] py-2 px-3 pr-12"
+        >
           <q class="italic text-white font-helvetica-400 text-2xl">
             {{ quote.quote_text.en }}
           </q>
@@ -79,7 +80,9 @@ const deleteQuote = () => {
         </div>
       </div>
       <div class="mb-6 w-full">
-        <div class="relative border border-[#6C757D] rounded-[0.25rem] py-2 px-3 pr-12">
+        <div
+          class="relative border border-[#6C757D] rounded-[0.25rem] py-2 px-3 pr-12"
+        >
           <q class="italic text-white font-helvetica-400 text-2xl">
             {{ quote.quote_text.ge }}
           </q>
@@ -91,33 +94,44 @@ const deleteQuote = () => {
         </div>
       </div>
       <div class="mb-6 w-full">
-        <img :src="quote.quote_image" alt="" class="object-cover w-[22.375rem] h-[18.875rem] xl:w-[56rem] xl:h-[32rem] " />
+        <img
+          :src="quote.quote_image"
+          alt=""
+          class="object-cover w-[22.375rem] h-[18.875rem] xl:w-[56rem] xl:h-[32rem]"
+        />
       </div>
-      <QuoteNotificationsCount :comment_count="quote.comment_number" :react_count="quote.react_number" />
-          <!-- DIVIDER -->
-    <div class="h-[0.0625rem] w-full bg-[#242e36] my-4"></div>
-    <!-- COMMENTS LIST -->
-    <div v-for="(comment, index) in quote.comments" :key="index">
-      <NewsFeedQuoteComment
-        :name="comment.comment_author_name"
-        :image="comment.comment_author_image"
-        :comment="comment.comment_text"
+      <QuoteNotificationsCount
+        v-if="auth_user_data?.id"
+        :comment_count="quote.comment_number"
+        :react_count="quote.react_number"
+        :quote_id="quote.quote_id"
+        :has_user_loved="quote.has_user_loved"
+        :user_id="auth_user_data.id"
       />
+      <!-- DIVIDER -->
+      <div class="h-[0.0625rem] w-full bg-[#242e36] my-4"></div>
+      <!-- COMMENTS LIST -->
+      <div v-for="(comment, index) in quote.comments" :key="index">
+        <NewsFeedQuoteComment
+          :name="comment.comment_author_name"
+          :image="comment.comment_author_image"
+          :comment="comment.comment_text"
+        />
+      </div>
+      <!-- WRITE COMMENT -->
+      <div class="flex gap-3 items-center w-full">
+        <img
+          v-if="auth_user_data"
+          :src="auth_user_data.image"
+          alt="quote author image"
+          class="w-10 xl:w-14 rounded-full shrink-0"
+        />
+        <textarea
+          name="comment"
+          :placeholder="t('general.text_write_comment')"
+          class="bg-[#24222F] rounded-[0.625rem] py-2 px-4 font-helvetica-400 text-base text-white focus:outline-none w-full h-[3.25rem]"
+        ></textarea>
+      </div>
     </div>
-    <!-- WRITE COMMENT -->
-    <div class="flex gap-3 items-center w-full">
-      <img
-        v-if="auth_user_data"
-        :src="auth_user_data.image"
-        alt="quote author image"
-        class="w-10 xl:w-14 rounded-full shrink-0"
-      />
-      <textarea
-        name="comment"
-        :placeholder="t('general.text_write_comment')"
-        class="bg-[#24222F] rounded-[0.625rem] py-2 px-4 font-helvetica-400 text-base text-white focus:outline-none w-full h-[3.25rem]"
-      ></textarea>
-    </div>
-</div>
   </LayoutCrudForm>
 </template>
