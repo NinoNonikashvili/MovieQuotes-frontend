@@ -1,6 +1,5 @@
 import type { AxiosRequestConfig } from "axios";
-import type { Url } from "url";
-import {  InputLanguages } from "./constants";
+import { InputLanguages, QuoteTypes } from "./constants";
 
 export type AuthLayoutType = {
   header_key: string;
@@ -76,7 +75,7 @@ export type CompoundSearchResults = {
 export type HeaderNavProps = {
   lang: string;
   name?: string;
-  image?: Url;
+  image?: string;
 };
 export type ProfileUpdateValues = {
   name?: string;
@@ -110,6 +109,7 @@ export type Quote = {
   image: File;
 };
 export type NewsFeedQuote = {
+  quote_id: string;
   author_avatar?: string;
   user_avatar?: string;
   author_name: string;
@@ -124,6 +124,7 @@ export type NewsFeedQuote = {
     comment_author_image?: string;
     comment_text: string;
   }>;
+  has_user_loved: boolean;
 };
 
 export type SingleMovieQuote = {
@@ -134,4 +135,18 @@ export type SingleMovieQuote = {
   heart_number: string;
 };
 
+export type QuoteNotification = {
+  quote_id: string;
+  user_id: string;
+  type: QuoteNotificationType;
+  comment: string | null;
+  seen: boolean;
+};
+
+export type QuoteHeartNotifiation = {
+  quote_id: string;
+  user_id: string;
+};
+
 export type Language = (typeof InputLanguages)[number];
+export type QuoteNotificationType = (typeof QuoteTypes)[number];

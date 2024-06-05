@@ -7,3 +7,5 @@ export const crudNotifications = [
   "QUOTE_UPDATED",
   "QUOTE_DELETED",
 ] as const;
+
+export const QuoteTypes = ["heart", "comment"] as const;

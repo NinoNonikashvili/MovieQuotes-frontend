@@ -19,8 +19,6 @@ const route = useRoute();
 const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
 
-
-
 const isBurgerMenuVisible = ref<boolean>(false);
 const isSearchVisible = ref<boolean>(false);
 const isNotificationModalVisible = ref<boolean>(false);
@@ -58,7 +56,7 @@ const debounce = (cb: CallableFunction) => {
   let timeout: number;
   return (text: string) => {
     clearTimeout(timeout);
-    timeout = setTimeout(() => {
+    timeout = window.setTimeout(() => {
       cb(text);
     }, 1000);
   };

@@ -26,8 +26,6 @@ declare module "vue-router" {
   }
 }
 
-
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -147,7 +145,7 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
   const user = useUserStore();
   const { auth_user } = storeToRefs(user);
-  const { set_auth_user } = user;
+  const { set_auth_user, set_auth_user_data } = user;
   //set language from url
   if (to.params.lang) {
     locale.value = to.params.lang as Locales;
@@ -164,7 +162,10 @@ router.beforeEach(async (to, from) => {
       const response = await checkAuthState();
       if (response.data.user) {
         set_auth_user(true);
-      } else [set_auth_user(false)];
+        set_auth_user_data(response.data.user);
+      } else {
+        set_auth_user(false);
+      }
     } catch (err) {
       return;
     }

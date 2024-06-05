@@ -13,7 +13,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   function (config) {
-    if (config.url?.includes("/email/verify")) {
+    if (
+      config.url?.includes("/email/verify") ||
+      config.url?.includes("broadcasting/auth")
+    ) {
       return config;
     }
     config.params = {
