@@ -1,4 +1,5 @@
 import instance from "@/plugins/axios";
+import type { QuoteHeartNotifiation, QuoteNotification } from "@/types/types";
 
 export async function createQuote(payload: FormData) {
   return await instance.post("/api/store-quote", payload);
@@ -21,4 +22,12 @@ export async function updateQuote(payload: FormData, id: string) {
 }
 export async function getSingleQuote(id: string) {
   return await instance.get("/api/quotes/" + id);
+}
+
+export async function addQuoteNotification(payload: QuoteNotification){
+  return await instance.post('/api/add-quote-notification', payload);
+}
+
+export async function removeQuoteHeart(payload: QuoteHeartNotifiation){
+  return await instance.post('/api/remove-quote-heart', payload);
 }
