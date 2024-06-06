@@ -23,7 +23,7 @@ jobs:
       - name: Deploy to Server
         if: ${{ success() }}
         run: |
-          ssh -o StrictHostKeyChecking=no ServerAliveInterval=300 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
+          ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=300 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
             export NODE_OPTIONS='--max-old-space-size=4096'
             cd apps
             cd front-movie-quotes-nino-nonikashvili
