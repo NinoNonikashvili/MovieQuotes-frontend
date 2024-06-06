@@ -1,7 +1,9 @@
 import instance from "@/plugins/axios";
 
-export async function getMovies() {
-  return await instance.get("/api/movies");
+export async function getMovies(cursor: string | null) {
+  return cursor
+    ? await instance.get("/api/movies", { params: { cursor: cursor } })
+    : await instance.get("/api/movies");
 }
 
 export async function getGenres() {
@@ -11,8 +13,8 @@ export async function getGenres() {
 export async function addMovie(movie: FormData) {
   return await instance.post("/api/add-movie", movie);
 }
-export async function editMovie(movie: FormData, id:string) {
-  return await instance.post("/api/edit-movie/"+id, movie);
+export async function editMovie(movie: FormData, id: string) {
+  return await instance.post("/api/edit-movie/" + id, movie);
 }
 
 export async function deleteMovie(id: number) {

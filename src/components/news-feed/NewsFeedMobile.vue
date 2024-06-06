@@ -3,9 +3,10 @@ import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import NewsFeedQuote from "@/components/news-feed/NewFeedQuote.vue";
 import IconWrite from "../icons/IconWrite.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import QuoteAdd from "@/components/quote/QuoteAdd.vue";
 import { useQuotesStore } from "@/stores/quotes";
+import { useFetchQuotes } from "@/composables/useFetchQuotes";
 
 // QUOTES
 const quoteStore = useQuotesStore();
@@ -16,7 +17,27 @@ const isAddQuoteModal = ref<boolean>(false);
 
 const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
+const elLoadMore = ref<HTMLElement | null>(null);
 
+const { fetch, loading } = useFetchQuotes();
+onMounted(() => {
+  const options = {
+    root: null, // Relative to the viewport
+    rootMargin: "0px",
+    threshold: 1.0,
+  };
+
+  const observer = new IntersectionObserver(async (entries) => {
+    entries.forEach(async (entry) => {
+      if (entry.isIntersecting) {
+        await fetch();
+      }
+    });
+  }, options);
+  if (elLoadMore.value) {
+    observer.observe(elLoadMore.value);
+  }
+});
 
 /**
  * 1. display write quote modal and save on click
@@ -32,7 +53,10 @@ const handleWriteQuoteClick = () => {
 </script>
 
 <template>
-  <section class="bg-[#181724] pt-8 xl:hidden" :class="{'blur-sm pointer-events-none': isAddQuoteModal}">
+  <section
+    class="bg-[#181724] pt-8 xl:hidden"
+    :class="{ 'blur-sm pointer-events-none': isAddQuoteModal }"
+  >
     <!-- WRITE QUOTE BTN  -->
     <button
       class="flex items-center gap-2 py-3 px-4 mb-6 ml-9 w-fit"
@@ -45,12 +69,21 @@ const handleWriteQuoteClick = () => {
     </button>
 
     <!-- QUOTES LIST -->
-    <div>
+    <div v-if="quotes">
       <NewsFeedQuote
         v-for="(quote, index) in quotes"
         :key="index"
         :quote="quote"
+        :last="index === quotes.length - 1"
       />
+    </div>
+
+    <div
+      ref="elLoadMore"
+      :class="loading ? 'opacity-100' : 'opacity-0'"
+      class="font-helvetica-500 text-white text-2xl"
+    >
+      Loading more...
     </div>
   </section>
   <div

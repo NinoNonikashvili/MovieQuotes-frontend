@@ -5,19 +5,41 @@ import { storeToRefs } from "pinia";
 import NewsFeedQuote from "@/components/news-feed/NewFeedQuote.vue";
 import IconWrite from "../icons/IconWrite.vue";
 import IconSearch from "../icons/IconSearch.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import QuoteAdd from "@/components/quote/QuoteAdd.vue";
 import { useQuotesStore } from "@/stores/quotes";
+import { useFetchQuotes } from "@/composables/useFetchQuotes";
 
 // QUOTES
 const quoteStore = useQuotesStore();
 const { quotes } = storeToRefs(quoteStore);
+const { fetch, loading } = useFetchQuotes();
 
 const longBtn = ref<string>("writeQuote");
 const isAddQuoteModal = ref<boolean>(false);
+const loadMoreRef = ref<HTMLElement | null>(null);
 
 const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
+
+onMounted(() => {
+  const options = {
+    root: null, // Relative to the viewport
+    rootMargin: "0px",
+    threshold: 1.0,
+  };
+
+  const observer = new IntersectionObserver(async (entries) => {
+    entries.forEach(async (entry) => {
+      if (entry.isIntersecting) {
+        await fetch();
+      }
+    });
+  }, options);
+  if (loadMoreRef.value) {
+    observer.observe(loadMoreRef.value);
+  }
+});
 
 /**
  * 1. display write quote modal and save on click
@@ -33,7 +55,10 @@ const handleWriteQuoteClick = () => {
 </script>
 
 <template>
-  <div class="hidden w-full px-16 pt-8 pb-[15rem] xl:flex bg-[#181724]" :class="{'blur-sm pointer-events-none': isAddQuoteModal}">
+  <div
+    class="hidden w-full px-16 pt-8 pb-[15rem] xl:flex bg-[#181724]"
+    :class="{ 'blur-sm pointer-events-none': isAddQuoteModal }"
+  >
     <LayoutUsersPages
       :name="auth_user_data?.name"
       :image="auth_user_data?.image"
@@ -82,12 +107,20 @@ const handleWriteQuoteClick = () => {
         </div>
       </div>
       <!-- QUOTES LIST -->
-      <div>
+      <div v-if="quotes">
         <NewsFeedQuote
           v-for="(quote, index) in quotes"
           :key="index"
           :quote="quote"
+          :last="index === quotes.length - 1"
         />
+      </div>
+      <div
+        ref="loadMoreRef"
+        :class="loading ? 'opacity-100' : 'opacity-0'"
+        class="font-helvetica-500 text-white text-2xl"
+      >
+        Loading more...
       </div>
     </section>
   </div>

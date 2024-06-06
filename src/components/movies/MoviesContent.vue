@@ -10,7 +10,8 @@ import MoviesListComponent from "@/components/movies/MoviesListComponent.vue";
 import AddMovie from "./AddMovie.vue";
 import SuccessNotification from "../shared/SuccessNotification.vue";
 
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useFetchMovies } from "@/composables/useFetchMovies";
 
 const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
@@ -19,11 +20,35 @@ const { movies } = storeToRefs(movieStore);
 const notificationsStore = useNotificationStore();
 const { status } = storeToRefs(notificationsStore);
 const { set_status } = useNotificationStore();
+const loadMoreMovies = ref<HTMLElement | null>(null);
 
 const isAddMovie = ref<boolean>(false);
 const closeAddMovie = () => {
   isAddMovie.value = false;
 };
+
+const { fetch, loading } = useFetchMovies();
+
+onMounted(() => {
+  const options = {
+    root: null, // Relative to the viewport
+    rootMargin: "0px",
+    threshold: 1.0,
+  };
+
+  const observer = new IntersectionObserver(async (entries) => {
+    entries.forEach(async (entry) => {
+      if (entry.isIntersecting) {
+        await fetch();
+      }
+    });
+  }, options);
+  console.log(loadMoreMovies.value);
+  if (loadMoreMovies.value) {
+    observer.observe(loadMoreMovies.value);
+    console.log("attach");
+  }
+});
 </script>
 <template>
   <div
@@ -78,6 +103,13 @@ const closeAddMovie = () => {
           :quotes_num="movie.quote_num"
         />
       </div>
+      <div
+        ref="loadMoreMovies"
+        :class="loading ? 'opacity-100' : 'opacity-0'"
+        class="font-helvetica-500 text-white text-2xl"
+      >
+        Loading more...
+      </div>
     </section>
   </div>
 
@@ -87,6 +119,9 @@ const closeAddMovie = () => {
     v-if="isAddMovie"
     :user_id="auth_user_data?.id"
   />
-  <SuccessNotification v-if="status" :text_key="'movies.'+status" @close-notification="set_status(null)"/>
-
+  <SuccessNotification
+    v-if="status"
+    :text_key="'movies.' + status"
+    @close-notification="set_status(null)"
+  />
 </template>
