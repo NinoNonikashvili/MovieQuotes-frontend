@@ -21,11 +21,9 @@ const { movies } = storeToRefs(moviesStore);
 
 onMounted(async () => {
   //fetch movies if not fetched yet
-  console.log("mounted", movies.value);
   if (!movies.value) {
     try {
-      const response = await getMovies();
-      console.log(response.data);
+      const response = await getMovies(null);
       set_movies(response.data.data);
     } catch (err) {
       return;
@@ -78,7 +76,6 @@ const handleSubmitClick = async () => {
     errors.value.movie = null;
   }
   if (img.value && quote_en.value && quote_ge.value && chosenMovieData.value) {
-    console.log("submit");
     try {
       const data = new FormData();
       data.append("movie_id", String(chosenMovieData.value.id));
@@ -86,7 +83,6 @@ const handleSubmitClick = async () => {
       data.append("quote_ge", quote_ge.value);
       data.append("image", img.value);
 
-      console.log("data:", data);
       await createQuote(data);
       addQuoteSuccess.value = true;
     } catch (err) {

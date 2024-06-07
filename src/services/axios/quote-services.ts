@@ -33,3 +33,13 @@ export async function addQuoteNotification(payload: QuoteNotification) {
 export async function removeQuoteHeart(payload: QuoteHeartNotifiation) {
   return await instance.post("/api/remove-quote-heart", payload);
 }
+export async function getNotifications() {
+  return await instance.get("/api/get-notifications");
+}
+
+export async function setNotificationSeen(id: string) {
+  return await instance.post("/api/set-notification-seen", { id: id });
+}
+export async function setAllNotificationsSeen(){
+  return await instance.get('/api/set-all-notifications-seen')
+}

@@ -121,7 +121,7 @@ const handleSubmit = async () => {
       set_status("MOVIE_ADDED");
       props.closeModal()
       try {
-        const response = await getMovies();
+        const response = await getMovies(null);
         set_movies(response.data.data as MoviesData[]);
       } catch (err) {
         return;

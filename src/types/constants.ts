@@ -8,4 +8,9 @@ export const crudNotifications = [
   "QUOTE_DELETED",
 ] as const;
 
-export const QuoteTypes = ["heart", "comment"] as const;
+
+export const NotificationActions = [
+  "react",
+  "unreact",
+  "comment",
+] as const;

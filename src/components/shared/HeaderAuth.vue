@@ -3,8 +3,7 @@ import IconBurger from "@/components/icons/IconBurger.vue";
 import IconSearch from "@/components/icons/IconSearch.vue";
 import IconBell from "@/components/icons/IconBell.vue";
 import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
-import IconHeart from "@/components/icons/IconHeart.vue";
-import { ref } from "vue";
+import { computed, watch, ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import i18n from "@/plugins/i18n";
 import { useRoute } from "vue-router";
@@ -13,6 +12,15 @@ import type { CompoundSearchResults } from "@/types/types";
 import HeaderAuthNavigation from "@/components/shared/HeaderAuthNavigation.vue";
 import HeaderAuthLangAndLogout from "@/components/shared/HeaderAuthLangAndLogout.vue";
 import { storeToRefs } from "pinia";
+import { useQuoteNotificationStore } from "@/stores/quote-notifications";
+import HeaderAuthSingleNotificationComponent from "./HeaderAuthSingleNotificationComponent.vue";
+import QuoteView from "../quote/QuoteView.vue";
+import {
+  getNotifications,
+  setAllNotificationsSeen,
+  setNotificationSeen,
+} from "@/services/axios/quote-services";
+import { useNotificationStore } from "@/stores/crud-notifications";
 
 const { locale } = i18n.global;
 const route = useRoute();
@@ -27,13 +35,56 @@ const results = ref<CompoundSearchResults | null>(null);
 
 const burgerRef = ref(null);
 const notificationModalRef = ref(null);
+const notificationStore = useQuoteNotificationStore();
+const {
+  set_notification,
+  decreaseSeenNotCount,
+  setSeenNotCount,
+  resetSeenNotCount,
+} = useQuoteNotificationStore();
+const { notifications, seenNotificationNum } = storeToRefs(notificationStore);
+
+const isViewQuote = ref<boolean>(false);
+const selectedQuoteId = ref<string | null>();
+
+const handleNotificationClick = async (notification_id: number) => {
+  decreaseSeenNotCount();
+
+  try {
+    await setNotificationSeen(String(notification_id));
+    let response = await getNotifications();
+    set_notification(response.data.data);
+    setSeenNotCount(response.data.data);
+  } catch (err) {
+    return;
+  }
+};
+
+const handleViewQuote = (quote_id: number) => {
+  selectedQuoteId.value = String(quote_id);
+  isViewQuote.value = true;
+};
+
+const mskeAllNotsSeen = async () => {
+  notifications.value.forEach((not) => (not.seen = true));
+  resetSeenNotCount();
+  try {
+    await setAllNotificationsSeen();
+  } catch (err) {
+    return;
+  }
+};
+
+const closeViewQuote = () => {
+  isViewQuote.value = false;
+  selectedQuoteId.value = null;
+};
 
 onClickOutside(burgerRef, () => {
   isBurgerMenuVisible.value = false;
 });
 onClickOutside(notificationModalRef, () => {
   isNotificationModalVisible.value = false;
-  console.log(isNotificationModalVisible.value);
 });
 const toggleIsNotificationModalVisible = () => {
   //prevent double toggling if outside click already toggled
@@ -62,13 +113,11 @@ const debounce = (cb: CallableFunction) => {
   };
 };
 const updateDebounce = debounce(async (searchKey: string) => {
-  console.log(searchKey);
   //send request
   // try{
   //   const response = await loadMoviesAndQuotes(searchKey);
   //   results.value = response.data
   // }catch(err) {
-  //   console.log(err)
   // }
 });
 const callUpdateDebounce = (e: Event) => {
@@ -157,8 +206,7 @@ const callUpdateDebounce = (e: Event) => {
         <div
           class="bg-[#E31221] w-6 h-6 rounded-full absolute -top-[0.5rem] -right-[0.8rem] flex items-center justify-center"
         >
-          <!-- replace with actual notificaiton -->
-          5
+          {{ seenNotificationNum }}
         </div>
         <div
           v-if="isNotificationModalVisible"
@@ -170,45 +218,29 @@ const callUpdateDebounce = (e: Event) => {
       <div
         ref="notificationModalRef"
         v-if="isNotificationModalVisible"
-        class="min-w-[26.75rem] px-8 py-6 bg-black absolute top-[5.5rem] right-0 rounded-xl"
+        class="min-w-[26.75rem] px-8 py-6 bg-black absolute top-[5.5rem] right-0 rounded-xl max-h-[30rem] overflow-y-scroll"
       >
         <div class="w-full flex items-center justify-between mb-6">
           <h3 class="font-helvetica-500 text-xl text-white">
             {{ $t("general.text_notifications") }}
           </h3>
           <!-- clear the numeber of notifications on click -->
-          <h4 class="font-helvetica-400 text-sm text-white underline">
+          <h4
+            class="font-helvetica-400 text-sm text-white underline cursor-pointer"
+            @click="mskeAllNotsSeen"
+          >
             {{ $t("general.text_mark_all_read") }}
           </h4>
         </div>
         <div class="flex flex-col gap-2">
           <!-- SINGLE NOTIFICATION -->
-          <div class="border border-[#6C757D] rounded-[0.25rem] p-4 flex gap-3">
-            <div class="flex flex-col">
-              <img
-                src=""
-                alt="user avatar"
-                class="rounded-full w-[3.75rem] h-[3.75rem]"
-              />
-              <span class="font-helvetica-400 text-base text-[#198754] mt-1">{{
-                $t("general.text_new")
-              }}</span>
-            </div>
-            <div>
-              <h3 class="font-helvetica-400 text-xl text-white">
-                Natia Veshaguri
-              </h3>
-              <div class="flex items-center gap-2 mb-2">
-                <IconHeart />
-                <p class="font-helvetica-400 text-base text-[#CED4DA]">
-                  {{ $t("general.quote_reaction_message") }}
-                </p>
-              </div>
-              <p class="font-helvetica-400 text-base text-[#D9D9D9]">
-                {{ "10 " + $t("general.time_elapsed") }}
-              </p>
-            </div>
-          </div>
+          <HeaderAuthSingleNotificationComponent
+            v-for="(notification, index) in notifications"
+            :key="index"
+            :notification="notification"
+            @notificationClicked="handleNotificationClick"
+            @viewQuote="handleViewQuote"
+          />
         </div>
       </div>
       <!-- LANG SWITCHER AND LOGOUT BTN FOR DESKTOP -->
@@ -216,4 +248,10 @@ const callUpdateDebounce = (e: Event) => {
       <HeaderAuthLangAndLogout visibility="hidden xl:block" />
     </div>
   </div>
+  <QuoteView
+    :closeModal="closeViewQuote"
+    :quote_id="selectedQuoteId"
+    :doNotShowCrud="true"
+    v-if="isViewQuote && selectedQuoteId"
+  />
 </template>

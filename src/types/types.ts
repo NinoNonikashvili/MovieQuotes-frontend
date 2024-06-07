@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig } from "axios";
-import { InputLanguages, QuoteTypes } from "./constants";
+import { InputLanguages, NotificationActions } from "./constants";
 
 export type AuthLayoutType = {
   header_key: string;
@@ -138,7 +138,7 @@ export type SingleMovieQuote = {
 export type QuoteNotification = {
   quote_id: string;
   user_id: string;
-  type: QuoteNotificationType;
+  type: QuoteNotificationAction;
   comment: string | null;
   seen: boolean;
 };
@@ -148,5 +148,15 @@ export type QuoteHeartNotifiation = {
   user_id: string;
 };
 
+export type QuoteNotifications = {
+  notification_id: number;
+  quote_id: number;
+  notification_author_image: string;
+  notification_author_name: string;
+  action: QuoteNotificationAction;
+  create_at: string;
+  seen: boolean;
+};
+
 export type Language = (typeof InputLanguages)[number];
-export type QuoteNotificationType = (typeof QuoteTypes)[number];
+export type QuoteNotificationAction = (typeof NotificationActions)[number];

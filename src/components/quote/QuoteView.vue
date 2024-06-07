@@ -12,6 +12,7 @@ import i18n from "@/plugins/i18n";
 const props = defineProps<{
   closeModal: CallableFunction;
   quote_id: string;
+  doNotShowCrud?: boolean
 }>();
 const quote = ref<{
   quote_id: string;
@@ -59,6 +60,7 @@ const deleteQuote = () => {
     :hideOnMobile="true"
   >
     <EditDelete
+      v-if="!props.doNotShowCrud"
       location="top-8 left-8"
       bg="bg-transparent"
       @edit="editQuote"
