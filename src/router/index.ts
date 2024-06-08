@@ -1,11 +1,4 @@
-import { createRouter, createWebHistory, type RouteLocation } from "vue-router";
-import HomePage from "@/views/HomePage.vue";
-import RegisterPage from "@/views/RegisterPage.vue";
-import LoginPage from "@/views/LoginPage.vue";
-import ResetPasswordPage from "@/views/ResetPasswordPage.vue";
-import ForgotPasswordPage from "@/views/ForgotPasswordPage.vue";
-import EmailVerifiedPage from "@/views/EmailVerifiedPage.vue";
-import NewsFeedPage from "@/views/NewsFeedPage.vue";
+import { createRouter, createWebHistory } from "vue-router";
 import i18n from "@/plugins/i18n";
 import type { Locales } from "@/types/types";
 import { setLocale } from "@vee-validate/i18n";
@@ -13,10 +6,30 @@ import HandleGmailAuthPage from "@/views/HandleGmailAuthPage.vue";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { checkAuthState } from "@/services/axios/auth-services";
-import ProfilePage from "@/views/ProfilePage.vue";
-import MoviesPage from "@/views/MoviesPage.vue";
-import MoviePage from "@/views/MoviePage.vue";
-import MovieContainer from "@/views/MovieContainer.vue";
+
+// import HomePage from "@/views/HomePage.vue";
+// import RegisterPage from "@/views/RegisterPage.vue";
+// import LoginPage from "@/views/LoginPage.vue";
+// import ResetPasswordPage from "@/views/ResetPasswordPage.vue";
+// import ForgotPasswordPage from "@/views/ForgotPasswordPage.vue";
+// import EmailVerifiedPage from "@/views/EmailVerifiedPage.vue";
+// import NewsFeedPage from "@/views/NewsFeedPage.vue";
+// import ProfilePage from "@/views/ProfilePage.vue";
+// import MoviesPage from "@/views/MoviesPage.vue";
+// import MoviePage from "@/views/MoviePage.vue";
+// import MovieContainer from "@/views/MovieContainer.vue";
+
+const HomePage = () => import("@/views/HomePage.vue");
+const RegisterPage = () => import("@/views/RegisterPage.vue");
+const LoginPage = () => import("@/views/LoginPage.vue");
+const ResetPasswordPage = () => import("@/views/ResetPasswordPage.vue");
+const ForgotPasswordPage = () => import("@/views/ForgotPasswordPage.vue");
+const EmailVerifiedPage = () => import("@/views/EmailVerifiedPage.vue");
+const NewsFeedPage = () => import("@/views/NewsFeedPage.vue");
+const ProfilePage = () => import("@/views/ProfilePage.vue");
+const MoviesPage = () => import("@/views/MoviesPage.vue");
+const MoviePage = () => import("@/views/MoviePage.vue");
+const MovieContainer = () => import("@/views/MovieContainer.vue");
 
 const { locale } = i18n.global;
 
@@ -115,10 +128,10 @@ const router = createRouter({
       path: "/movies/",
       name: "movies",
       // beforeEnter: [loadMovies],
-      redirect: to => {
+      redirect: (to) => {
         // the function receives the target route as the argument
         // we return a redirect path/location here.
-        return { name: 'movies-all', params: { lang: to.params.lang } }
+        return { name: "movies-all", params: { lang: to.params.lang } };
       },
       component: MovieContainer,
       meta: {

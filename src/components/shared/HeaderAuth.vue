@@ -8,7 +8,6 @@ import { onClickOutside } from "@vueuse/core";
 import i18n from "@/plugins/i18n";
 import { useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user";
-import type { CompoundSearchResults } from "@/types/types";
 import HeaderAuthNavigation from "@/components/shared/HeaderAuthNavigation.vue";
 import HeaderAuthLangAndLogout from "@/components/shared/HeaderAuthLangAndLogout.vue";
 import { storeToRefs } from "pinia";
@@ -22,13 +21,12 @@ import {
 } from "@/services/axios/quote-services";
 import { useFetchQuotes } from "@/composables/useFetchQuotes";
 import { useQuotesStore } from "@/stores/quotes";
-import NewsFeedQuote from "@/components/news-feed/NewFeedQuote.vue";
 
 const { locale } = i18n.global;
 const route = useRoute();
 const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
-const { fetch, loading, fetchSearchedQuotes } = useFetchQuotes();
+const { fetchSearchedQuotes } = useFetchQuotes();
 const quoteStore = useQuotesStore();
 const { quotes } = storeToRefs(quoteStore);
 
@@ -36,7 +34,6 @@ const isBurgerMenuVisible = ref<boolean>(false);
 const isSearchVisible = ref<boolean>(false);
 const isNotificationModalVisible = ref<boolean>(false);
 const tempIsNotificationModalVisible = ref<boolean>(false);
-const results = ref<CompoundSearchResults | null>(null);
 
 const burgerRef = ref(null);
 const notificationModalRef = ref(null);
