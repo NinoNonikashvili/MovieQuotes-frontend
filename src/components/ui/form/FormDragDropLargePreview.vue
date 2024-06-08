@@ -6,7 +6,7 @@ const props = defineProps<{
   default_value?: string;
 }>();
 
-const imgPreview = ref<string | undefined | null>('https://tse4.mm.bing.net/th?id=OIP.1b-GpcCf6-Nm3xvKeO8w4AHaEl&pid=Api&P=0&h=220');
+const imgPreview = ref<string | undefined | null>(props.default_value);
 if (props.default_value) {
   imgPreview.value = props.default_value;
 }

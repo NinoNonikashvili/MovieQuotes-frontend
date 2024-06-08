@@ -23,7 +23,7 @@ onMounted(async () => {
   //fetch movies if not fetched yet
   if (!movies.value) {
     try {
-      const response = await getMovies(null);
+      const response = await getMovies(null, null);
       set_movies(response.data.data);
     } catch (err) {
       return;

@@ -31,3 +31,6 @@ export async function deleteMovie(id: number) {
 export async function getBilingualMovie(id: number) {
   return await instance.get("/api/movies/" + id);
 }
+export async function getSingleMovie(id: string) {
+  return await instance.get("/api/movies/single/" + id);
+}

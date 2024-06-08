@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, type RouteLocation } from "vue-router";
 import HomePage from "@/views/HomePage.vue";
 import RegisterPage from "@/views/RegisterPage.vue";
 import LoginPage from "@/views/LoginPage.vue";
@@ -115,7 +115,11 @@ const router = createRouter({
       path: "/movies/",
       name: "movies",
       // beforeEnter: [loadMovies],
-      redirect: { name: "movies-all", params: { lang: locale.value } },
+      redirect: to => {
+        // the function receives the target route as the argument
+        // we return a redirect path/location here.
+        return { name: 'movies-all', params: { lang: to.params.lang } }
+      },
       component: MovieContainer,
       meta: {
         requiresAuth: true,
@@ -147,6 +151,7 @@ router.beforeEach(async (to, from) => {
   const { auth_user } = storeToRefs(user);
   const { set_auth_user, set_auth_user_data } = user;
   //set language from url
+  console.log(from, from.params.lang, to.params.lang);
   if (to.params.lang) {
     locale.value = to.params.lang as Locales;
     if (locale.value === "ge") {
