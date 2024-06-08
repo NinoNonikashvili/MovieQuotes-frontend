@@ -129,10 +129,10 @@ export type NewsFeedQuote = {
 
 export type SingleMovieQuote = {
   id: string;
-  image: string;
+  quote_image: string;
   quote: string;
   comment_number: string;
-  heart_number: string;
+  react_number: string;
 };
 
 export type QuoteNotification = {

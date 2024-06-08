@@ -27,7 +27,19 @@ const closeAddMovie = () => {
   isAddMovie.value = false;
 };
 
-const { fetch, loading } = useFetchMovies();
+const { fetch, loading, fetchSearchedMovies } = useFetchMovies();
+
+const search = async (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  console.log("search");
+  if (target.value) {
+    try {
+      await fetchSearchedMovies(target.value);
+    } catch (err) {
+      return;
+    }
+  }
+};
 
 onMounted(() => {
   const options = {
@@ -61,7 +73,7 @@ onMounted(() => {
       :image="auth_user_data?.image"
     />
 
-    <section class="w-full">
+    <section class="w-full min-h-screen">
       <header class="flex items-center justify-between w-full">
         <div class="flex gap-2 flex-col xl:flex-row w-fit">
           <h1 class="font-helvetica-500 text-2xl text-white">
@@ -81,6 +93,7 @@ onMounted(() => {
 
               <input
                 :placeholder="$t('general.text_search_by')"
+                @keydown.enter="search"
                 class="font-helvetica-400 text-xl text-[#CED4DA] bg-transparent focus:outline-none w-full"
               />
             </div>

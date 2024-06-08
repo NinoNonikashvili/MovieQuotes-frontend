@@ -151,13 +151,16 @@ const handleTriggerForm = async (id: string, action: string) => {
         {{ $t("movies.text_movie_description") }}
       </h1>
       <!-- DIV MOVIE DATA -->
-      <div class="flex flex-col xl:flex-row gap-6 xl:gap-5 w-fit" v-if="movie">
+      <div
+        class="flex flex-col xl:flex-row gap-6 xl:gap-5 w-fit xl:w-full"
+        v-if="movie"
+      >
         <img
           :src="movie.image"
           alt=""
           class="h-[18.875rem] w-[22.375rem] xl:w-[50.625rem] xl:h-[27.5rem] object-fit rounded-[0.25rem]"
         />
-        <div class="relative">
+        <div class="relative w-full">
           <h3 class="fomt-helvetica-500 text-[#DDCCAA] text-2xl mt-3 mb-5">
             {{ movie.title }} ({{ movie.year }})
           </h3>
@@ -179,7 +182,7 @@ const handleTriggerForm = async (id: string, action: string) => {
           <EditDelete
             @edit="handleEditMovie"
             @delete="handleDeleteMovie"
-            location="top-0 right-0"
+            location="top-0 right-0 "
           />
         </div>
       </div>

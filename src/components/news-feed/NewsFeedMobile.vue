@@ -30,7 +30,7 @@ onMounted(() => {
   const observer = new IntersectionObserver(async (entries) => {
     entries.forEach(async (entry) => {
       if (entry.isIntersecting) {
-        await fetch();
+        await fetch(null);
       }
     });
   }, options);
@@ -43,6 +43,8 @@ onMounted(() => {
  * 1. display write quote modal and save on click
  * 2. add search functionality and send request on enter click
  */
+
+ 
 const closeAddQuote = () => {
   isAddQuoteModal.value = false;
 };

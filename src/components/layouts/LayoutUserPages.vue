@@ -10,7 +10,7 @@ const props = defineProps<{
 }>();
 </script>
 <template>
-  <section class="w-[14.625rem] mr-[7%] desktop:mr-[11.5rem] shrink-0">
+  <section class="w-[14.625rem] mr-[7%] desktop:mr-[11.5rem] shrink-0 min-h-screen">
       <HeaderAuthNavigation
         :name="props.name"
         :lang="locale"

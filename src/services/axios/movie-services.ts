@@ -1,9 +1,16 @@
 import instance from "@/plugins/axios";
 
-export async function getMovies(cursor: string | null) {
-  return cursor
-    ? await instance.get("/api/movies", { params: { cursor: cursor } })
-    : await instance.get("/api/movies");
+export async function getMovies(cursor: string | null, search: string | null) {
+  const params: { [key: string]: string | null } = {};
+
+  if (cursor) {
+    params.cursor = cursor;
+  }
+
+  if (search) {
+    params.search = search;
+  }
+  return await instance.get("/api/movies", { params: params });
 }
 
 export async function getGenres() {

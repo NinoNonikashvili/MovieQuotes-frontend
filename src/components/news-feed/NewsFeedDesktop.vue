@@ -13,11 +13,12 @@ import { useFetchQuotes } from "@/composables/useFetchQuotes";
 // QUOTES
 const quoteStore = useQuotesStore();
 const { quotes } = storeToRefs(quoteStore);
-const { fetch, loading } = useFetchQuotes();
+const { fetch, loading, fetchSearchedQuotes } = useFetchQuotes();
 
 const longBtn = ref<string>("writeQuote");
 const isAddQuoteModal = ref<boolean>(false);
 const loadMoreRef = ref<HTMLElement | null>(null);
+const searchKey = ref<string | null>(null);
 
 const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
@@ -32,7 +33,7 @@ onMounted(() => {
   const observer = new IntersectionObserver(async (entries) => {
     entries.forEach(async (entry) => {
       if (entry.isIntersecting) {
-        await fetch();
+        await fetch(searchKey.value);
       }
     });
   }, options);
@@ -41,10 +42,19 @@ onMounted(() => {
   }
 });
 
-/**
- * 1. display write quote modal and save on click
- * 2. add search functionality and send request on enter click
- */
+
+const search = async (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  console.log("search");
+  if (target.value) {
+    searchKey.value = target.value;
+    try {
+      await fetchSearchedQuotes(target.value);
+    } catch (err) {
+      return;
+    }
+  }
+};
 const closeAddQuote = () => {
   isAddQuoteModal.value = false;
 };
@@ -92,9 +102,11 @@ const handleWriteQuoteClick = () => {
           <div v-if="longBtn === 'search'" class="relative w-full">
             <input
               class="font-helvetica-400 text-xl text-[#CED4DA] bg-transparent focus:outline-none peer"
+              @keydown.enter="search"
             />
             <p
               class="font-helvetica-400 text-xl text-[#CED4DA] peer-focus:hidden absolute top-0 left-0 pointer-events-none"
+              :class="{ hidden: searchKey }"
             >
               {{ $t("general.text_enter")
               }}<span class="font-helvetica-400 text-xl text-white">@</span>

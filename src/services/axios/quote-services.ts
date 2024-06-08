@@ -4,10 +4,17 @@ import type { QuoteHeartNotifiation, QuoteNotification } from "@/types/types";
 export async function createQuote(payload: FormData) {
   return await instance.post("/api/store-quote", payload);
 }
-export async function getQuotes(cursor: string | null) {
-  return cursor
-    ? await instance.get("/api/quotes/", { params: { cursor: cursor } })
-    : await instance.get("/api/quotes");
+export async function getQuotes(cursor: string | null, search: string | null) {
+  const params: { [key: string]: string | null } = {};
+
+  if (cursor) {
+    params.cursor = cursor;
+  }
+
+  if (search) {
+    params.search = search;
+  }
+  return await instance.get("/api/quotes/", { params: params });
 }
 export async function getSingleMovieQuotes(payload: { id: string }) {
   return await instance.post("/api/single-movie-quotes", payload);
@@ -40,6 +47,6 @@ export async function getNotifications() {
 export async function setNotificationSeen(id: string) {
   return await instance.post("/api/set-notification-seen", { id: id });
 }
-export async function setAllNotificationsSeen(){
-  return await instance.get('/api/set-all-notifications-seen')
+export async function setAllNotificationsSeen() {
+  return await instance.get("/api/set-all-notifications-seen");
 }

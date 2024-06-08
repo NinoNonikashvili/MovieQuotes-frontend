@@ -28,7 +28,7 @@ const deleteQuote = () => {
       class="flex flex-col gap-6 xl:flex-row xl:gap-8 pb-6 border-b border-white"
     >
       <img
-        :src="props.quote.image"
+        :src="props.quote.quote_image"
         alt=""
         class="w-[22.5rem] h-[8.75rem] xl:w-[14.125rem] rounded-sm object-cover"
       />
@@ -47,7 +47,7 @@ const deleteQuote = () => {
       </div>
       <div class="flex gap-2 items-center">
         <span class="font-helvetica-400 text-xl text-white">{{
-          props.quote.heart_number ?? "0"
+          props.quote.react_number ?? "0"
         }}</span>
         <IconHeartOutline />
       </div>
