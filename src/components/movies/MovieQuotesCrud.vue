@@ -7,17 +7,27 @@ import IconEditPencil from "../icons/IconEditPencil.vue";
 
 const dropdown = ref(false);
 const emit = defineEmits<{
-  (e:'triggerViewQuote'):void
-  (e:'triggerEditQuote'):void
-  (e:'triggerDeleteQuote'):void
-}>()
+  (e: "triggerViewQuote"): void;
+  (e: "triggerEditQuote"): void;
+  (e: "triggerDeleteQuote"): void;
+}>();
+
+const emitView = () => {
+  emit("triggerViewQuote");
+  dropdown.value = false;
+};
+const emitEdit = () => {
+  emit("triggerEditQuote");
+  dropdown.value = false;
+};
+const emitDelete = () => {
+  emit("triggerDeleteQuote");
+  dropdown.value = false;
+};
 
 const props = defineProps<{
   location: string;
 }>();
-
-
-
 </script>
 
 <template>
@@ -35,7 +45,7 @@ const props = defineProps<{
       >
         <button
           class="bg-transparent border-0 w-fit p-4 flex items-center gap-3 mb-1"
-          @click="emit('triggerViewQuote')"
+          @click="emitView"
         >
           <IconShowPassword class="shrink-0" color="#ffffff" />
           <p class="font-helvetica-500 text-base text-white shrink-0">
@@ -44,7 +54,7 @@ const props = defineProps<{
         </button>
         <button
           class="bg-transparent border-0 w-fit p-4 flex items-center gap-3 mb-1"
-          @click="emit('triggerEditQuote')"
+          @click="emitEdit"
         >
           <IconEditPencil class="shrink-0" />
           <p class="font-helvetica-500 text-base text-white">
@@ -53,7 +63,7 @@ const props = defineProps<{
         </button>
         <button
           class="bg-transparent border-0 w-fit p-4 flex items-center gap-3"
-          @click="emit('triggerDeleteQuote')"
+          @click="emitDelete"
         >
           <IconTrash class="shrink-0" />
           <p class="font-helvetica-500 text-base text-white">

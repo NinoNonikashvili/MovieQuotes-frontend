@@ -8,10 +8,12 @@ import NewsFeedQuoteComment from "@/components/news-feed/NewsFeedQuoteComment.vu
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import i18n from "@/plugins/i18n";
+import { useAddQuoteNotification } from "@/composables/useAddQuoteNotification";
 
 const props = defineProps<{
   closeModal: CallableFunction;
   quote_id: string;
+  doNotShowCrud?: boolean;
 }>();
 const quote = ref<{
   quote_id: string;
@@ -32,6 +34,10 @@ onMounted(async () => {
   try {
     let response = await getSingleQuote(props.quote_id);
     quote.value = response.data.data;
+    if (quote.value) {
+      local_comments.value = quote.value.comments;
+      local_comments_number.value = quote.value.comment_number;
+    }
   } catch (err) {
     return;
   }
@@ -50,6 +56,44 @@ const editQuote = () => {
 const deleteQuote = () => {
   emit("triggerForm", props.quote_id, "delete");
 };
+const local_comments = ref<
+  | {
+      comment_author_name: string;
+      comment_author_image?: string;
+      comment_text: string;
+    }[]
+  | null
+>();
+const local_comments_number = ref<number>();
+
+const handleComment = async (e: Event) => {
+  console.log("handle comment");
+  const target = e.target as HTMLInputElement;
+  console.log(target.value, auth_user_data.value?.id, props.quote_id);
+  if (target.value && auth_user_data.value?.id && props.quote_id) {
+    try {
+      await useAddQuoteNotification({
+        quote_id: props.quote_id,
+        user_id: String(auth_user_data.value.id),
+        type: "comment",
+        comment: target.value,
+        seen: false,
+      });
+    } catch (er) {
+      return;
+    }
+    local_comments.value?.push({
+      comment_author_name: auth_user_data.value.name,
+      comment_author_image: auth_user_data.value.image,
+      comment_text: target.value,
+    });
+    if (local_comments_number.value) {
+      local_comments_number.value++;
+    }
+
+    target.value = "";
+  }
+};
 </script>
 
 <template>
@@ -59,6 +103,7 @@ const deleteQuote = () => {
     :hideOnMobile="true"
   >
     <EditDelete
+      v-if="!props.doNotShowCrud"
       location="top-8 left-8"
       bg="bg-transparent"
       @edit="editQuote"
@@ -101,17 +146,17 @@ const deleteQuote = () => {
         />
       </div>
       <QuoteNotificationsCount
-        v-if="auth_user_data?.id"
-        :comment_count="quote.comment_number"
+        v-if="auth_user_data?.id && local_comments_number && props.quote_id"
+        :comment_count="local_comments_number"
         :react_count="quote.react_number"
-        :quote_id="quote.quote_id"
+        :quote_id="props.quote_id"
         :has_user_loved="quote.has_user_loved"
         :user_id="auth_user_data.id"
       />
       <!-- DIVIDER -->
       <div class="h-[0.0625rem] w-full bg-[#242e36] my-4"></div>
       <!-- COMMENTS LIST -->
-      <div v-for="(comment, index) in quote.comments" :key="index">
+      <div v-for="(comment, index) in local_comments" :key="index">
         <NewsFeedQuoteComment
           :name="comment.comment_author_name"
           :image="comment.comment_author_image"
@@ -119,7 +164,7 @@ const deleteQuote = () => {
         />
       </div>
       <!-- WRITE COMMENT -->
-      <div class="flex gap-3 items-center w-full">
+      <div class="flex gap-3 items-center w-full" v-if="!props.doNotShowCrud">
         <img
           v-if="auth_user_data"
           :src="auth_user_data.image"
@@ -128,6 +173,7 @@ const deleteQuote = () => {
         />
         <textarea
           name="comment"
+          @keydown.enter.prevent="handleComment"
           :placeholder="t('general.text_write_comment')"
           class="bg-[#24222F] rounded-[0.625rem] py-2 px-4 font-helvetica-400 text-base text-white focus:outline-none w-full h-[3.25rem]"
         ></textarea>

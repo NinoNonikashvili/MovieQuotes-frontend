@@ -6,7 +6,11 @@ import FormTextarea from "../ui/form/FormTextarea.vue";
 import FormDropDown from "../ui/form/FormDropDown.vue";
 import { useMoviesStore } from "@/stores/movies";
 import { storeToRefs } from "pinia";
-import { addMovie, getGenres, getMovies } from "@/services/axios/movie-services";
+import {
+  addMovie,
+  getGenres,
+  getMovies,
+} from "@/services/axios/movie-services";
 import FormDragDrop from "../ui/form/FormDragDrop.vue";
 import ButtonFilled from "../ui/buttons/ButtonFilled.vue";
 import { useNotificationStore } from "@/stores/crud-notifications";
@@ -14,7 +18,7 @@ import type { MoviesData } from "@/types/types";
 
 const { set_status } = useNotificationStore();
 const movieStores = useMoviesStore();
-const { set_genres,set_movies } = useMoviesStore();
+const { set_genres, set_movies } = useMoviesStore();
 const { genres } = storeToRefs(movieStores);
 
 onMounted(async () => {
@@ -119,9 +123,9 @@ const handleSubmit = async () => {
     try {
       await addMovie(data);
       set_status("MOVIE_ADDED");
-      props.closeModal()
+      props.closeModal();
       try {
-        const response = await getMovies();
+        const response = await getMovies(null, null);
         set_movies(response.data.data as MoviesData[]);
       } catch (err) {
         return;

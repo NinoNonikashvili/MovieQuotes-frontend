@@ -10,6 +10,7 @@ import { ref } from "vue";
 
 const props = defineProps<{
   quote: NewsFeedQuote;
+  last: boolean;
 }>();
 
 const userStore = useUserStore();
@@ -25,11 +26,7 @@ const local_comments = ref<
 >(props.quote.comments);
 const local_comments_number = ref<number>(props.quote.comment_number);
 
-/**
- * 1. add functionality to increase quote reactions by one on heart click - done
- * 2. load more comments on comment icon click - not necessarry
- * 3. add comment on textarea input enter click
- */
+
 
 const handleComment = async (e: Event) => {
   const target = e.target as HTMLInputElement;
@@ -58,7 +55,11 @@ const handleComment = async (e: Event) => {
 
 <template>
   <div
-    class="w-full xl:w-[58rem] xl:p-6 px-9 py-7 bg-[#12101A] rounded-xl mb-8"
+    class="w-full xl:w-[58rem] xl:p-6 px-9 py-7 bg-[#12101A] rounded-xl"
+    :class="{
+      'mb-0': props.last,
+      'mb-8': !props.last,
+    }"
   >
     <!--    QUOTE AUTHOR -->
     <div class="flex gap-3 items-center w-fit">

@@ -2,7 +2,11 @@
 import LayoutCrudForm from "@/components/layouts/LayoutCrudForm.vue";
 import EditDelete from "../shared/EditDelete.vue";
 import { onMounted, ref } from "vue";
-import { getSingleMovieQuotes, getSingleQuote, updateQuote } from "@/services/axios/quote-services";
+import {
+  getSingleMovieQuotes,
+  getSingleQuote,
+  updateQuote,
+} from "@/services/axios/quote-services";
 import ButtonFilled from "../ui/buttons/ButtonFilled.vue";
 import { useI18n } from "vue-i18n";
 import { useNotificationStore } from "@/stores/crud-notifications";
@@ -28,8 +32,8 @@ const quote = ref<{
   }[];
 }>();
 
-const {set_status} = useNotificationStore();
-const {set_movie_quotes} = useQuotesStore()
+const { set_status } = useNotificationStore();
+const { set_movie_quotes } = useQuotesStore();
 
 onMounted(async () => {
   try {
@@ -60,13 +64,13 @@ const deleteQuote = () => {
 };
 
 const { t } = useI18n();
-const img = ref<File | null | string>('default');
-const quote_en = ref<string | null >('default');
-const quote_ge = ref<string | null >('default');
+const img = ref<File | null | string>("default");
+const quote_en = ref<string | null>("default");
+const quote_ge = ref<string | null>("default");
 
 const errors = ref<{
   img: string | null;
-}>({ img: null});
+}>({ img: null });
 
 const handleSelectedImg = (image: File) => {
   img.value = image;
@@ -85,30 +89,36 @@ const handleSubmit = async () => {
   if (img.value && quote_en.value && quote_ge.value && props.movie_id) {
     console.log("submit");
     let data = new FormData();
-    if(img.value !== 'default' ){
-        data.append("image", img.value);
+    if (img.value !== "default") {
+      data.append("image", img.value);
     }
-    if(quote_en.value !== 'default'){
-        data.append("quote_en", quote_en.value);
+    if (quote_en.value !== "default") {
+      data.append("quote_en", quote_en.value);
     }
-    if(quote_ge.value !== 'default'){
-        data.append("quote_ge", quote_ge.value);
+    if (quote_ge.value !== "default") {
+      data.append("quote_ge", quote_ge.value);
     }
-    if(!(img.value!=='default' && quote_en.value !== 'default' && quote_ge.value !== 'default')) {
-        data.append("movie_id", String(props.movie_id));
+    if (
+      !(
+        img.value !== "default" &&
+        quote_en.value !== "default" &&
+        quote_ge.value !== "default"
+      )
+    ) {
+      data.append("movie_id", String(props.movie_id));
     }
     try {
- 
       await updateQuote(data, props.quote_id);
-      props.closeModal()
-      set_status('QUOTE_UPDATED')
+      props.closeModal();
+      set_status("QUOTE_UPDATED");
       try {
-        const response = await getSingleMovieQuotes({ id: String(props.movie_id) });
+        const response = await getSingleMovieQuotes({
+          id: String(props.movie_id),
+        });
         set_movie_quotes(response.data.quotes);
       } catch (err) {
         err;
       }
-      
     } catch (err) {
       return;
     }
@@ -150,7 +160,10 @@ const handleSubmit = async () => {
         />
       </div>
       <div class="mb-6 w-full">
-        <FormDragDropLargePreview @selected-img="handleSelectedImg" />
+        <FormDragDropLargePreview
+          @selected-img="handleSelectedImg"
+          :default_value="quote.quote_image"
+        />
         <p
           class="font-helvetica-400 text-base text-red-400 mt-2"
           v-if="errors.img"

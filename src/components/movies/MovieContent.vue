@@ -25,23 +25,16 @@ import QuoteAddFromMovie from "../quote/QuoteAddFromMovie.vue";
 const notificationsStore = useNotificationStore();
 const { status } = storeToRefs(notificationsStore);
 const user = useUserStore();
-const movieStore = useMoviesStore();
+const { auth_user_data } = storeToRefs(user);
 const quoteStore = useQuotesStore();
 const { set_movie_quotes } = useQuotesStore();
 const { movie_quotes } = storeToRefs(quoteStore);
-const { auth_user_data } = storeToRefs(user);
-const { movies } = storeToRefs(movieStore);
+const movieStore = useMoviesStore();
+const { single_movie } = storeToRefs(movieStore);
 
 const router = useRouter();
 const route = useRoute();
-const props = defineProps<{
-  id: string;
-}>();
 
-const current_movie = movies.value?.find(
-  (movie) => movie.id === parseInt(props.id),
-);
-const movie = ref<MoviesData | undefined>(current_movie);
 const { set_status } = useNotificationStore();
 
 const handleEditMovie = () => {
@@ -50,9 +43,9 @@ const handleEditMovie = () => {
 };
 const handleDeleteMovie = async () => {
   isDeleteMovie.value = true;
-  console.log("delete movie", movie.value?.id);
-  if (movie.value) {
-    let id = movie.value.id;
+  console.log("delete movie", single_movie.value?.id);
+  if (single_movie.value) {
+    let id = single_movie.value.id;
     try {
       await deleteMovie(id);
       console.log("delelted successfully");
@@ -151,19 +144,24 @@ const handleTriggerForm = async (id: string, action: string) => {
         {{ $t("movies.text_movie_description") }}
       </h1>
       <!-- DIV MOVIE DATA -->
-      <div class="flex flex-col xl:flex-row gap-6 xl:gap-5 w-fit" v-if="movie">
+      <div
+        class="flex flex-col xl:flex-row gap-6 xl:gap-5 w-fit xl:w-full"
+        v-if="single_movie"
+      >
         <img
-          :src="movie.image"
+          :src="single_movie.image"
           alt=""
           class="h-[18.875rem] w-[22.375rem] xl:w-[50.625rem] xl:h-[27.5rem] object-fit rounded-[0.25rem]"
         />
-        <div class="relative">
-          <h3 class="fomt-helvetica-500 text-[#DDCCAA] text-2xl mt-3 mb-5">
-            {{ movie.title }} ({{ movie.year }})
+        <div class="relative w-full">
+          <h3
+            class="fomt-helvetica-500 text-[#DDCCAA] text-2xl mt-3 mb-5 max-w-[90%]"
+          >
+            {{ single_movie.title }} ({{ single_movie.year }})
           </h3>
           <div class="w-full overflow-hidden flex gap-2 mb-5">
             <div
-              v-for="(genre, index) in movie.genres"
+              v-for="(genre, index) in single_movie.genres"
               :key="index"
               class="font-helvetica-700 text-white text-lg bg-[#6C757D] px-3 py-2 rounded-[0.25rem]"
             >
@@ -171,15 +169,15 @@ const handleTriggerForm = async (id: string, action: string) => {
             </div>
           </div>
           <p class="font-helvetica-700 text-white text-lg mb-5">
-            {{ $t("quote.text_director") }}: {{ movie.director }}
+            {{ $t("quote.text_director") }}: {{ single_movie.director }}
           </p>
           <p class="font-helvetica-400 text-lg text-[#CED4DA]">
-            {{ movie.description }}
+            {{ single_movie.description }}
           </p>
           <EditDelete
             @edit="handleEditMovie"
             @delete="handleDeleteMovie"
-            location="top-0 right-0"
+            location="top-0 right-0 "
           />
         </div>
       </div>
@@ -220,10 +218,10 @@ const handleTriggerForm = async (id: string, action: string) => {
 
   <!-- EDIT MOVIE FORM -->
   <EditMovie
-    v-if="isEditMovie && auth_user_data && movie"
+    v-if="isEditMovie && auth_user_data && single_movie"
     :user_id="auth_user_data.id"
     :closeModal="closeEditMovie"
-    :movie_id="movie.id"
+    :movie_id="single_movie.id"
   />
   <!-- VIEW QUOTE FORM -->
 
@@ -235,16 +233,16 @@ const handleTriggerForm = async (id: string, action: string) => {
   />
   <!-- ADD QUOTE FORM -->
   <QuoteAddFromMovie
-    v-if="movie && isAddQuote"
+    v-if="single_movie && isAddQuote"
     :close-modal="closeAddQuote"
-    :movie="movie"
+    :movie="single_movie"
   />
   <!-- EDIT QUOTE FORM -->
   <QuoteEdit
-    v-if="isEditQuote && selectedQuoteId && movie"
+    v-if="isEditQuote && selectedQuoteId && single_movie"
     :close-modal="closeEditQuote"
     :quote_id="selectedQuoteId"
-    :movie_id="movie.id"
+    :movie_id="single_movie.id"
     @triggerForm="handleTriggerForm"
   />
 

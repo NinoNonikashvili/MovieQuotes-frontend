@@ -13,10 +13,17 @@
   "text_mark_all_read": "Mark all as read",
   "text_new": "New",
   "quote_reaction_message": "Reacted to your quote",
+  "quote_unreaction_message": "Removed reaction from your quote",
   "quote_comment_message": "Commented to your quote",
   "time_elapsed": "min ago",
   "text_movie": "movie",
   "text_write_new_quote": "Write new quote",
   "text_search_by": "Search by",
-  "text_write_comment": "write a comment"
+  "text_write_comment": "write a comment",
+  "days_elapsed": "{days} days ago",
+  "hours_elapsed": "{hours} hrs ago",
+  "minutes_elapsed": "{minutes} mins ago",
+  "day_elapsed": "{day} day ago",
+  "hour_elapsed": "{hour} hr ago",
+  "minute_elapsed": "{minute} min ago"
 }
