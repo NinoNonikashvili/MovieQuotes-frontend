@@ -7,18 +7,6 @@ import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { checkAuthState } from "@/services/axios/auth-services";
 
-// import HomePage from "@/views/HomePage.vue";
-// import RegisterPage from "@/views/RegisterPage.vue";
-// import LoginPage from "@/views/LoginPage.vue";
-// import ResetPasswordPage from "@/views/ResetPasswordPage.vue";
-// import ForgotPasswordPage from "@/views/ForgotPasswordPage.vue";
-// import EmailVerifiedPage from "@/views/EmailVerifiedPage.vue";
-// import NewsFeedPage from "@/views/NewsFeedPage.vue";
-// import ProfilePage from "@/views/ProfilePage.vue";
-// import MoviesPage from "@/views/MoviesPage.vue";
-// import MoviePage from "@/views/MoviePage.vue";
-// import MovieContainer from "@/views/MovieContainer.vue";
-
 const HomePage = () => import("@/views/HomePage.vue");
 const RegisterPage = () => import("@/views/RegisterPage.vue");
 const LoginPage = () => import("@/views/LoginPage.vue");
