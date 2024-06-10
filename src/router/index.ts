@@ -6,6 +6,8 @@ import HandleGmailAuthPage from "@/views/HandleGmailAuthPage.vue";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { checkAuthState } from "@/services/axios/auth-services";
+import ErrorFrontPage from "@/views/ErrorFrontPage.vue";
+import ErrorServerpage from "@/views/ErrorServerpage.vue";
 
 const HomePage = () => import("@/views/HomePage.vue");
 const RegisterPage = () => import("@/views/RegisterPage.vue");
@@ -144,6 +146,17 @@ const router = createRouter({
         },
       ],
     },
+
+    {
+      path: "/:wrongUrl",
+      name: "not-found",
+      component: ErrorFrontPage,
+    },
+    {
+      path: "/server-error",
+      name: "server-error",
+      component: ErrorServerpage,
+    },
   ],
 });
 
@@ -152,7 +165,6 @@ router.beforeEach(async (to, from) => {
   const { auth_user } = storeToRefs(user);
   const { set_auth_user, set_auth_user_data } = user;
   //set language from url
-  console.log(from, from.params.lang, to.params.lang);
   if (to.params.lang) {
     locale.value = to.params.lang as Locales;
     if (locale.value === "ge") {

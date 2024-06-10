@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type Prop from "@/types/typesButtonProps";
 import IconPlusBoardered from "@/components/icons/IconPlusBordered.vue";
+import i18n from "@/plugins/i18n";
+
+const {locale} = i18n.global
 
 const props = withDefaults(defineProps<Prop>(), {
   bg: "bg-red-600",
@@ -25,7 +28,7 @@ const handleRedirect = () => {
 <template>
   <RouterLink
     v-if="props.link && !redirect"
-    :to="{ name: props.link }"
+    :to="{ name: props.link, params:{lang: locale} }"
     class="flex w-full"
   >
     <button
