@@ -2,13 +2,14 @@ import { createRouter, createWebHistory } from "vue-router";
 import i18n from "@/plugins/i18n";
 import type { Locales } from "@/types/types";
 import { setLocale } from "@vee-validate/i18n";
-import HandleGmailAuthPage from "@/views/HandleGmailAuthPage.vue";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { checkAuthState } from "@/services/axios/auth-services";
-import ErrorFrontPage from "@/views/ErrorFrontPage.vue";
-import ErrorServerpage from "@/views/ErrorServerpage.vue";
 
+
+const HandleGmailAuthPage = () => import("@/views/HandleGmailAuthPage.vue")
+const ErrorFrontPage = () => import("@/views/ErrorFrontPage.vue")
+const ErrorServerpage = () => import("@/views/ErrorServerpage.vue")
 const HomePage = () => import("@/views/HomePage.vue");
 const RegisterPage = () => import("@/views/RegisterPage.vue");
 const LoginPage = () => import("@/views/LoginPage.vue");
