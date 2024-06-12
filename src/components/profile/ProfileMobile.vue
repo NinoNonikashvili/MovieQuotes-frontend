@@ -143,7 +143,7 @@ const cancelChanges = () => {
       />
       <ProfileMobileUserDatum
         :title="$t('profile.text_email')"
-        :value="auth_user_data?.email ?? 'email.gmail.com'"
+        :value="auth_user_data?.email ?? 'email.gmail.com'" 
       />
       <ProfileMobileUserDatum
         v-if="!auth_user_data?.google_id"

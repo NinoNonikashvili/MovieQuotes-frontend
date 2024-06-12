@@ -33,7 +33,7 @@ const { logoutFun } = useLogout();
     <select
       v-model="$i18n.locale"
       @change="setLangInUrl"
-      class="bg-transparent text-white focus:outline-none"
+      class="bg-transparent text-white font-helvetica-400 text-base focus:outline-none"
     >
       <option
         class="bg-[#11101A]"
