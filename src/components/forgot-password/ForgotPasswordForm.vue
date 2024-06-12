@@ -24,7 +24,7 @@ const onSubmit = handleSubmit(async (values) => {
   try {
     await forgot_password(emailArgument);
 
-    emailLink.value = emailArgument.email.includes("gmail.com")
+    emailLink.value = emailArgument.email.includes("gmail.com") || emailArgument.email.includes("redberry.ge") 
       ? "https://gmail.com"
       : "";
 

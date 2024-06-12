@@ -42,7 +42,10 @@ const handleSendAgainPasswordResset = async () => {
 };
 
 const emailLink = computed(() => {
-  if (props.email.includes("gmail.com")) {
+  if (
+    props.email.includes("gmail.com") ||
+    props.email.includes("redberry.ge")
+  ) {
     return "https://gmail.com";
   }
   return "";

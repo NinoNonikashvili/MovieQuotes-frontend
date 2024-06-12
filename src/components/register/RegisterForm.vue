@@ -25,7 +25,7 @@ const showNotification = ref<boolean>(false);
 const data = ref<AxiosResponse | null>(null);
 
 const emailLink = computed(() => {
-  if (data?.value?.data.data.email.includes("gmail.com")) {
+  if (data?.value?.data.data.email.includes("gmail.com") || data?.value?.data.data.email.includes("redberry.ge") ) {
     return "https://gmail.com";
   }
   return "";
