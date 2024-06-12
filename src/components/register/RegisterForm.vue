@@ -72,7 +72,7 @@ const onsubmit = handleSubmit(async (values) => {
           <FormInputPassword name="password_confirmation" :required="true"/>
           <ButtonFilled
             :submit="true"
-            text_key="form.text_register"
+            text_key="form.text_get_started"
             class="mt-2"
           />
           <ButtonOutline
