@@ -26,11 +26,16 @@ const isConfirmChanges = ref<boolean>(false);
 const isSuccessNotification = ref<boolean>(false);
 const isErrorNotification = ref<boolean>(false);
 
-const { handleSubmit, values } = useForm({
+const {  values } = useForm({
   validationSchema: {
     name: "min:3",
     password: "min:8|max:15|low_case_and_numeric",
     password_confirmation: "confirmed:@password",
+  },
+  initialValues: {
+    name: "",
+    password: "",
+    password_confirmation: "",
   },
 });
 
@@ -65,7 +70,8 @@ const editChanges = () => {
   isConfirmChanges.value = true;
 };
 
-const saveChanges = handleSubmit(async () => {
+const saveChanges = async () => {
+
   isConfirmChanges.value = false;
   isProfileInfo.value = true;
   let updatedValues = new FormData();
@@ -93,10 +99,9 @@ const saveChanges = handleSubmit(async () => {
   } catch (err) {
     isErrorNotification.value = true;
   }
-});
+};
 
 const cancelChanges = () => {
-  //cancel changes and display profile info
   isConfirmChanges.value = false;
   isProfileInfo.value = true;
   isEditName.value = false;
@@ -143,7 +148,7 @@ const cancelChanges = () => {
       />
       <ProfileMobileUserDatum
         :title="$t('profile.text_email')"
-        :value="auth_user_data?.email ?? 'email.gmail.com'" 
+        :value="auth_user_data?.email ?? 'email.gmail.com'"
       />
       <ProfileMobileUserDatum
         v-if="!auth_user_data?.google_id"
@@ -154,27 +159,18 @@ const cancelChanges = () => {
     </div>
     <!-- EDIT DATA -->
     <div
-      :class="{ 'hide': !isEditName && !isEditPassword }"
+      :class="{ hide: !isEditName && !isEditPassword }"
       class="absolute top-[15rem] left-0 right-0 mx-auto max-w-[26.75rem]"
     >
       <form class="rounded-xl bg-[#24222F] px-8 py-16">
         <FormInputText
           name="name"
-          :class="{ 'hide': !isEditName }"
+          :class="{ hide: !isEditName }"
           :required="false"
         />
-        <div
-          class="flex flex-col gap-2"
-          :class="{ 'hide': !isEditPassword }"
-        >
-          <FormInputPassword
-            name="password"
-            :required="false"
-          />
-          <FormInputPassword
-            name="password_confirmation"
-            :required="false"
-          />
+        <div class="flex flex-col gap-2" :class="{ hide: !isEditPassword }">
+          <FormInputPassword name="password" :required="false" />
+          <FormInputPassword name="password_confirmation" :required="false" />
         </div>
       </form>
       <div
@@ -210,7 +206,7 @@ const cancelChanges = () => {
         >
           {{ $t("profile.text_cancel") }}
         </button>
-        <div class="w-[4.2rem]">
+        <div class="w-[4.2rem] pointer-events-auto">
           <ButtonFilled @click="saveChanges" text_key="profile.text_confirm" />
         </div>
       </div>
