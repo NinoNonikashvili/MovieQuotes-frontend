@@ -558,6 +558,14 @@ video {
   pointer-events: none;
 }
 
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
+.static {
+  position: static;
+}
+
 .fixed {
   position: fixed;
 }
@@ -697,6 +705,18 @@ video {
 
 .m-auto {
   margin: auto;
+}
+
+.-m-\[5px\] {
+  margin: -5px;
+}
+
+.-m-\[8px\] {
+  margin: -8px;
+}
+
+.-m-2 {
+  margin: -0.5rem;
 }
 
 .mx-auto {
@@ -1828,6 +1848,12 @@ video {
 
 .opacity-100 {
   opacity: 1;
+}
+
+.shadow-inner {
+  --tw-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: inset 0 2px 4px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .shadow-sm {

@@ -44,7 +44,6 @@ onMounted(() => {
  * 2. add search functionality and send request on enter click
  */
 
- 
 const closeAddQuote = () => {
   isAddQuoteModal.value = false;
 };
@@ -55,39 +54,45 @@ const handleWriteQuoteClick = () => {
 </script>
 
 <template>
-  <section
-    class="bg-[#181724] pt-8 xl:hidden"
-    :class="{ 'blur-sm pointer-events-none': isAddQuoteModal }"
+  <div
+    class="bg-[#181724] w-full"
+    :class="isAddQuoteModal ? 'fixed' : 'static'"
   >
-    <!-- WRITE QUOTE BTN  -->
-    <button
-      class="flex items-center gap-2 py-3 px-4 mb-6 ml-9 w-fit"
-      @click="handleWriteQuoteClick"
+    <section
+      class="bg-[#181724] pt-8 xl:hidden"
+      :class="{ 'blur-sm -m-2 pointer-events-none': isAddQuoteModal }"
     >
-      <IconWrite />
-      <p class="font-helvetica-400 text-xl text-white">
-        {{ $t("general.text_write_new_quote") }}
-      </p>
-    </button>
+      <!-- WRITE QUOTE BTN  -->
+      <button
+        class="flex items-center gap-2 py-3 px-4 mb-6 ml-9 w-fit"
+        @click="handleWriteQuoteClick"
+      >
+        <IconWrite />
+        <p class="font-helvetica-400 text-xl text-white">
+          {{ $t("general.text_write_new_quote") }}
+        </p>
+      </button>
 
-    <!-- QUOTES LIST -->
-    <div v-if="quotes">
-      <NewsFeedQuote
-        v-for="(quote, index) in quotes"
-        :key="index"
-        :quote="quote"
-        :last="index === quotes.length - 1"
-      />
-    </div>
+      <!-- QUOTES LIST -->
+      <div v-if="quotes">
+        <NewsFeedQuote
+          v-for="(quote, index) in quotes"
+          :key="index"
+          :quote="quote"
+          :last="index === quotes.length - 1"
+        />
+      </div>
 
-    <div
-      ref="elLoadMore"
-      :class="loading ? 'opacity-100' : 'opacity-0'"
-      class="font-helvetica-500 text-white text-2xl"
-    >
-      Loading more...
-    </div>
-  </section>
+      <div
+        ref="elLoadMore"
+        :class="loading ? 'opacity-100' : 'opacity-0'"
+        class="font-helvetica-500 text-white text-2xl"
+      >
+        Loading more...
+      </div>
+    </section>
+  </div>
+
   <div
     class="max-w-[60rem] absolute top-[7.375rem] left-0 right-0 mx-auto"
     v-if="isAddQuoteModal"

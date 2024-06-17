@@ -129,9 +129,10 @@ const handleTriggerForm = async (id: string, action: string) => {
 </script>
 
 <template>
-  <div
+  <div class="bg-[#181724] w-full">
+    <div
     class="w-full px-10 py-4 xl:px-16 xl:pt-8 pb-[15rem] flex bg-[#181724]"
-    :class="{ 'pointer-events-none blur-sm': isFormVIsible }"
+    :class="{ 'pointer-events-none blur-sm -m-2': isFormVIsible }"
   >
     <LayoutUserPages
       class="hidden xl:flex"
@@ -215,6 +216,8 @@ const handleTriggerForm = async (id: string, action: string) => {
       </div>
     </section>
   </div>
+  </div>
+
 
   <!-- EDIT MOVIE FORM -->
   <EditMovie

@@ -26,7 +26,7 @@ const isConfirmChanges = ref<boolean>(false);
 const isSuccessNotification = ref<boolean>(false);
 const isErrorNotification = ref<boolean>(false);
 
-const {  values } = useForm({
+const { values } = useForm({
   validationSchema: {
     name: "min:3",
     password: "min:8|max:15|low_case_and_numeric",
@@ -71,7 +71,6 @@ const editChanges = () => {
 };
 
 const saveChanges = async () => {
-
   isConfirmChanges.value = false;
   isProfileInfo.value = true;
   let updatedValues = new FormData();
@@ -111,107 +110,113 @@ const cancelChanges = () => {
 </script>
 
 <template>
-  <div
-    class="xl:hidden bg-[#11101A] h-screen"
-    :class="{ 'blur-sm': isSuccessNotification }"
-  >
-    <!-- BACK TO NEWS FEED -->
-    <div class="px-10 py-6 bg-[#11101A] w-full">
-      <RouterLink
-        :to="{ name: 'news-feed', params: { lang: locale } }"
-        class="block w-fit"
-      >
-        <IconLeftArrow />
-      </RouterLink>
-    </div>
-    <!-- PROFILE INFO -->
+  <div class="bg-[#11101A] w-full">
     <div
-      v-if="isProfileInfo"
-      class="bg-[#24222F] rounded-xl px-8 py-6 pb-[10rem] flex flex-col items-center"
+      class="xl:hidden bg-[#11101A] h-screen"
+      :class="{ 'blur-sm -m-2': isSuccessNotification }"
     >
-      <div class="mb-16 w-[13rem] relative flex flex-col items-center z-10">
-        <img :src="imageRef" alt="" class="w-full rounded-full mb-2" />
-        <p class="font-helvetica-400 text-xl text-white">
-          {{ $t("profile.text_upload_photo") }}
-        </p>
-        <input
-          @input="handleFileInput"
-          type="file"
-          class="opacity-0 absolute top-0 left-0 w-full h-full cursor-pointer"
-        />
+      <!-- BACK TO NEWS FEED -->
+      <div class="px-10 py-6 bg-[#11101A] w-full">
+        <RouterLink
+          :to="{ name: 'news-feed', params: { lang: locale } }"
+          class="block w-fit"
+        >
+          <IconLeftArrow />
+        </RouterLink>
       </div>
+      <!-- PROFILE INFO -->
+      <div
+        v-if="isProfileInfo"
+        class="bg-[#24222F] rounded-xl px-8 py-6 pb-[10rem] flex flex-col items-center"
+      >
+        <div class="mb-16 w-[13rem] relative flex flex-col items-center z-10">
+          <img :src="imageRef" alt="" class="w-full rounded-full mb-2" />
+          <p class="font-helvetica-400 text-xl text-white">
+            {{ $t("profile.text_upload_photo") }}
+          </p>
+          <input
+            @input="handleFileInput"
+            type="file"
+            class="opacity-0 absolute top-0 left-0 w-full h-full cursor-pointer"
+          />
+        </div>
 
-      <ProfileMobileUserDatum
-        :title="$t('profile.text_username')"
-        :value="auth_user_data?.name ?? 'Nino'"
-        :callback="showEditUsernameModal"
-      />
-      <ProfileMobileUserDatum
-        :title="$t('profile.text_email')"
-        :value="auth_user_data?.email ?? 'email.gmail.com'"
-      />
-      <ProfileMobileUserDatum
-        v-if="!auth_user_data?.google_id"
-        :title="$t('profile.text_password')"
-        value="********"
-        :callback="showEditPasswordModal"
-      />
-    </div>
-    <!-- EDIT DATA -->
-    <div
-      :class="{ hide: !isEditName && !isEditPassword }"
-      class="absolute top-[15rem] left-0 right-0 mx-auto max-w-[26.75rem]"
-    >
-      <form class="rounded-xl bg-[#24222F] px-8 py-16">
-        <FormInputText
-          name="name"
-          :class="{ hide: !isEditName }"
-          :required="false"
+        <ProfileMobileUserDatum
+          :title="$t('profile.text_username')"
+          :value="auth_user_data?.name ?? 'Nino'"
+          :callback="showEditUsernameModal"
         />
-        <div class="flex flex-col gap-2" :class="{ hide: !isEditPassword }">
-          <FormInputPassword name="password" :required="false" />
-          <FormInputPassword name="password_confirmation" :required="false" />
-        </div>
-      </form>
+        <ProfileMobileUserDatum
+          :title="$t('profile.text_email')"
+          :value="auth_user_data?.email ?? 'email.gmail.com'"
+        />
+        <ProfileMobileUserDatum
+          v-if="!auth_user_data?.google_id"
+          :title="$t('profile.text_password')"
+          value="********"
+          :callback="showEditPasswordModal"
+        />
+      </div>
+      <!-- EDIT DATA -->
       <div
-        class="w-full flex items-center justify-between py-4 px-5 bg-transparent"
+        :class="{ hide: !isEditName && !isEditPassword }"
+        class="absolute top-[15rem] left-0 right-0 mx-auto max-w-[26.75rem]"
       >
-        <button
-          class="border-0 bg-transparent font-helvetica-400 text-base text-[#CED4DA]"
-          @click="cancelChanges"
+        <form class="rounded-xl bg-[#24222F] px-8 py-16">
+          <FormInputText
+            name="name"
+            :class="{ hide: !isEditName }"
+            :required="false"
+          />
+          <div class="flex flex-col gap-2" :class="{ hide: !isEditPassword }">
+            <FormInputPassword name="password" :required="false" />
+            <FormInputPassword name="password_confirmation" :required="false" />
+          </div>
+        </form>
+        <div
+          class="w-full flex items-center justify-between py-4 px-5 bg-transparent"
         >
-          {{ $t("profile.text_cancel") }}
-        </button>
-        <div class="w-[4.2rem]">
-          <ButtonFilled @click="editChanges" text_key="profile.text_edit" />
+          <button
+            class="border-0 bg-transparent font-helvetica-400 text-base text-[#CED4DA]"
+            @click="cancelChanges"
+          >
+            {{ $t("profile.text_cancel") }}
+          </button>
+          <div class="w-[4.2rem]">
+            <ButtonFilled @click="editChanges" text_key="profile.text_edit" />
+          </div>
         </div>
       </div>
-    </div>
-    <!-- CONFIRM CHANGES -->
-    <div
-      v-if="isConfirmChanges"
-      class="z-20 w-[22rem] rounded-[0.625rem] bg-gradient-to-r shadow-sm from-zinc-800 to-zinc-700 absolute top-[15rem] left-0 right-0 mx-auto"
-    >
+      <!-- CONFIRM CHANGES -->
       <div
-        class="w-full flex justify-center pt-[4rem] pb-[3rem] border-b border-b-white"
+        v-if="isConfirmChanges"
+        class="z-20 w-[22rem] rounded-[0.625rem] bg-gradient-to-r shadow-sm from-zinc-800 to-zinc-700 absolute top-[15rem] left-0 right-0 mx-auto"
       >
-        <p class="font-helvetica-400 text-base text-white">
-          Are you sure to make changes ?
-        </p>
-      </div>
-      <div class="w-full flex items-center justify-between py-4 px-5">
-        <button
-          class="border-0 bg-transparent font-helvetica-400 text-base text-[#CED4DA]"
-          @click="cancelChanges"
+        <div
+          class="w-full flex justify-center pt-[4rem] pb-[3rem] border-b border-b-white"
         >
-          {{ $t("profile.text_cancel") }}
-        </button>
-        <div class="w-[4.2rem] pointer-events-auto">
-          <ButtonFilled @click="saveChanges" text_key="profile.text_confirm" />
+          <p class="font-helvetica-400 text-base text-white">
+            Are you sure to make changes ?
+          </p>
+        </div>
+        <div class="w-full flex items-center justify-between py-4 px-5">
+          <button
+            class="border-0 bg-transparent font-helvetica-400 text-base text-[#CED4DA]"
+            @click="cancelChanges"
+          >
+            {{ $t("profile.text_cancel") }}
+          </button>
+          <div class="w-[4.2rem] pointer-events-auto">
+            <ButtonFilled
+              @click="saveChanges"
+              text_key="profile.text_confirm"
+            />
+          </div>
         </div>
       </div>
     </div>
   </div>
+
   <!-- SUCCESS NOTIFICATION -->
 
   <SuccessNotification
