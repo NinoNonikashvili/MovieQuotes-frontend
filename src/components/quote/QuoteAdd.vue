@@ -84,6 +84,7 @@ const handleSubmitClick = async () => {
       data.append("image", img.value);
 
       await createQuote(data);
+      props.closeModal();
       addQuoteSuccess.value = true;
     } catch (err) {
       addQuoteFailure.value = true;
