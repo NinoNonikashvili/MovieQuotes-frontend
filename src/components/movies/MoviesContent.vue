@@ -63,69 +63,67 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="bg-[#181724] w-full">
-    <div
-      class="w-full px-10 py-4 xl:px-16 xl:pt-8 pb-[15rem] flex bg-[#181724]"
-      :class="{ 'pointer-events-none blur-sm -m-2': isAddMovie }"
-    >
-      <LayoutUsersPages
-        class="hidden xl:flex"
-        :name="auth_user_data?.name"
-        :image="auth_user_data?.image"
-      />
+  <div
+    class="w-full px-10 py-4 xl:px-16 xl:pt-8 pb-[15rem] flex bg-[#181724]"
+    :class="{ 'pointer-events-none blur-sm': isAddMovie }"
+  >
+    <LayoutUsersPages
+      class="hidden xl:flex"
+      :name="auth_user_data?.name"
+      :image="auth_user_data?.image"
+    />
 
-      <section class="w-full min-h-screen">
-        <header class="flex items-center justify-between w-full">
-          <div class="flex gap-2 flex-col xl:flex-row w-fit">
-            <h1 class="font-helvetica-500 text-2xl text-white">
-              {{ $t("movies.page_header") }}
-            </h1>
-            <p class="font-helvetica-500 text-2xl text-white">
-              {{ $t("movies.text_total") }}
-              ({{ movies?.length }})
-            </p>
-          </div>
-          <div class="flex gap-2 items-center">
-            <div class="flex items-center gap-3">
-              <div
-                class="items-center gap-2 py-3 pl-0 pr-4 hidden xl:flex border-b border-transparent w-[14rem] has-[:focus]:w-[18rem] has-[:focus]:border-b-white"
-              >
-                <IconSearch class="shrink-0" />
+    <section class="w-full min-h-screen">
+      <header class="flex items-center justify-between w-full">
+        <div class="flex gap-2 flex-col xl:flex-row w-fit">
+          <h1 class="font-helvetica-500 text-2xl text-white">
+            {{ $t("movies.page_header") }}
+          </h1>
+          <p class="font-helvetica-500 text-2xl text-white">
+            {{ $t("movies.text_total") }}
+            ({{ movies?.length }})
+          </p>
+        </div>
+        <div class="flex gap-2 items-center">
+          <div class="flex items-center gap-3">
+            <div
+              class="items-center gap-2 py-3 pl-0 pr-4 hidden xl:flex border-b border-transparent w-[14rem] has-[:focus]:w-[18rem] has-[:focus]:border-b-white"
+            >
+              <IconSearch class="shrink-0" />
 
-                <input
-                  :placeholder="$t('general.text_search_by')"
-                  @keydown.enter="search"
-                  class="font-helvetica-400 text-xl text-[#CED4DA] bg-transparent focus:outline-none w-full"
-                />
-              </div>
+              <input
+                :placeholder="$t('general.text_search_by')"
+                @keydown.enter="search"
+                class="font-helvetica-400 text-xl text-[#CED4DA] bg-transparent focus:outline-none w-full"
+              />
             </div>
-            <ButtonFilled
-              text_key="movies.text_add_movie"
-              icon="IconPlusBoardered"
-              @click="isAddMovie = true"
-            />
           </div>
-        </header>
-        <div class="mt-8 flex flex-wrap gap-12" v-if="movies">
-          <MoviesListComponent
-            v-for="(movie, index) in movies"
-            :id="movie.id"
-            :key="index"
-            :title="movie.title"
-            :image="movie.image"
-            :year="movie.year"
-            :quotes_num="movie.quote_num"
+          <ButtonFilled
+            text_key="movies.text_add_movie"
+            icon="IconPlusBoardered"
+            @click="isAddMovie = true"
           />
         </div>
-        <div
-          ref="loadMoreMovies"
-          :class="loading ? 'opacity-100' : 'opacity-0'"
-          class="font-helvetica-500 text-white text-2xl"
-        >
-          Loading more...
-        </div>
-      </section>
-    </div>
+      </header>
+      <div class="mt-8 flex flex-wrap gap-12" v-if="movies">
+        <MoviesListComponent
+          v-for="(movie, index) in movies"
+          :id="movie.id"
+          :key="index"
+          :title="movie.title"
+          :image="movie.image"
+          :year="movie.year"
+          :quotes_num="movie.quote_num"
+        />
+      </div>
+      <div
+        ref="loadMoreMovies"
+        :class="loading ? 'opacity-100' : 'opacity-0'"
+        class="font-helvetica-500 text-white text-2xl"
+      >
+        Loading more...
+      </div>
+    </section>
   </div>
 
   <!-- ADD MOVIE FORM -->

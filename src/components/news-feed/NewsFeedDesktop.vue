@@ -42,6 +42,7 @@ onMounted(() => {
   }
 });
 
+
 const search = async (e: Event) => {
   const target = e.target as HTMLInputElement;
   console.log("search");
@@ -65,85 +66,77 @@ const handleWriteQuoteClick = () => {
 
 <template>
   <div
-    class="bg-[#181724] w-full"
-    :class="isAddQuoteModal ? 'fixed' : 'static'"
+    class="hidden w-full px-16 pt-8 pb-[15rem] xl:flex bg-[#181724]"
+    :class="{ 'blur-sm pointer-events-none': isAddQuoteModal }"
   >
-    <div
-      class="hidden w-full px-16 pt-8 pb-[15rem] xl:flex bg-[#181724]"
-      :class="{
-        'blur-sm shadow-inner pointer-events-none -m-[8px] ': isAddQuoteModal,
-      }"
-    >
-      <LayoutUsersPages
-        :name="auth_user_data?.name"
-        :image="auth_user_data?.image"
-      />
+    <LayoutUsersPages
+      :name="auth_user_data?.name"
+      :image="auth_user_data?.image"
+    />
 
-      <section>
-        <!-- WRITE QUOTE BTN & SEARCH -->
-        <div class="flex gap-8 w-[58rem] mb-6">
-          <button
-            class="flex items-center gap-2 py-3 px-4 bg-[#24222F] rounded-[0.625rem]"
-            :class="
-              longBtn === 'writeQuote' ? 'w-full shrink' : 'w-fit shrink-0'
-            "
-            @click="handleWriteQuoteClick"
+    <section>
+      <!-- WRITE QUOTE BTN & SEARCH -->
+      <div class="flex gap-8 w-[58rem] mb-6">
+        <button
+          class="flex items-center gap-2 py-3 px-4 bg-[#24222F] rounded-[0.625rem]"
+          :class="longBtn === 'writeQuote' ? 'w-full shrink' : 'w-fit shrink-0'"
+          @click="handleWriteQuoteClick"
+        >
+          <IconWrite />
+          <p class="font-helvetica-400 text-xl text-white">
+            {{ $t("general.text_write_new_quote") }}
+          </p>
+        </button>
+        <div
+          class="flex items-center gap-2 py-3 px-4"
+          :class="longBtn === 'search' ? 'w-full shrink' : 'w-fit shrink-0'"
+          @click="longBtn = 'search'"
+        >
+          <IconSearch />
+          <p
+            class="font-helvetica-400 text-xl text-[#CED4DA]"
+            v-if="longBtn !== 'search'"
           >
-            <IconWrite />
-            <p class="font-helvetica-400 text-xl text-white">
-              {{ $t("general.text_write_new_quote") }}
-            </p>
-          </button>
-          <div
-            class="flex items-center gap-2 py-3 px-4"
-            :class="longBtn === 'search' ? 'w-full shrink' : 'w-fit shrink-0'"
-            @click="longBtn = 'search'"
-          >
-            <IconSearch />
+            {{ $t("general.text_search_by") }}
+          </p>
+          <div v-if="longBtn === 'search'" class="relative w-full">
+            <input
+              class="font-helvetica-400 text-xl text-[#CED4DA] bg-transparent focus:outline-none peer"
+              @keydown.enter="search"
+            />
             <p
-              class="font-helvetica-400 text-xl text-[#CED4DA]"
-              v-if="longBtn !== 'search'"
+              class="font-helvetica-400 text-xl text-[#CED4DA] peer-focus:hidden absolute top-0 left-0 pointer-events-none"
+              :class="{ hidden: searchKey }"
             >
-              {{ $t("general.text_search_by") }}
+              {{ $t("general.text_enter")
+              }}<span class="font-helvetica-400 text-xl text-white">@</span>
+              {{ $t("general.search_movie_instructions") }},
+              {{ $t("general.text_enter")
+              }}<span class="font-helvetica-400 text-xl text-white">#</span>
+              {{ $t("general.search_quote_instructions") }}
             </p>
-            <div v-if="longBtn === 'search'" class="relative w-full">
-              <input
-                class="font-helvetica-400 text-xl text-[#CED4DA] bg-transparent focus:outline-none peer"
-                @keydown.enter="search"
-              />
-              <p
-                class="font-helvetica-400 text-xl text-[#CED4DA] peer-focus:hidden absolute top-0 left-0 pointer-events-none"
-                :class="{ hidden: searchKey }"
-              >
-                {{ $t("general.text_enter")
-                }}<span class="font-helvetica-400 text-xl text-white">@</span>
-                {{ $t("general.search_movie_instructions") }},
-                {{ $t("general.text_enter")
-                }}<span class="font-helvetica-400 text-xl text-white">#</span>
-                {{ $t("general.search_quote_instructions") }}
-              </p>
-            </div>
           </div>
         </div>
-        <!-- QUOTES LIST -->
-        <div v-if="quotes">
-          <NewsFeedQuote
-            v-for="(quote, index) in quotes"
-            :key="index"
-            :quote="quote"
-            :last="index === quotes.length - 1"
-          />
-        </div>
-        <div
-          ref="loadMoreRef"
-          :class="loading ? 'opacity-100' : 'opacity-0'"
-          class="font-helvetica-500 text-white text-2xl"
-        >
-          Loading more...
-        </div>
-      </section>
-    </div>
+      </div>
+      <!-- QUOTES LIST -->
+      <div v-if="quotes">
+        <NewsFeedQuote
+          v-for="(quote, index) in quotes"
+          :key="index"
+          :quote="quote"
+          :last="index === quotes.length - 1"
+        />
+      </div>
+      <div
+        ref="loadMoreRef"
+        :class="loading ? 'opacity-100' : 'opacity-0'"
+        class="font-helvetica-500 text-white text-2xl"
+      >
+        Loading more...
+      </div>
+    </section>
   </div>
+
   <div
     class="max-w-[60rem] absolute top-[7.375rem] left-0 right-0 mx-auto"
     v-if="isAddQuoteModal"
