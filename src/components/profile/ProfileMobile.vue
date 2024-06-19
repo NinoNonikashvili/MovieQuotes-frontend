@@ -28,15 +28,14 @@ const isConfirmChanges = ref<boolean>(false);
 const isSuccessNotification = ref<boolean>(false);
 const isErrorNotification = ref<boolean>(false);
 
-
 const quoteStore = useQuotesStore();
-const {set_view_quote_id} = useQuotesStore();
-const {  view_quote_id } = storeToRefs(quoteStore);
+const { set_view_quote_id } = useQuotesStore();
+const { view_quote_id } = storeToRefs(quoteStore);
 const closeViewQuote = () => {
   set_view_quote_id(null);
 };
 
-const {  values } = useForm({
+const { values, resetForm } = useForm({
   validationSchema: {
     name: "min:3|low_case_and_numeric",
     password: "min:8|max:15|low_case_and_numeric",
@@ -81,7 +80,6 @@ const editChanges = () => {
 };
 
 const saveChanges = async () => {
-
   isConfirmChanges.value = false;
   isProfileInfo.value = true;
   let updatedValues = new FormData();
@@ -117,6 +115,13 @@ const cancelChanges = () => {
   isEditName.value = false;
   isEditPassword.value = false;
   imageRef.value = auth_user_data?.value?.image;
+  resetForm({
+    values: {
+      name: "",
+      password: "",
+      password_confirmation: "",
+    },
+  });
 };
 </script>
 
@@ -140,7 +145,11 @@ const cancelChanges = () => {
       class="bg-[#24222F] rounded-xl px-8 py-6 pb-[10rem] flex flex-col items-center"
     >
       <div class="mb-16 w-[13rem] relative flex flex-col items-center z-10">
-        <img :src="imageRef" alt="" class="w-[13rem] h-[13rem] rounded-full mb-2" />
+        <img
+          :src="imageRef"
+          alt=""
+          class="w-[13rem] h-[13rem] rounded-full mb-2"
+        />
         <p class="font-helvetica-400 text-xl text-white">
           {{ $t("profile.text_upload_photo") }}
         </p>
