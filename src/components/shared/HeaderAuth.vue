@@ -193,7 +193,7 @@ const search = async (e: Event) => {
                 <span class="font-helvetica-400 text-white text-xl"
                   >{{ $t("general.text_movie") }} -
                   <span class="font-helvetica-500 text-[#DDCCAA]"
-                    >{{ quote.quote_director }}.</span
+                    >{{ quote.movie_title }}.</span
                   >
                   ({{ quote.quote_year }})</span
                 >

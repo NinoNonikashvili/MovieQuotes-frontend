@@ -88,7 +88,7 @@ const handleComment = async (e: Event) => {
       <span class="font-helvetica-400 text-white text-xl"
         >{{ $t("general.text_movie") }} -
         <span class="font-helvetica-500 text-[#DDCCAA]"
-          >{{ props.quote.quote_director }}.</span
+          >{{ props.quote.movie_title }}.</span
         >
         ({{ props.quote.quote_year }})</span
       >

@@ -120,6 +120,7 @@ export type NewsFeedQuote = {
   quote_image?: string;
   quote_year: string;
   quote_director: string;
+  movie_title:string;
   comment_number: number;
   react_number: number;
   comments: Array<{
