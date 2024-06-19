@@ -168,12 +168,13 @@ const handleFileInput = (e: Event) => {
           </button>
         </div>
 
-        <FormInputText
+          <FormInputText
           name="new_name"
           v-if="isUpdateName"
-          class="w-[33rem] mb-[3.5rem]"
+          class="w-[33rem] mb-14 h-20"
           :required="false"
         />
+        
         <FormInputText
           name="email"
           :disabled="true"
@@ -221,12 +222,12 @@ const handleFileInput = (e: Event) => {
             </div>
             <FormInputPassword
               name="new_password"
-              class="w-[33rem] mb-[3.5rem]"
+              class="w-[33rem] mb-14 h-20"
               :required="false"
             />
             <FormInputPassword
               name="new_password_confirmation"
-              class="w-[33rem] mb-[3.5rem]"
+              class="w-[33rem] mb-14 h-20"
               :required="false"
             />
           </div>
