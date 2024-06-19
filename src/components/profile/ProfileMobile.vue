@@ -16,10 +16,11 @@ import ErrorNotification from "@/components/shared/ErrorNotification.vue";
 import SuccessNotification from "@/components/shared/SuccessNotification.vue";
 import { useQuotesStore } from "@/stores/quotes";
 import QuoteView from "../quote/QuoteView.vue";
+import router from "@/router";
 
 const { locale } = i18n.global;
 const user = useUserStore();
-const { set_auth_user_data } = user;
+const { set_auth_user_data, set_auth_user } = user;
 const { auth_user_data } = storeToRefs(user);
 const isProfileInfo = ref<boolean>(true);
 const isEditName = ref<boolean>(false);
@@ -83,6 +84,7 @@ const saveChanges = async () => {
   isConfirmChanges.value = false;
   isProfileInfo.value = true;
   let updatedValues = new FormData();
+  const userEmail = auth_user_data.value?.email;
   if (imageFile.value) {
     updatedValues.append("image", imageFile.value);
   }
@@ -97,13 +99,23 @@ const saveChanges = async () => {
   }
   try {
     await updateProfile(updatedValues);
-    try {
-      let data = await getUpdatedUser();
-      set_auth_user_data(data.data.user_data as AuthUserData);
-    } catch (err) {
-      return;
-    }
     isSuccessNotification.value = true;
+    if (values.password) {
+      //login user again
+      let timerID = setTimeout(() => {
+        clearTimeout(timerID)
+        router.push({ name: "home" });
+        set_auth_user(false)
+      }, 3000)
+      
+    } else {
+      try {
+        let data = await getUpdatedUser();
+        set_auth_user_data(data.data.user_data as AuthUserData);
+      } catch (err) {
+        return;
+      }
+    }
   } catch (err) {
     isErrorNotification.value = true;
   }

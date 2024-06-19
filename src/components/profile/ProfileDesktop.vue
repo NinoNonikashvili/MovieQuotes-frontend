@@ -13,10 +13,11 @@ import ErrorNotification from "@/components/shared/ErrorNotification.vue";
 import SuccessNotification from "@/components/shared/SuccessNotification.vue";
 import QuoteView from "../quote/QuoteView.vue";
 import { useQuotesStore } from "@/stores/quotes";
+import router from "@/router";
 
 const user = useUserStore();
 
-const { set_auth_user_data } = user;
+const { set_auth_user_data, set_auth_user } = user;
 const { auth_user_data } = storeToRefs(user);
 const { handleSubmit } = useForm({
   validationSchema: {
@@ -43,10 +44,9 @@ const isErrorNotification = ref<boolean>(false);
 const imageRef = ref<string | undefined>(auth_user_data?.value?.image);
 const imageFile = ref<File | undefined>();
 
-
 const quoteStore = useQuotesStore();
-const {set_view_quote_id} = useQuotesStore();
-const {  view_quote_id } = storeToRefs(quoteStore);
+const { set_view_quote_id } = useQuotesStore();
+const { view_quote_id } = storeToRefs(quoteStore);
 const closeViewQuote = () => {
   set_view_quote_id(null);
 };
@@ -89,14 +89,23 @@ const onSubmit = handleSubmit(async (values) => {
   //if password is not updated send false
   try {
     await updateProfile(updatedValues);
+    if (values.new_password) {
+      //login user again
+      let timerID = setTimeout(() => {
+        clearTimeout(timerID);
+        router.push({ name: "home" });
+        set_auth_user(false);
+      }, 3000);
+    } else {
+      try {
+        let data = await getUpdatedUser();
+        set_auth_user_data(data.data.user_data as AuthUserData);
+      } catch (err) {
+        return;
+      }
+    }
 
     //update user store
-    try {
-      let data = await getUpdatedUser();
-      set_auth_user_data(data.data.user_data as AuthUserData);
-    } catch (err) {
-      return;
-    }
 
     isSuccessNotificationVisible.value = true;
     isUpdateActivated.value = false;
@@ -141,7 +150,11 @@ const handleFileInput = (e: Event) => {
         <div
           class="mb-16 w-[13rem] absolute left-0 right-0 mx-auto -top-12 flex flex-col items-center"
         >
-          <img :src="imageRef" alt="" class="w-[13rem] h-[13rem] rounded-full mb-2" />
+          <img
+            :src="imageRef"
+            alt=""
+            class="w-[13rem] h-[13rem] rounded-full mb-2"
+          />
           <p class="font-helvetica-400 text-xl text-white">
             {{ $t("profile.text_upload_photo") }}
           </p>
@@ -168,13 +181,13 @@ const handleFileInput = (e: Event) => {
           </button>
         </div>
 
-          <FormInputText
+        <FormInputText
           name="new_name"
           v-if="isUpdateName"
           class="w-[33rem] mb-14 h-20"
           :required="false"
         />
-        
+
         <FormInputText
           name="email"
           :disabled="true"
