@@ -141,7 +141,7 @@ const handleFileInput = (e: Event) => {
         <div
           class="mb-16 w-[13rem] absolute left-0 right-0 mx-auto -top-12 flex flex-col items-center"
         >
-          <img :src="imageRef" alt="" class="w-full rounded-full mb-2" />
+          <img :src="imageRef" alt="" class="w-[13rem] h-[13rem] rounded-full mb-2" />
           <p class="font-helvetica-400 text-xl text-white">
             {{ $t("profile.text_upload_photo") }}
           </p>

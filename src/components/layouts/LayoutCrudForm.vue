@@ -35,7 +35,7 @@ const props = defineProps<{
         <img
           :src="auth_user_data?.image"
           alt="quote author image"
-          class="w-10 xl:w-14 rounded-full"
+          class="w-10 xl:w-14 rounded-[100%]"
         />
         <p class="font-helvetica-400 text-xl text-white">
           {{ auth_user_data?.name }}
