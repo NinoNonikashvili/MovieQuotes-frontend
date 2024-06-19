@@ -17,6 +17,7 @@ export type NotificationType = {
   link_text_key: string;
   link: string;
   redirect?: boolean;
+  styles?: boolean;
 };
 
 export type Locales = "en" | "ge";
@@ -36,8 +37,10 @@ export type LoginUser = {
 
 export type VerificationMessageProps = {
   isVerified: boolean;
+  isPasswordReset?:boolean;
   email: string;
   handler: string;
+  styles?: boolean;
 };
 
 export type EmailArgument = {

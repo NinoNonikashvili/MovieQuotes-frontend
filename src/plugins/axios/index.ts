@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import i18n from "@/plugins/i18n";
-import router from '@/router'
+import router from "@/router";
 
 const { locale } = i18n.global;
 
@@ -38,15 +38,13 @@ instance.interceptors.response.use(
   function (error) {
     // handle 401 419 cors error here
     const err = error as AxiosError;
-    console.log("errorrr", err?.response?.status);
-    if (
-      err?.response?.status &&
-      (err?.response?.status === 401 ||
-        err?.response?.status === 419 ||
-        err?.response?.status >= 500)
-    ) {
-      console.log("here");
+    if (err?.response?.status && err?.response?.status >= 500) {
       router.push({ name: "server-error" });
+    } else if (
+      err?.response?.status &&
+      (err?.response?.status === 401 || err?.response?.status === 419)
+    ) {
+      router.push({ path: "/" });
     }
     return Promise.reject(error);
   },
