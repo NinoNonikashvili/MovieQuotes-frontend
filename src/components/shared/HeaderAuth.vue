@@ -216,11 +216,11 @@ const search = async (e: Event) => {
       </div>
 
       <!-- NOTIFICATIONS -->
-      <div class="relative">
-        <IconBell @click="toggleIsNotificationModalVisible" />
+      <div class="relative cursor-pointer" @click="toggleIsNotificationModalVisible">
+        <IconBell  />
         <div
           v-if="seenNotificationNum !== 0"
-          class="bg-[#E31221] w-6 h-6 rounded-full absolute -top-[0.5rem] -right-[0.8rem] flex items-center justify-center"
+          class="bg-[#E33812] text-white text-base font-helvetica-500 w-6 h-6 rounded-full absolute -top-[0.5rem] -right-[0.8rem] flex items-center justify-center"
         >
           {{ seenNotificationNum }}
         </div>
