@@ -140,7 +140,7 @@ const search = async (e: Event) => {
 
     <!-- BURGER MODAL -->
     <div
-      class="max-w-[23.75rem] h-[41rem] bg-[#11101A] absolute top-0 left-0 p-[2.8125rem] z-10"
+      class="max-w-[23.75rem] h-[41rem] bg-[#11101A] absolute top-0 left-0 p-[2.8125rem] z-30"
       ref="burgerRef"
       v-if="isBurgerMenuVisible"
     >
