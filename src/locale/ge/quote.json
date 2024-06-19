@@ -1,3 +1,26 @@
 {
-  "text_write_new_quote": "დაამატე ციტატა"
+  "text_write_new_quote": "დაამატე ციტატა",
+  "placeholder_add_quote_content": "დაამატე ახალი ციტატა",
+  "placeholder_text_quote": "ციტატა",
+  "drag_image": "გადმოაბობღე ფოტო ან",
+  "text_choose_file": "აირჩიე ფაილი",
+  "text_choose_movie": "აირჩიე ფილმი",
+  "drag_n_drop_file": "გადმოაბობღე ფოტო ან",
+  "text_post": "გამოაქვეყნე",
+  "required_in_en": "აუცილებელია ინგლისურად!",
+  "required_in_ge": "აუცილებელია ქართულად!",
+  "required": "აუცილებელია!",
+  "text_director": "რეჟისორი",
+  "error_quote_added": "ციტატის დამატება ვერ ხერხდება",
+  "success_quote_added": "ციტატა დამატებულია",
+  "quote_label": "ციტატის ტექსტი",
+  "image_label": "სურათი",
+  "movie_label": "ფილმი",
+  "text_view_quote": "ციტატა დეტალურად",
+  "text_save_changes": "შეინახე ცვლილებები",
+  "text_edit_quote": "შეცვალე ციტატა",
+  "text_change_photo": "შეცვალე ფოტო",
+  "QUOTE_ADDED": "ციტატა დაემატა",
+  "QUOTE_UPDATED": "ციტატა შეიცვალა",
+  "QUOTE_DELETED": "ციტატა წაიშალა"
 }

@@ -4,5 +4,28 @@
   "text_edit_profile": "შეცვალე პროფილი",
   "text_news_feed": "სიახლეები",
   "text_list_of_movies": "ფილმები",
-  "text_logout": "გასვლა"
+  "text_logout": "გასვლა",
+
+
+  "text_search": "ძებნა",
+  "text_enter": "Enter",
+  "search_movie_instructions": " ფილმების მოსაძებნად",
+  "search_quote_instructions": " ციტატების მოსაძებნად ",
+  "text_notifications": "შეტყობინებები",
+  "text_mark_all_read": "მონიშნე ყველა წაკითხულად",
+  "text_new": "ახალი",
+  "quote_reaction_message": "უყვარს შენი ციტატა",
+  "quote_unreaction_message": "აღარ უყვარს შენი ციტატა",
+  "quote_comment_message": "დააკომენტარა შენს ციტატაზე",
+  "time_elapsed": "წთ წინ",
+  "text_movie": "ფილმი",
+  "text_write_new_quote": "დაწერე ახალი ციტატა",
+  "text_search_by": "მოძებნე",
+  "text_write_comment": "დაწერე კომენტარი",
+  "days_elapsed": "{days} დღის წინ",
+  "hours_elapsed": "{hours} სთ წინ",
+  "minutes_elapsed": "{minutes} წთ წინ",
+  "day_elapsed": "{day} დღის წინ",
+  "hour_elapsed": "{hour} სთ წინ",
+  "minute_elapsed": "{minute} წთ წინ"
 }
