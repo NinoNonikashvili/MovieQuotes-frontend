@@ -14,6 +14,8 @@ import type { AuthUserData } from "@/types/types";
 import { storeToRefs } from "pinia";
 import ErrorNotification from "@/components/shared/ErrorNotification.vue";
 import SuccessNotification from "@/components/shared/SuccessNotification.vue";
+import { useQuotesStore } from "@/stores/quotes";
+import QuoteView from "../quote/QuoteView.vue";
 
 const { locale } = i18n.global;
 const user = useUserStore();
@@ -25,6 +27,14 @@ const isEditPassword = ref<boolean>(false);
 const isConfirmChanges = ref<boolean>(false);
 const isSuccessNotification = ref<boolean>(false);
 const isErrorNotification = ref<boolean>(false);
+
+
+const quoteStore = useQuotesStore();
+const {set_view_quote_id} = useQuotesStore();
+const {  view_quote_id } = storeToRefs(quoteStore);
+const closeViewQuote = () => {
+  set_view_quote_id(null);
+};
 
 const {  values } = useForm({
   validationSchema: {
@@ -226,6 +236,13 @@ const cancelChanges = () => {
     text_key="profile.error_profile_update"
     v-if="isErrorNotification"
     @close-notification="isErrorNotification = false"
+  />
+
+  <QuoteView
+    :closeModal="closeViewQuote"
+    :quote_id="view_quote_id"
+    :doNotShowCrud="true"
+    v-if="view_quote_id"
   />
 </template>
 <style scoped>

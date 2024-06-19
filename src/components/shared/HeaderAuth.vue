@@ -234,7 +234,7 @@ const search = async (e: Event) => {
       <div
         ref="notificationModalRef"
         v-if="isNotificationModalVisible"
-        class="min-w-[26.75rem] px-8 py-6 bg-black absolute top-[5.5rem] right-0 rounded-xl max-h-[30rem] overflow-y-scroll"
+        class="min-w-[26.75rem] px-8 py-6 bg-black absolute top-[5.5rem] right-0 rounded-xl max-h-[30rem] overflow-y-scroll z-30"
       >
         <div class="w-full flex items-center justify-between mb-6">
           <h3 class="font-helvetica-500 text-xl text-white">

@@ -11,6 +11,8 @@ import { storeToRefs } from "pinia";
 import LayoutUsersPages from "@/components/layouts/LayoutUserPages.vue";
 import ErrorNotification from "@/components/shared/ErrorNotification.vue";
 import SuccessNotification from "@/components/shared/SuccessNotification.vue";
+import QuoteView from "../quote/QuoteView.vue";
+import { useQuotesStore } from "@/stores/quotes";
 
 const user = useUserStore();
 
@@ -40,6 +42,14 @@ const isErrorNotification = ref<boolean>(false);
 // image input initialize with auth_user_data.image
 const imageRef = ref<string | undefined>(auth_user_data?.value?.image);
 const imageFile = ref<File | undefined>();
+
+
+const quoteStore = useQuotesStore();
+const {set_view_quote_id} = useQuotesStore();
+const {  view_quote_id } = storeToRefs(quoteStore);
+const closeViewQuote = () => {
+  set_view_quote_id(null);
+};
 
 const openUpdateName = () => {
   isUpdateName.value = true;
@@ -256,5 +266,11 @@ const handleFileInput = (e: Event) => {
     text_key="profile.error_profile_update"
     v-if="isErrorNotification"
     @close-notification="isErrorNotification = false"
+  />
+  <QuoteView
+    :closeModal="closeViewQuote"
+    :quote_id="view_quote_id"
+    :doNotShowCrud="true"
+    v-if="view_quote_id"
   />
 </template>
