@@ -38,7 +38,7 @@ const closeViewQuote = () => {
 
 const {  values } = useForm({
   validationSchema: {
-    name: "min:3",
+    name: "min:3|low_case_and_numeric",
     password: "min:8|max:15|low_case_and_numeric",
     password_confirmation: "confirmed:@password",
   },

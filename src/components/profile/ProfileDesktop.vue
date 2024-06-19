@@ -20,7 +20,7 @@ const { set_auth_user_data } = user;
 const { auth_user_data } = storeToRefs(user);
 const { handleSubmit } = useForm({
   validationSchema: {
-    new_name: "min:3",
+    new_name: "min:3|low_case_and_numeric",
     new_password: "min:8|max:15|low_case_and_numeric",
     new_password_confirmation: "confirmed:@new_password",
   },
