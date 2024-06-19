@@ -1044,6 +1044,10 @@ video {
   width: 4.2rem;
 }
 
+.w-\[50\%\] {
+  width: 50%;
+}
+
 .w-\[58rem\] {
   width: 58rem;
 }
@@ -1083,6 +1087,7 @@ video {
 
 .w-1\/2 {
   width: 50%;
+
 }
 
 .min-w-\[26\.75rem\] {
@@ -1135,6 +1140,14 @@ video {
 
 .max-w-lg {
   max-width: 32rem;
+}
+
+.max-w-\[7\.5rem\] {
+  max-width: 7.5rem;
+}
+
+.max-w-\[14rem\] {
+  max-width: 14rem;
 }
 
 .shrink {
