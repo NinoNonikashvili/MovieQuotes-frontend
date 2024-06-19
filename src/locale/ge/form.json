@@ -10,10 +10,16 @@
   "label_email": "ელ.ფოსტა",
   "label_password": "პაროლი",
   "label_password_confirmation": "გაიმეორე აპროლი",
+  "label_new_name": "ახალი სახელი",
+  "label_new_password": "ახალი პაროლი",
+  "label_new_password_confirmation": "გაიმეორე ახალი პაროლი",
   "placeholder_name": "შეიყვანე სახელი",
   "placeholder_email": "შეიყვანე ელ.ფოსტა",
   "placeholder_password": "პაროლი",
   "placeholder_password_confirmation": "პაროლი",
+  "placeholder_new_name": "შეიყვანე ახალი სახელი",
+  "placeholder_new_password": "შეიყვანე ახალი პაროლი",
+  "placeholder_new_password_confirmation": "დაადასტურე ახალი პაროლი ",
 
   "login_header": "ავტორიზაცია",
   "login_sub_header": "კეთილი იყოს თქვენი დაბრუნება! შიყვანეთ თქვენი მონაცემები",
@@ -35,6 +41,9 @@
   "reset_password_sub_header": "ახალი პაროლი უნდა განსხვავდებოდეს ძველისგან",
   "reset_password_footer_text": "შესვლა",
   "text_reset_password": "აღადგინე პაროლი",
+  "text_success": "გილოცავ!",
+  "notification_success_password_reset_p": "პაროლი წარმატებით შეიცვალა!",
+
 
   "notification_success_header": "გმადლობთ!",
   "notification_success_email_sent_p": "გთხოვთ მიყევით ელ.ფოსტაზე გამოგზავნილ ინსტრუქციებს ანგარიშის გასააქტიურებლად.",
@@ -46,4 +55,6 @@
   "notification_link_expired_header": "ბმული ვადაგასულია!",
   "notification_link_expired_p": "ბმული უნდა გამოიყენოთ გამოგზავნიდან 2სთ-ის განმავლობაში",
   "notification_link_expired_button_text": "მოითხოვე ახალი ბმული"
+
+
 }
