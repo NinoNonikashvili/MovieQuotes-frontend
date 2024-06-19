@@ -140,7 +140,7 @@ const search = async (e: Event) => {
 
     <!-- BURGER MODAL -->
     <div
-      class="max-w-[23.75rem] h-[41rem] bg-[#11101A] absolute top-0 left-0 p-[2.8125rem] z-10"
+      class="max-w-[23.75rem] h-[41rem] bg-[#11101A] absolute top-0 left-0 p-[2.8125rem] z-30"
       ref="burgerRef"
       v-if="isBurgerMenuVisible"
     >
@@ -193,7 +193,7 @@ const search = async (e: Event) => {
                 <span class="font-helvetica-400 text-white text-xl"
                   >{{ $t("general.text_movie") }} -
                   <span class="font-helvetica-500 text-[#DDCCAA]"
-                    >{{ quote.quote_director }}.</span
+                    >{{ quote.movie_title }}.</span
                   >
                   ({{ quote.quote_year }})</span
                 >
@@ -234,7 +234,7 @@ const search = async (e: Event) => {
       <div
         ref="notificationModalRef"
         v-if="isNotificationModalVisible"
-        class="min-w-[26.75rem] px-8 py-6 bg-black absolute top-[5.5rem] right-0 rounded-xl max-h-[30rem] overflow-y-scroll"
+        class="min-w-[26.75rem] px-8 py-6 bg-black absolute top-[5.5rem] right-0 rounded-xl max-h-[30rem] overflow-y-scroll z-30"
       >
         <div class="w-full flex items-center justify-between mb-6">
           <h3 class="font-helvetica-500 text-xl text-white">

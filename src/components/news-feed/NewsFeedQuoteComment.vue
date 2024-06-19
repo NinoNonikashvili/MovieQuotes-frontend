@@ -12,7 +12,7 @@ const props = defineProps<{
       <img
         :src="props.image"
         alt="quote author image"
-        class="w-10 xl:w-14 rounded-full"
+        class="w-10 h-10 xl:w-14 xl:h-14 rounded-[100%]"
       />
       <p class="font-helvetica-400 text-base text-white">
         {{ props.name }}

@@ -43,6 +43,7 @@ watch(() => route.params.id, verifyUser, { immediate: true });
       :isVerified="isVerified"
       :email="email"
       handler="handleSendAgainEmailVerification"
+      :styles="true"
     />
   </AuthBackground>
 </template>

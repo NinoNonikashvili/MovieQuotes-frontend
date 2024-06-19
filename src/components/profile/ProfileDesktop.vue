@@ -11,6 +11,8 @@ import { storeToRefs } from "pinia";
 import LayoutUsersPages from "@/components/layouts/LayoutUserPages.vue";
 import ErrorNotification from "@/components/shared/ErrorNotification.vue";
 import SuccessNotification from "@/components/shared/SuccessNotification.vue";
+import QuoteView from "../quote/QuoteView.vue";
+import { useQuotesStore } from "@/stores/quotes";
 
 const user = useUserStore();
 
@@ -40,6 +42,14 @@ const isErrorNotification = ref<boolean>(false);
 // image input initialize with auth_user_data.image
 const imageRef = ref<string | undefined>(auth_user_data?.value?.image);
 const imageFile = ref<File | undefined>();
+
+
+const quoteStore = useQuotesStore();
+const {set_view_quote_id} = useQuotesStore();
+const {  view_quote_id } = storeToRefs(quoteStore);
+const closeViewQuote = () => {
+  set_view_quote_id(null);
+};
 
 const openUpdateName = () => {
   isUpdateName.value = true;
@@ -131,7 +141,7 @@ const handleFileInput = (e: Event) => {
         <div
           class="mb-16 w-[13rem] absolute left-0 right-0 mx-auto -top-12 flex flex-col items-center"
         >
-          <img :src="imageRef" alt="" class="w-full rounded-full mb-2" />
+          <img :src="imageRef" alt="" class="w-[13rem] h-[13rem] rounded-full mb-2" />
           <p class="font-helvetica-400 text-xl text-white">
             {{ $t("profile.text_upload_photo") }}
           </p>
@@ -158,12 +168,13 @@ const handleFileInput = (e: Event) => {
           </button>
         </div>
 
-        <FormInputText
+          <FormInputText
           name="new_name"
           v-if="isUpdateName"
-          class="w-[33rem] mb-[3.5rem]"
+          class="w-[33rem] mb-14 h-20"
           :required="false"
         />
+        
         <FormInputText
           name="email"
           :disabled="true"
@@ -211,12 +222,12 @@ const handleFileInput = (e: Event) => {
             </div>
             <FormInputPassword
               name="new_password"
-              class="w-[33rem] mb-[3.5rem]"
+              class="w-[33rem] mb-14 h-20"
               :required="false"
             />
             <FormInputPassword
               name="new_password_confirmation"
-              class="w-[33rem] mb-[3.5rem]"
+              class="w-[33rem] mb-14 h-20"
               :required="false"
             />
           </div>
@@ -256,5 +267,11 @@ const handleFileInput = (e: Event) => {
     text_key="profile.error_profile_update"
     v-if="isErrorNotification"
     @close-notification="isErrorNotification = false"
+  />
+  <QuoteView
+    :closeModal="closeViewQuote"
+    :quote_id="view_quote_id"
+    :doNotShowCrud="true"
+    v-if="view_quote_id"
   />
 </template>

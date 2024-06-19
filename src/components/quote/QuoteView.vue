@@ -98,6 +98,7 @@ const handleComment = async (e: Event) => {
 
 <template>
   <LayoutCrudForm
+      class="z-30"
     :closeModal="props.closeModal"
     header_key="quote.text_view_quote"
     :hideOnMobile="true"

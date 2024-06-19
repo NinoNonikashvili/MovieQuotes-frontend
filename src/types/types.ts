@@ -17,6 +17,7 @@ export type NotificationType = {
   link_text_key: string;
   link: string;
   redirect?: boolean;
+  styles?: boolean;
 };
 
 export type Locales = "en" | "ge";
@@ -36,8 +37,10 @@ export type LoginUser = {
 
 export type VerificationMessageProps = {
   isVerified: boolean;
+  isPasswordReset?:boolean;
   email: string;
   handler: string;
+  styles?: boolean;
 };
 
 export type EmailArgument = {
@@ -117,6 +120,7 @@ export type NewsFeedQuote = {
   quote_image?: string;
   quote_year: string;
   quote_director: string;
+  movie_title:string;
   comment_number: number;
   react_number: number;
   comments: Array<{
