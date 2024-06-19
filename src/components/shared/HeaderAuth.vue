@@ -29,6 +29,9 @@ const { fetchSearchedQuotes } = useFetchQuotes();
 const quoteStore = useQuotesStore();
 const { set_view_quote_id } = useQuotesStore();
 const { quotes } = storeToRefs(quoteStore);
+const localeObj = i18n.global;
+const searchErrorMessage = ref<string | null>(null);
+
 
 const isBurgerMenuVisible = ref<boolean>(false);
 const isSearchVisible = ref<boolean>(false);
@@ -46,7 +49,12 @@ const {
 } = useQuoteNotificationStore();
 const { notifications, seenNotificationNum } = storeToRefs(notificationStore);
 const searchKey = ref<string | null>(null);
-
+  const resetSearchKey = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  if (target.value === "") {
+    searchKey.value = null;
+  }
+};
 
 const handleNotificationClick = async (notification_id: number) => {
   decreaseSeenNotCount();
@@ -110,13 +118,19 @@ const toggleSearch = () => {
 
 const search = async (e: Event) => {
   const target = e.target as HTMLInputElement;
-  console.log("search");
   if (target.value) {
-    searchKey.value = target.value;
-    try {
-      await fetchSearchedQuotes(target.value);
-    } catch (err) {
-      return;
+    if (locale.value === "en" && target.value.match(/[ა-ჰ]/g)) {
+      searchErrorMessage.value = localeObj.t("validations.only_en");
+    } else if (locale.value === "ge" && target.value.match(/[a-zA-Z]/g)) {
+      searchErrorMessage.value = localeObj.t("validations.only_ge");
+    } else {
+      searchErrorMessage.value = null;
+      searchKey.value = target.value;
+      try {
+        await fetchSearchedQuotes(target.value);
+      } catch (err) {
+        return;
+      }
     }
   }
 };
@@ -173,12 +187,21 @@ const search = async (e: Event) => {
 
           <input
             @keydown.enter="search"
+            @input="resetSearchKey"
             type="text"
             :placeholder="$t('general.text_search')"
             class="focus:outline-none bg-transparent font-helvetica-400 text-base text-white placeholder:text-white"
           />
         </div>
         <div>
+          <div v-if="searchErrorMessage">
+            <p
+            class="font-helvetica-400 text-base text-red-400 pl-[4.625rem]"
+            :class="searchErrorMessage ? 'text-red-400' : 'text-transparent'"
+          >
+            {{ searchErrorMessage }}
+          </p>
+          </div>
           <div v-if="quotes && searchKey">
             <div
               v-for="(quote, index) in quotes"
@@ -200,7 +223,7 @@ const search = async (e: Event) => {
               </div>
             </div>
           </div>
-          <div v-if="!quotes" class="w-full px-[4.625rem] py-6">
+          <div v-if="!searchKey" class="w-full px-[4.625rem] py-6">
             <p class="text-[#636268] font-helvetica-geo-400 text-base mb-5">
               {{ $t("general.text_enter") }}
               <span class="text-white font-helvetica-geo-400 text-base">@</span>

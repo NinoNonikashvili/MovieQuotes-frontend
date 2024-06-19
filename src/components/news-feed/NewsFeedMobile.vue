@@ -63,7 +63,7 @@ const handleWriteQuoteClick = () => {
 
 <template>
   <section
-    class="bg-[#181724] pt-8 xl:hidden"
+    class="bg-[#181724] pt-8 xl:hidden min-h-screen"
     :class="{ 'fixed pointer-events-none': isAddQuoteModal || view_quote_id }"
   >
     <div :class="{ overlay: isAddQuoteModal || view_quote_id }"></div>
