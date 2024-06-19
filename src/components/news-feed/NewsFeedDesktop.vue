@@ -9,11 +9,21 @@ import { ref, onMounted } from "vue";
 import QuoteAdd from "@/components/quote/QuoteAdd.vue";
 import { useQuotesStore } from "@/stores/quotes";
 import { useFetchQuotes } from "@/composables/useFetchQuotes";
+import QuoteView from "../quote/QuoteView.vue";
+import SuccessNotification from "../shared/SuccessNotification.vue";
+import { useNotificationStore } from "@/stores/crud-notifications";
+
 
 // QUOTES
 const quoteStore = useQuotesStore();
-const { quotes } = storeToRefs(quoteStore);
+const {set_view_quote_id} = useQuotesStore();
+const { quotes, view_quote_id } = storeToRefs(quoteStore);
 const { fetch, loading, fetchSearchedQuotes } = useFetchQuotes();
+
+const notificationsStore = useNotificationStore();
+const { status } = storeToRefs(notificationsStore);
+const { set_status } = useNotificationStore();
+
 
 const longBtn = ref<string>("writeQuote");
 const isAddQuoteModal = ref<boolean>(false);
@@ -42,7 +52,6 @@ onMounted(() => {
   }
 });
 
-
 const search = async (e: Event) => {
   const target = e.target as HTMLInputElement;
   console.log("search");
@@ -62,12 +71,18 @@ const handleWriteQuoteClick = () => {
   longBtn.value = "writeQuote";
   isAddQuoteModal.value = true;
 };
+
+const closeViewQuote = () => {
+  set_view_quote_id(null);
+};
 </script>
 
 <template>
+  <div :class="{ overlay: isAddQuoteModal || view_quote_id}"></div>
+
   <div
     class="hidden w-full px-16 pt-8 pb-[15rem] xl:flex bg-[#181724]"
-    :class="{ 'blur-sm pointer-events-none': isAddQuoteModal }"
+    :class="{ 'fixed pointer-events-none': isAddQuoteModal || view_quote_id }"
   >
     <LayoutUsersPages
       :name="auth_user_data?.name"
@@ -137,14 +152,36 @@ const handleWriteQuoteClick = () => {
     </section>
   </div>
 
-  <div
-    class="max-w-[60rem] absolute top-[7.375rem] left-0 right-0 mx-auto"
-    v-if="isAddQuoteModal"
-  >
+
     <QuoteAdd
+    v-if="isAddQuoteModal"
       :closeModal="closeAddQuote"
       :user_name="auth_user_data?.name"
       :user_avatar="auth_user_data?.image"
     />
-  </div>
+    <QuoteView
+    :closeModal="closeViewQuote"
+    :quote_id="view_quote_id"
+    :doNotShowCrud="true"
+    v-if="view_quote_id"
+  />
+
+  <SuccessNotification
+    v-if="status"
+    :text_key="'quote.' + status"
+    @close-notification="set_status(null)"
+  />
 </template>
+<style>
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: auto;
+  top: 106px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(25, 23, 37, 0.5);
+  z-index: 2;
+}
+</style>

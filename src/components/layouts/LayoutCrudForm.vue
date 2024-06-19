@@ -15,7 +15,7 @@ const props = defineProps<{
 
 <template>
   <div
-    class="fixed h-screen overflow-y-scroll xl:h-fit xl:overflow-y-hidden top-0 left-0 w-full xl:absolute xl:max-w-[60rem] xl:top-[7.375rem] xl:left-0 xl:right-0 xl:mx-auto"
+    class="fixed h-screen overflow-y-scroll xl:h-[80vh] top-0 left-0 w-full xl:absolute xl:max-w-[60rem] xl:top-[8rem] xl:left-0 xl:right-0 xl:mx-auto z-20"
   >
     <div class="bg-[#11101A] rounded-xl w-full">
       <!-- HEADER -->

@@ -7,10 +7,14 @@ import { ref, onMounted } from "vue";
 import QuoteAdd from "@/components/quote/QuoteAdd.vue";
 import { useQuotesStore } from "@/stores/quotes";
 import { useFetchQuotes } from "@/composables/useFetchQuotes";
+import QuoteView from "../quote/QuoteView.vue";
+import SuccessNotification from "../shared/SuccessNotification.vue";
+import { useNotificationStore } from "@/stores/crud-notifications";
 
 // QUOTES
 const quoteStore = useQuotesStore();
-const { quotes } = storeToRefs(quoteStore);
+const { set_view_quote_id } = useQuotesStore();
+const { quotes, view_quote_id } = storeToRefs(quoteStore);
 
 const longBtn = ref<string>("writeQuote");
 const isAddQuoteModal = ref<boolean>(false);
@@ -39,12 +43,15 @@ onMounted(() => {
   }
 });
 
-/**
- * 1. display write quote modal and save on click
- * 2. add search functionality and send request on enter click
- */
+const closeViewQuote = () => {
+  set_view_quote_id(null);
+};
 
- 
+const notificationsStore = useNotificationStore();
+const { status } = storeToRefs(notificationsStore);
+const { set_status } = useNotificationStore();
+
+
 const closeAddQuote = () => {
   isAddQuoteModal.value = false;
 };
@@ -57,8 +64,9 @@ const handleWriteQuoteClick = () => {
 <template>
   <section
     class="bg-[#181724] pt-8 xl:hidden"
-    :class="{ 'blur-sm pointer-events-none': isAddQuoteModal }"
+    :class="{ 'fixed pointer-events-none': isAddQuoteModal || view_quote_id }"
   >
+    <div :class="{ overlay: isAddQuoteModal || view_quote_id }"></div>
     <!-- WRITE QUOTE BTN  -->
     <button
       class="flex items-center gap-2 py-3 px-4 mb-6 ml-9 w-fit"
@@ -97,5 +105,16 @@ const handleWriteQuoteClick = () => {
       :user_name="auth_user_data?.name"
       :user_avatar="auth_user_data?.image"
     />
+    <QuoteView
+      :closeModal="closeViewQuote"
+      :quote_id="view_quote_id"
+      :doNotShowCrud="true"
+      v-if="view_quote_id"
+    />
+    <SuccessNotification
+    v-if="status"
+    :text_key="'quote.' + status"
+    @close-notification="set_status(null)"
+  />
   </div>
 </template>

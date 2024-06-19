@@ -65,8 +65,9 @@ onMounted(() => {
 <template>
   <div
     class="w-full px-10 py-4 xl:px-16 xl:pt-8 pb-[15rem] flex bg-[#181724]"
-    :class="{ 'pointer-events-none blur-sm': isAddMovie }"
+    :class="{ 'pointer-events-none ': isAddMovie }"
   >
+  <div :class="{ overlay: isAddMovie }"></div>
     <LayoutUsersPages
       class="hidden xl:flex"
       :name="auth_user_data?.name"

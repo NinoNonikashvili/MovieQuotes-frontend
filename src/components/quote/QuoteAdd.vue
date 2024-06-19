@@ -11,13 +11,13 @@ import { storeToRefs } from "pinia";
 import type { MoviesData } from "@/types/types";
 import { createQuote } from "@/services/axios/quote-services";
 import { getMovies } from "@/services/axios/movie-services";
-import SuccessNotification from "@/components/shared/SuccessNotification.vue";
-import ErrorNotification from "@/components/shared/ErrorNotification.vue";
 import LayoutCrudForm from "../layouts/LayoutCrudForm.vue";
+import { useNotificationStore } from "@/stores/crud-notifications";
 
 const moviesStore = useMoviesStore();
 const { set_movies } = useMoviesStore();
 const { movies } = storeToRefs(moviesStore);
+const { set_status } = useNotificationStore();
 
 onMounted(async () => {
   //fetch movies if not fetched yet
@@ -42,8 +42,6 @@ const img = ref<File | null>(null);
 const quote_en = ref<string | null>(null);
 const quote_ge = ref<string | null>(null);
 const chosenMovieData = ref<MoviesData | undefined>();
-const addQuoteSuccess = ref<boolean>(false);
-const addQuoteFailure = ref<boolean>(false);
 
 const errors = ref<{
   img: string | null;
@@ -85,9 +83,8 @@ const handleSubmitClick = async () => {
 
       await createQuote(data);
       props.closeModal();
-      addQuoteSuccess.value = true;
+      set_status("QUOTE_ADDED");
     } catch (err) {
-      addQuoteFailure.value = true;
       return;
     }
   }
@@ -144,14 +141,4 @@ const handleSubmitClick = async () => {
       <ButtonFilled text_key="quote.text_post" :submit="true" />
     </form>
   </LayoutCrudForm>
-  <SuccessNotification
-    text_key="quote.success_quote_added"
-    v-if="addQuoteSuccess"
-    @close-notification="addQuoteSuccess = false"
-  />
-  <ErrorNotification
-    text_key="quote.error_quote_added"
-    v-if="addQuoteFailure"
-    @close-notification="addQuoteFailure = false"
-  />
 </template>

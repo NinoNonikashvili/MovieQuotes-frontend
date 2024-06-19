@@ -13,7 +13,6 @@ import HeaderAuthLangAndLogout from "@/components/shared/HeaderAuthLangAndLogout
 import { storeToRefs } from "pinia";
 import { useQuoteNotificationStore } from "@/stores/quote-notifications";
 import HeaderAuthSingleNotificationComponent from "./HeaderAuthSingleNotificationComponent.vue";
-import QuoteView from "../quote/QuoteView.vue";
 import {
   getNotifications,
   setAllNotificationsSeen,
@@ -28,6 +27,7 @@ const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
 const { fetchSearchedQuotes } = useFetchQuotes();
 const quoteStore = useQuotesStore();
+const { set_view_quote_id } = useQuotesStore();
 const { quotes } = storeToRefs(quoteStore);
 
 const isBurgerMenuVisible = ref<boolean>(false);
@@ -47,8 +47,6 @@ const {
 const { notifications, seenNotificationNum } = storeToRefs(notificationStore);
 const searchKey = ref<string | null>(null);
 
-const isViewQuote = ref<boolean>(false);
-const selectedQuoteId = ref<string | null>();
 
 const handleNotificationClick = async (notification_id: number) => {
   decreaseSeenNotCount();
@@ -72,8 +70,8 @@ const showSearchedQuote = (e: Event) => {
 };
 
 const handleViewQuote = (quote_id: number) => {
-  selectedQuoteId.value = String(quote_id);
-  isViewQuote.value = true;
+  set_view_quote_id(String(quote_id));
+  isNotificationModalVisible.value=false;
 };
 
 const mskeAllNotsSeen = async () => {
@@ -86,10 +84,7 @@ const mskeAllNotsSeen = async () => {
   }
 };
 
-const closeViewQuote = () => {
-  isViewQuote.value = false;
-  selectedQuoteId.value = null;
-};
+
 
 onClickOutside(burgerRef, () => {
   isBurgerMenuVisible.value = false;
@@ -112,7 +107,6 @@ const toggleSearch = () => {
   isSearchVisible.value = !isSearchVisible.value;
 };
 
-// debounce logic
 
 const search = async (e: Event) => {
   const target = e.target as HTMLInputElement;
@@ -127,7 +121,6 @@ const search = async (e: Event) => {
   }
 };
 
-//add notification modal
 </script>
 
 <template>
@@ -271,10 +264,5 @@ const search = async (e: Event) => {
       <HeaderAuthLangAndLogout visibility="hidden xl:block" />
     </div>
   </div>
-  <QuoteView
-    :closeModal="closeViewQuote"
-    :quote_id="selectedQuoteId"
-    :doNotShowCrud="true"
-    v-if="isViewQuote && selectedQuoteId"
-  />
+
 </template>
