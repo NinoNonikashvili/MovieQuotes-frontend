@@ -1012,6 +1012,10 @@ video {
   width: 4.2rem;
 }
 
+.w-\[50\%\] {
+  width: 50%;
+}
+
 .w-\[58rem\] {
   width: 58rem;
 }
@@ -1028,6 +1032,10 @@ video {
   width: 8rem;
 }
 
+.w-\[9\.375rem\] {
+  width: 9.375rem;
+}
+
 .w-\[9rem\] {
   width: 9rem;
 }
@@ -1039,6 +1047,18 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[\] {
+  width: ;
+}
+
+.w-\[1\] {
+  width: 1;
+}
+
+.w-\[7\.5rem\] {
+  width: 7.5rem;
 }
 
 .min-w-\[26\.75rem\] {
@@ -1083,6 +1103,14 @@ video {
 
 .max-w-lg {
   max-width: 32rem;
+}
+
+.max-w-\[7\.5rem\] {
+  max-width: 7.5rem;
+}
+
+.max-w-\[14rem\] {
+  max-width: 14rem;
 }
 
 .shrink {
@@ -1313,6 +1341,11 @@ video {
 
 .bg-\[\#181623\]\/70 {
   background-color: rgb(24 22 35 / 0.7);
+}
+
+.bg-\[\#181624\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(24 22 36 / var(--tw-bg-opacity));
 }
 
 .bg-\[\#181724\] {
@@ -1568,6 +1601,11 @@ video {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.py-40 {
+  padding-top: 10rem;
+  padding-bottom: 10rem;
 }
 
 .py-6 {
