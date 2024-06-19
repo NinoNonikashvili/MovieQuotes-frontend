@@ -6,9 +6,13 @@ import { onMounted } from "vue";
 import { getQuotes } from "@/services/axios/quote-services";
 import { useQuotesStore } from "@/stores/quotes";
 import type { NewsFeedQuote } from "@/types/types";
+import { watch } from "vue";
+import { useRoute } from "vue-router";
 
-onMounted(async () => {
-  const { set_quotes, set_quote_cursor } = useQuotesStore();
+const route = useRoute();
+const { set_quotes, set_quote_cursor } = useQuotesStore();
+
+const load = async () => {
   try {
     const response = await getQuotes(null, null);
     set_quotes(response.data.quotes as NewsFeedQuote[]);
@@ -26,7 +30,18 @@ onMounted(async () => {
   } catch (err) {
     return;
   }
+};
+
+onMounted(async () => {
+  await load();
 });
+
+watch(
+  () => route.params.lang,
+  async () => {
+    await load();
+  },
+);
 </script>
 
 <template>
