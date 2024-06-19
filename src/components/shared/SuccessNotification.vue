@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IconCheckpoint from "@/components/icons/IconCheckpoint.vue";
 import IconCross from "@/components/icons/IconCross.vue";
+import { onMounted } from "vue";
 
 const props = defineProps<{
   text_key: string;
@@ -12,6 +13,13 @@ const emit = defineEmits<{
 const emitEvent = () => {
   emit("close-notification");
 };
+
+onMounted(()=>{
+  let timerID = setTimeout(() => {
+        clearTimeout(timerID)
+        emitEvent()
+      }, 3000)
+})
 </script>
 <template>
   <div
