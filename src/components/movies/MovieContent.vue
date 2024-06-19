@@ -8,7 +8,6 @@ import { storeToRefs } from "pinia";
 import EditDelete from "@/components/shared/EditDelete.vue";
 import ButtonFilled from "../ui/buttons/ButtonFilled.vue";
 import MovieQuotesComponent from "./MovieQuotesComponent.vue";
-import type { MoviesData } from "@/types/types";
 import { computed, ref } from "vue";
 import { deleteMovie } from "@/services/axios/movie-services";
 import { useRouter, useRoute } from "vue-router";
@@ -131,8 +130,9 @@ const handleTriggerForm = async (id: string, action: string) => {
 <template>
   <div
     class="w-full px-10 py-4 xl:px-16 xl:pt-8 pb-[15rem] flex bg-[#181724]"
-    :class="{ 'pointer-events-none blur-sm': isFormVIsible }"
+    :class="{ 'fixed pointer-events-none ': isFormVIsible }"
   >
+  <div :class="{ overlay: isFormVIsible}"></div>
     <LayoutUserPages
       class="hidden xl:flex"
       :name="auth_user_data?.name"

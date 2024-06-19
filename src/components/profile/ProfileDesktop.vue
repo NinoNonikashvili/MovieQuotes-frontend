@@ -144,6 +144,7 @@ const handleFileInput = (e: Event) => {
         <div class="flex items-center gap-4 mb-[3.5rem]">
           <FormInputText
             name="name"
+            :value="auth_user_data?.name"
             :disabled="true"
             class="w-[33rem]"
             :required="false"
@@ -166,6 +167,7 @@ const handleFileInput = (e: Event) => {
         <FormInputText
           name="email"
           :disabled="true"
+          :value="auth_user_data?.email"
           class="w-[33rem] mb-[3.5rem]"
           :required="false"
         />

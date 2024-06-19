@@ -15,7 +15,7 @@ const emitEvent = () => {
 </script>
 <template>
   <div
-    class="bg-[#BADBCC] rounded-[0.25rem] p-4 flex items-center justify-between absolute top-[10rem] left-0 right-0 mx-auto xl:mx-0 xl:right-[12rem] w-[25rem]"
+    class="bg-[#BADBCC] rounded-[0.25rem] p-4 flex items-center justify-between absolute top-[10rem] left-0 right-0 mx-auto xl:mx-0 xl:right-[12rem] xl:left-auto w-[25rem]"
   >
     <div class="flex items-center gap-2">
       <IconCheckpoint />

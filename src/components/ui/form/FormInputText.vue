@@ -35,6 +35,18 @@ const validationListeners = {
       </p>
       <div class="relative">
         <input
+        v-if="props.disabled && props.value"
+          :disabled="props.disabled"
+          ref="elInput"
+          :value="props.value"
+          v-on="validationListeners"
+          type="text"
+          :id="props.name"
+          class="peer w-full px-3 py-2 bg-gray-100 rounded-[4px] focus:outline-none focus:ring-[#0D6EFD]/25 focus:ring-2 font-helvetica-400 text-base text-gray-500 placeholder:text-gray-500"
+         
+        />
+        <input
+        v-else
           :disabled="props.disabled"
           ref="elInput"
           v-model="value"

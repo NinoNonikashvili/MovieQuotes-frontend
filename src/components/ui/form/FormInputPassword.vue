@@ -61,12 +61,12 @@ const validationListeners = {
         />
         <IconHidePassword
           class="absolute top-[0.9rem] right-2"
-          v-if="!isPasswordVisible"
+          v-if="!isPasswordVisible && !props.disabled"
           @click="togglePassword"
         />
         <IconShowPassword
           class="absolute top-[0.9rem] right-2"
-          v-if="isPasswordVisible"
+          v-if="isPasswordVisible && !props.disabled"
           @click="togglePassword"
         />
         <IconInputError

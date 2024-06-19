@@ -6,7 +6,7 @@ import { useAddQuoteNotification } from "@/composables/useAddQuoteNotification";
 import i18n from "@/plugins/i18n";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const props = defineProps<{
   quote: NewsFeedQuote;
@@ -24,9 +24,17 @@ const local_comments = ref<
     }[]
   | null
 >(props.quote.comments);
+
 const local_comments_number = ref<number>(props.quote.comment_number);
 
 
+watch(
+  () => props.quote,
+  () => {
+    local_comments.value = props.quote.comments;
+    local_comments_number.value = props.quote.comment_number;
+  },
+);
 
 const handleComment = async (e: Event) => {
   const target = e.target as HTMLInputElement;
@@ -106,6 +114,7 @@ const handleComment = async (e: Event) => {
     <!-- DIVIDER -->
     <div class="h-[0.0625rem] w-full bg-white my-4"></div>
     <!-- COMMENTS LIST -->
+
     <div v-for="(comment, index) in local_comments" :key="index">
       <NewsFeedQuoteComment
         :name="comment.comment_author_name"

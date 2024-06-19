@@ -8,16 +8,18 @@ import { useI18n } from "vue-i18n";
 import QuoteChosenMovie from "@/components/quote/QuoteChosenMovie.vue";
 import { useMoviesStore } from "@/stores/movies";
 import { storeToRefs } from "pinia";
-import type { MoviesData } from "@/types/types";
-import { createQuote } from "@/services/axios/quote-services";
+import type { MoviesData, NewsFeedQuote } from "@/types/types";
+import { createQuote, getQuotes } from "@/services/axios/quote-services";
 import { getMovies } from "@/services/axios/movie-services";
-import SuccessNotification from "@/components/shared/SuccessNotification.vue";
-import ErrorNotification from "@/components/shared/ErrorNotification.vue";
 import LayoutCrudForm from "../layouts/LayoutCrudForm.vue";
+import { useNotificationStore } from "@/stores/crud-notifications";
+import { useFetchQuotes } from "@/composables/useFetchQuotes";
+import { useQuotesStore } from "@/stores/quotes";
 
 const moviesStore = useMoviesStore();
 const { set_movies } = useMoviesStore();
 const { movies } = storeToRefs(moviesStore);
+const { set_status } = useNotificationStore();
 
 onMounted(async () => {
   //fetch movies if not fetched yet
@@ -42,8 +44,7 @@ const img = ref<File | null>(null);
 const quote_en = ref<string | null>(null);
 const quote_ge = ref<string | null>(null);
 const chosenMovieData = ref<MoviesData | undefined>();
-const addQuoteSuccess = ref<boolean>(false);
-const addQuoteFailure = ref<boolean>(false);
+const { set_quotes, set_quote_cursor } = useQuotesStore();
 
 const errors = ref<{
   img: string | null;
@@ -84,9 +85,30 @@ const handleSubmitClick = async () => {
       data.append("image", img.value);
 
       await createQuote(data);
-      addQuoteSuccess.value = true;
+      props.closeModal();
+      set_status("QUOTE_ADDED");
+      try {
+        try {
+          const response = await getQuotes(null, null);
+          set_quotes(response.data.quotes as NewsFeedQuote[]);
+          if (response.data.next_url) {
+            const url = new URL(response.data.next_url);
+            const cursor = url.searchParams.get("cursor");
+            if (cursor) {
+              set_quote_cursor(cursor);
+            } else {
+              set_quote_cursor(null);
+            }
+          } else {
+            set_quote_cursor(null);
+          }
+        } catch (err) {
+          return;
+        }
+      } catch (err) {
+        err;
+      }
     } catch (err) {
-      addQuoteFailure.value = true;
       return;
     }
   }
@@ -143,14 +165,4 @@ const handleSubmitClick = async () => {
       <ButtonFilled text_key="quote.text_post" :submit="true" />
     </form>
   </LayoutCrudForm>
-  <SuccessNotification
-    text_key="quote.success_quote_added"
-    v-if="addQuoteSuccess"
-    @close-notification="addQuoteSuccess = false"
-  />
-  <ErrorNotification
-    text_key="quote.error_quote_added"
-    v-if="addQuoteFailure"
-    @close-notification="addQuoteFailure = false"
-  />
 </template>
