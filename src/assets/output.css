@@ -1077,6 +1077,14 @@ video {
   width: 100%;
 }
 
+.w-\[11rem\] {
+  width: 11rem;
+}
+
+.w-1\/2 {
+  width: 50%;
+}
+
 .min-w-\[26\.75rem\] {
   min-width: 26.75rem;
 }
@@ -1160,6 +1168,10 @@ video {
   list-style-type: none;
 }
 
+.flex-row {
+  flex-direction: row;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -1186,6 +1198,10 @@ video {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
 }
 
 .gap-1 {

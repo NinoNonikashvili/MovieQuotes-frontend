@@ -20,6 +20,7 @@
   "text_save_changes": "Save changes",
   "text_edit_quote": "Edit Quote",
   "text_change_photo": "Change photo",
+  "text_replace_image": "Replace photo",
   "QUOTE_ADDED": "Quote added successfully",
   "QUOTE_UPDATED": "Quote edited successfully",
   "QUOTE_DELETED": "Quote deleted successfully"
