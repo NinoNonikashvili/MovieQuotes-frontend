@@ -45,6 +45,7 @@ instance.interceptors.response.use(
       (err?.response?.status === 401 || err?.response?.status === 419)
     ) {
       router.push({ path: "/" });
+
     }
     return Promise.reject(error);
   },
