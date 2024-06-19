@@ -114,9 +114,6 @@ const handleComment = async (e: Event) => {
     <!-- DIVIDER -->
     <div class="h-[0.0625rem] w-full bg-white my-4"></div>
     <!-- COMMENTS LIST -->
-    <p class="text-white">
-      {{ props.quote.comments }} {{ local_comments_number }}
-    </p>
 
     <div v-for="(comment, index) in local_comments" :key="index">
       <NewsFeedQuoteComment
