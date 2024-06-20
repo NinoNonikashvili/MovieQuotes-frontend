@@ -12,23 +12,25 @@ import { useFetchQuotes } from "@/composables/useFetchQuotes";
 import QuoteView from "../quote/QuoteView.vue";
 import SuccessNotification from "../shared/SuccessNotification.vue";
 import { useNotificationStore } from "@/stores/crud-notifications";
-
+import i18n from "@/plugins/i18n";
 
 // QUOTES
 const quoteStore = useQuotesStore();
-const {set_view_quote_id} = useQuotesStore();
+const { set_view_quote_id } = useQuotesStore();
 const { quotes, view_quote_id } = storeToRefs(quoteStore);
 const { fetch, loading, fetchSearchedQuotes } = useFetchQuotes();
 
 const notificationsStore = useNotificationStore();
 const { status } = storeToRefs(notificationsStore);
 const { set_status } = useNotificationStore();
-
+const { locale } = i18n.global;
+const localeObj = i18n.global;
 
 const longBtn = ref<string>("writeQuote");
 const isAddQuoteModal = ref<boolean>(false);
 const loadMoreRef = ref<HTMLElement | null>(null);
 const searchKey = ref<string | null>(null);
+const searchErrorMessage = ref<string | null>(null);
 
 const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
@@ -54,14 +56,27 @@ onMounted(() => {
 
 const search = async (e: Event) => {
   const target = e.target as HTMLInputElement;
-  console.log("search");
   if (target.value) {
-    searchKey.value = target.value;
-    try {
-      await fetchSearchedQuotes(target.value);
-    } catch (err) {
-      return;
+    if (locale.value === "en" && target.value.match(/[ა-ჰ]/g)) {
+      searchErrorMessage.value = localeObj.t("validations.only_en");
+    } else if (locale.value === "ge" && target.value.match(/[a-zA-Z]/g)) {
+      searchErrorMessage.value = localeObj.t("validations.only_ge");
+    } else {
+      searchErrorMessage.value = null;
+      searchKey.value = target.value;
+      try {
+        await fetchSearchedQuotes(target.value);
+      } catch (err) {
+        return;
+      }
     }
+  }
+};
+
+const resetSearchKey = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  if (target.value === "") {
+    searchKey.value = null;
   }
 };
 const closeAddQuote = () => {
@@ -78,7 +93,7 @@ const closeViewQuote = () => {
 </script>
 
 <template>
-  <div :class="{ overlay: isAddQuoteModal || view_quote_id}"></div>
+  <div :class="{ overlay: isAddQuoteModal || view_quote_id }"></div>
 
   <div
     class="hidden w-full px-16 pt-8 pb-[15rem] xl:flex bg-[#181724]"
@@ -91,7 +106,7 @@ const closeViewQuote = () => {
 
     <section>
       <!-- WRITE QUOTE BTN & SEARCH -->
-      <div class="flex gap-8 w-[58rem] mb-6">
+      <div class="flex gap-8 w-[58rem] mb-6 items-start">
         <button
           class="flex items-center gap-2 py-3 px-4 bg-[#24222F] rounded-[0.625rem]"
           :class="longBtn === 'writeQuote' ? 'w-full shrink' : 'w-fit shrink-0'"
@@ -102,35 +117,44 @@ const closeViewQuote = () => {
             {{ $t("general.text_write_new_quote") }}
           </p>
         </button>
-        <div
-          class="flex items-center gap-2 py-3 px-4"
-          :class="longBtn === 'search' ? 'w-full shrink' : 'w-fit shrink-0'"
-          @click="longBtn = 'search'"
-        >
-          <IconSearch />
-          <p
-            class="font-helvetica-400 text-xl text-[#CED4DA]"
-            v-if="longBtn !== 'search'"
+        <div class="flex flex-col gap-2 w-full">
+          <div
+            class="flex items-center gap-2 py-3 px-4"
+            :class="longBtn === 'search' ? 'w-full shrink' : 'w-fit shrink-0'"
+            @click="longBtn = 'search'"
           >
-            {{ $t("general.text_search_by") }}
-          </p>
-          <div v-if="longBtn === 'search'" class="relative w-full">
-            <input
-              class="font-helvetica-400 text-xl text-[#CED4DA] bg-transparent focus:outline-none peer"
-              @keydown.enter="search"
-            />
+            <IconSearch />
             <p
-              class="font-helvetica-400 text-xl text-[#CED4DA] peer-focus:hidden absolute top-0 left-0 pointer-events-none"
-              :class="{ hidden: searchKey }"
+              class="font-helvetica-400 text-xl text-[#CED4DA]"
+              v-if="longBtn !== 'search'"
             >
-              {{ $t("general.text_enter")
-              }}<span class="font-helvetica-400 text-xl text-white">@</span>
-              {{ $t("general.search_movie_instructions") }},
-              {{ $t("general.text_enter")
-              }}<span class="font-helvetica-400 text-xl text-white">#</span>
-              {{ $t("general.search_quote_instructions") }}
+              {{ $t("general.text_search_by") }}
             </p>
+            <div v-if="longBtn === 'search'" class="relative w-full">
+              <input
+                class="font-helvetica-400 text-xl text-[#CED4DA] bg-transparent focus:outline-none peer"
+                @keydown.enter="search"
+                @input="resetSearchKey"
+              />
+              <p
+                class="font-helvetica-400 text-xl text-[#CED4DA] peer-focus:hidden absolute top-0 left-0 pointer-events-none"
+                :class="{ hidden: searchKey }"
+              >
+                {{ $t("general.text_enter")
+                }}<span class="font-helvetica-400 text-xl text-white">@</span>
+                {{ $t("general.search_movie_instructions") }},
+                {{ $t("general.text_enter")
+                }}<span class="font-helvetica-400 text-xl text-white">#</span>
+                {{ $t("general.search_quote_instructions") }}
+              </p>
+            </div>
           </div>
+          <p
+            class="font-helvetica-400 text-base text-red-400 ml-2"
+            :class="searchErrorMessage ? 'text-red-400' : 'text-transparent'"
+          >
+            {{ searchErrorMessage }}
+          </p>
         </div>
       </div>
       <!-- QUOTES LIST -->
@@ -152,14 +176,13 @@ const closeViewQuote = () => {
     </section>
   </div>
 
-
-    <QuoteAdd
+  <QuoteAdd
     v-if="isAddQuoteModal"
-      :closeModal="closeAddQuote"
-      :user_name="auth_user_data?.name"
-      :user_avatar="auth_user_data?.image"
-    />
-    <QuoteView
+    :closeModal="closeAddQuote"
+    :user_name="auth_user_data?.name"
+    :user_avatar="auth_user_data?.image"
+  />
+  <QuoteView
     :closeModal="closeViewQuote"
     :quote_id="view_quote_id"
     :doNotShowCrud="true"

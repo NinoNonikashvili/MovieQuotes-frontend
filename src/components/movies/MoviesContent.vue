@@ -12,6 +12,7 @@ import SuccessNotification from "../shared/SuccessNotification.vue";
 
 import { onMounted, ref } from "vue";
 import { useFetchMovies } from "@/composables/useFetchMovies";
+import i18n from "@/plugins/i18n";
 
 const user = useUserStore();
 const { auth_user_data } = storeToRefs(user);
@@ -21,6 +22,10 @@ const notificationsStore = useNotificationStore();
 const { status } = storeToRefs(notificationsStore);
 const { set_status } = useNotificationStore();
 const loadMoreMovies = ref<HTMLElement | null>(null);
+const { locale } = i18n.global;
+const localeObj = i18n.global;
+
+const searchErrorMessage = ref<string | null>(null);
 
 const isAddMovie = ref<boolean>(false);
 const closeAddMovie = () => {
@@ -31,12 +36,18 @@ const { fetch, loading, fetchSearchedMovies } = useFetchMovies();
 
 const search = async (e: Event) => {
   const target = e.target as HTMLInputElement;
-  console.log("search");
   if (target.value) {
-    try {
-      await fetchSearchedMovies(target.value);
-    } catch (err) {
-      return;
+    if (locale.value === "en" && target.value.match(/[ა-ჰ]/g)) {
+      searchErrorMessage.value = localeObj.t("validations.only_en");
+    } else if (locale.value === "ge" && target.value.match(/[a-zA-Z]/g)) {
+      searchErrorMessage.value = localeObj.t("validations.only_ge");
+    } else {
+      searchErrorMessage.value = null;
+      try {
+        await fetchSearchedMovies(target.value);
+      } catch (err) {
+        return;
+      }
     }
   }
 };
@@ -67,7 +78,7 @@ onMounted(() => {
     class="w-full px-10 py-4 xl:px-16 xl:pt-8 pb-[15rem] flex bg-[#181724]"
     :class="{ 'pointer-events-none ': isAddMovie }"
   >
-  <div :class="{ overlay: isAddMovie }"></div>
+    <div :class="{ overlay: isAddMovie }"></div>
     <LayoutUsersPages
       class="hidden xl:flex"
       :name="auth_user_data?.name"
@@ -75,7 +86,7 @@ onMounted(() => {
     />
 
     <section class="w-full min-h-screen">
-      <header class="flex items-center justify-between w-full">
+      <header class="flex items-start justify-between w-full">
         <div class="flex gap-2 flex-col xl:flex-row w-fit">
           <h1 class="font-helvetica-500 text-2xl text-white">
             {{ $t("movies.page_header") }}
@@ -85,25 +96,33 @@ onMounted(() => {
             ({{ movies?.length }})
           </p>
         </div>
-        <div class="flex gap-2 items-center">
-          <div class="flex items-center gap-3">
-            <div
-              class="items-center gap-2 py-3 pl-0 pr-4 hidden xl:flex border-b border-transparent w-[14rem] has-[:focus]:w-[18rem] has-[:focus]:border-b-white"
-            >
-              <IconSearch class="shrink-0" />
+        <div class="flex flex-col gap-2">
+          <div class="flex gap-2 items-center">
+            <div class="flex items-center gap-3">
+              <div
+                class="items-center gap-2 py-3 pl-0 pr-4 hidden xl:flex border-b border-transparent w-[14rem] has-[:focus]:w-[18rem] has-[:focus]:border-b-white"
+              >
+                <IconSearch class="shrink-0" />
 
-              <input
-                :placeholder="$t('general.text_search_by')"
-                @keydown.enter="search"
-                class="font-helvetica-400 text-xl text-[#CED4DA] bg-transparent focus:outline-none w-full"
-              />
+                <input
+                  :placeholder="$t('general.text_search_by')"
+                  @keydown.enter="search"
+                  class="font-helvetica-400 text-xl text-[#CED4DA] bg-transparent focus:outline-none w-full"
+                />
+              </div>
             </div>
+            <ButtonFilled
+              text_key="movies.text_add_movie"
+              icon="IconPlusBoardered"
+              @click="isAddMovie = true"
+            />
           </div>
-          <ButtonFilled
-            text_key="movies.text_add_movie"
-            icon="IconPlusBoardered"
-            @click="isAddMovie = true"
-          />
+          <p
+            class="font-helvetica-400 text-base text-red-400 mt-2"
+            :class="searchErrorMessage ? 'text-red-400' : 'text-transparent'"
+          >
+            {{ searchErrorMessage }}
+          </p>
         </div>
       </header>
       <div class="mt-8 flex flex-wrap gap-12" v-if="movies">

@@ -98,7 +98,7 @@ const handleComment = async (e: Event) => {
       <img
         :src="props.quote.quote_image"
         alt="image from the movie of the quote"
-        class="h-[12.5rem] xl:h-[31.25rem] rounded-[0.625rem] object-cover"
+        class="h-[12.5rem] xl:h-[31.25rem] w-full rounded-[0.625rem] object-cover"
       />
     </div>
     <!-- QUOTE REACT/COMMENTS -->
