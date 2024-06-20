@@ -123,9 +123,9 @@ const handleComment = async (e: Event) => {
       />
     </div>
     <!-- WRITE COMMENT -->
-    <div class="flex gap-3 items-center w-full">
+    <div class="flex gap-3 items-center w-full" v-if="auth_user_data">
       <img
-        :src="props.quote.author_avatar"
+        :src="auth_user_data.image"
         alt="quote author image"
         class="w-10 h-10 xl:w-14 xl:h-14 rounded-[100%] shrink-0"
       />

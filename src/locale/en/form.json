@@ -54,5 +54,6 @@
 
   "notification_link_expired_header": "Link expired!",
   "notification_link_expired_p": "Login link has expired, because you haven’t used it",
-  "notification_link_expired_button_text": "Request another link"
+  "notification_link_expired_button_text": "Request another link",
+  "text_are_u_sure_making_changes": "Are you sure to make changes ?"
 }
