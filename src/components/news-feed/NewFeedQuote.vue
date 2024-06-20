@@ -74,7 +74,7 @@ const handleComment = async (e: Event) => {
       <img
         :src="props.quote.author_avatar"
         alt="quote author image"
-        class="w-10 xl:w-14 rounded-full"
+        class="w-10 h-10 xl:w-14 xl:h-14 rounded-[100%]"
       />
       <p class="font-helvetica-400 text-base text-white">
         {{ props.quote.author_name }}
@@ -127,7 +127,7 @@ const handleComment = async (e: Event) => {
       <img
         :src="props.quote.author_avatar"
         alt="quote author image"
-        class="w-10 xl:w-14 rounded-full shrink-0"
+        class="w-10 h-10 xl:w-14 xl:h-14 rounded-[100%] shrink-0"
       />
       <textarea
         name="comment"
