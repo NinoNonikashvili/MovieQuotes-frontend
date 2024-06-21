@@ -99,15 +99,21 @@ const saveChanges = async () => {
   }
   try {
     await updateProfile(updatedValues);
+    resetForm({
+    values: {
+      name: "",
+      password: "",
+      password_confirmation: "",
+    },
+  });
     isSuccessNotification.value = true;
     if (values.password) {
       //login user again
       let timerID = setTimeout(() => {
-        clearTimeout(timerID)
+        clearTimeout(timerID);
         router.push({ name: "home" });
-        set_auth_user(false)
-      }, 3000)
-      
+        set_auth_user(false);
+      }, 3000);
     } else {
       try {
         let data = await getUpdatedUser();
@@ -138,10 +144,8 @@ const cancelChanges = () => {
 </script>
 
 <template>
-  <div
-    class="xl:hidden bg-[#11101A] h-screen"
-    :class="{ 'blur-sm': isSuccessNotification }"
-  >
+  <div :class="{ overlay: isSuccessNotification }"></div>
+  <div class="xl:hidden bg-[#11101A] h-screen">
     <!-- BACK TO NEWS FEED -->
     <div class="px-10 py-6 bg-[#11101A] w-full">
       <RouterLink
@@ -213,7 +217,7 @@ const cancelChanges = () => {
         >
           {{ $t("profile.text_cancel") }}
         </button>
-        <div class="w-[4.2rem]">
+        <div class="w-fit">
           <ButtonFilled @click="editChanges" text_key="profile.text_edit" />
         </div>
       </div>
@@ -227,7 +231,7 @@ const cancelChanges = () => {
         class="w-full flex justify-center pt-[4rem] pb-[3rem] border-b border-b-white"
       >
         <p class="font-helvetica-400 text-base text-white">
-          Are you sure to make changes ?
+          {{ $t("form.text_are_u_sure_making_changes") }}
         </p>
       </div>
       <div class="w-full flex items-center justify-between py-4 px-5">
@@ -237,7 +241,7 @@ const cancelChanges = () => {
         >
           {{ $t("profile.text_cancel") }}
         </button>
-        <div class="w-[4.2rem] pointer-events-auto">
+        <div class="w-fit pointer-events-auto">
           <ButtonFilled @click="saveChanges" text_key="profile.text_confirm" />
         </div>
       </div>
@@ -270,5 +274,16 @@ const cancelChanges = () => {
 .hide * {
   opacity: 0;
   height: 0;
+}
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: auto;
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(25, 23, 37, 0.5);
+  z-index: 30;
 }
 </style>

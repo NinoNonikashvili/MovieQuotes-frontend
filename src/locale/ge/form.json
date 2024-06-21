@@ -54,7 +54,8 @@
 
   "notification_link_expired_header": "ბმული ვადაგასულია!",
   "notification_link_expired_p": "ბმული უნდა გამოიყენოთ გამოგზავნიდან 2სთ-ის განმავლობაში",
-  "notification_link_expired_button_text": "მოითხოვე ახალი ბმული"
+  "notification_link_expired_button_text": "მოითხოვე ახალი ბმული",
+  "text_are_u_sure_making_changes": "შევინახოთ ცვლილებები?"
 
 
 }
