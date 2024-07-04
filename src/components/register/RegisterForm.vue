@@ -25,7 +25,7 @@ const showNotification = ref<boolean>(false);
 const data = ref<AxiosResponse | null>(null);
 
 const emailLink = computed(() => {
-  if (data?.value?.data.data.email.includes("gmail.com")) {
+  if (data?.value?.data.data.email.includes("gmail.com") || data?.value?.data.data.email.includes("redberry.ge") ) {
     return "https://gmail.com";
   }
   return "";
@@ -66,13 +66,13 @@ const onsubmit = handleSubmit(async (values) => {
         footer_link_text_key="form.text_login"
       >
         <form class="flex flex-col gap-4 my-8 w-full" @submit="onsubmit">
-          <FormInputText name="name" />
-          <FormInputText name="email" />
-          <FormInputPassword name="password" />
-          <FormInputPassword name="password_confirmation" />
+          <FormInputText name="name" :required="true"/>
+          <FormInputText name="email" :required="true"/>
+          <FormInputPassword name="password" :required="true"/>
+          <FormInputPassword name="password_confirmation" :required="true"/>
           <ButtonFilled
             :submit="true"
-            text_key="form.text_register"
+            text_key="form.text_get_started"
             class="mt-2"
           />
           <ButtonOutline

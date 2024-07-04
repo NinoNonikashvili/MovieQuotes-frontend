@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppHeader from "@/components/shared/AppHeader.vue";
+import HeaderApp from "@/components/shared/HeaderApp.vue";
 import AppFooter from "@/components/shared/AppFooter.vue";
 import ButtonFilled from "@/components/ui/buttons/ButtonFilled.vue";
 import IconCite from "@/components/icons/IconCite.vue";
@@ -24,12 +24,12 @@ window.addEventListener("scroll", () => {
 
 <template>
   <div class="w-full bg-gradient-to-b to-[#11101A] from-[#08080D]">
-    <AppHeader />
+    <HeaderApp />
     <div
       class="flex flex-col items-center justify-center w-full pt-[14.25rem] pb-[10.25rem] xl:pb-[13.75rem] xl:pt-[17.5rem]"
     >
       <h1
-        class="text-helvetica-700 text-orange-200 text-2xl xl:text-[3.75rem] xl:leading-[5.625rem] text-center"
+        class="font-helvetica-700 text-orange-200 text-2xl xl:text-[3.75rem] xl:leading-[5.625rem] text-center"
       >
         {{ $t("landing.header_1") }} <br />
         {{ $t("landing.header_2") }}
@@ -99,32 +99,20 @@ window.addEventListener("scroll", () => {
 <style scoped>
 .landing1 {
   background-image: url("@/assets/images/landing1.png"),
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.8),
-      rgba(255, 255, 255, 0.1),
-      rgba(0, 0, 0, 0.8)
-    );
+  linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 65%),
+  linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 65%);
   background-blend-mode: overlay;
 }
 .landing2 {
   background-image: url("@/assets/images/landing2.png"),
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.8),
-      rgba(255, 255, 255, 0.1),
-      rgba(0, 0, 0, 0.8)
-    );
+  linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 65%),
+  linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 65%);
   background-blend-mode: overlay;
 }
 .landing3 {
   background-image: url("@/assets/images/landing3.png"),
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.8),
-      rgba(255, 255, 255, 0.1),
-      rgba(0, 0, 0, 0.8)
-    );
+  linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 65%),
+  linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 65%);
   background-blend-mode: overlay;
 }
 </style>

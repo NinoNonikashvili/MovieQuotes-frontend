@@ -30,14 +30,12 @@ const onSubmit = handleSubmit(async (values) => {
     token: route.query.token as string,
   };
   try {
-    const response = await reset_password(resetPasswordConfig);
-    console.log(response);
+    await reset_password(resetPasswordConfig);
     showNotification.value = true;
     isVerified.value = true;
   } catch (err) {
     showNotification.value = true;
     isVerified.value = false;
-    console.log(err);
   }
 });
 </script>
@@ -53,8 +51,8 @@ const onSubmit = handleSubmit(async (values) => {
         :go_back="true"
       >
         <form class="flex flex-col gap-4 my-8 w-full" @submit="onSubmit">
-          <FormInputPassword name="password" />
-          <FormInputPassword name="password_confirmation" />
+          <FormInputPassword name="password" :required="true" />
+          <FormInputPassword name="password_confirmation" :required="true" />
           <ButtonFilled
             :submit="true"
             text_key="form.text_reset_password"
@@ -64,9 +62,9 @@ const onSubmit = handleSubmit(async (values) => {
       </AuthLayout>
     </template>
     <template #notification v-if="showNotification">
-
       <VerificationMessages
-        :isVerified="isVerified"
+        :isVerified="false"
+        :isPasswordReset="true"
         :email="email"
         handler="handleSendAgainPasswordResset"
       />

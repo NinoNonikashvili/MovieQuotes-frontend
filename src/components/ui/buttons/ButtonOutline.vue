@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<Prop>(), {
   line_height: "leading-6",
   link: "",
   submit: false,
+  icon: "",
 });
 </script>
 
@@ -48,7 +49,7 @@ const props = withDefaults(defineProps<Prop>(), {
     ]"
     :type="submit ? 'submit' : 'button'"
   >
-    <component :is="IconGmail" />
+    <component v-if="props.icon" :is="IconGmail" />
     <p :class="[props.text_size, props.line_height]">
       {{ $t(props.text_key) }}
     </p>

@@ -1,5 +1,6 @@
 {
   "text_register": "Register",
+  "text_get_started": "Get started",
   "register_header": "Create an account",
   "register_sub_header": "Start your journey!",
   "register_have_an_account_question": "Already have an account?",
@@ -7,13 +8,19 @@
   "text_sign_up_with_google": "Sign up with Google",
   "text_signup": "Sign up",
   "label_name": "Name",
+  "label_new_name": "New name",
+  "label_new_password": "New password",
+  "label_new_password_confirmation": "Confirm new password",
   "label_email": "Email",
   "label_password": "Password",
   "label_password_confirmation": "Confirm Password",
-  "placeholder_name": "Enter your name",
+  "placeholder_name": "At least 8 & max.15 lower case chars",
+  "placeholder_new_name": "Enter new name",
+  "placeholder_new_password": "At least 8 & max.15 lower case chars",
+  "placeholder_new_password_confirmation": "Confirm new password ",
   "placeholder_email": "Enter your email",
-  "placeholder_password": "Password",
-  "placeholder_password_confirmation": "Password",
+  "placeholder_password": "At least 8 & max.15 lower case chars",
+  "placeholder_password_confirmation": "Confirm Password",
 
   "login_header": "Log in to your account",
   "login_sub_header": "Welcome back! Please enter your details.",
@@ -47,5 +54,6 @@
 
   "notification_link_expired_header": "Link expired!",
   "notification_link_expired_p": "Login link has expired, because you haven’t used it",
-  "notification_link_expired_button_text": "Request another link"
+  "notification_link_expired_button_text": "Request another link",
+  "text_are_u_sure_making_changes": "Are you sure to make changes ?"
 }

@@ -10,7 +10,8 @@ const props = defineProps<NotificationType>();
 
 <template>
   <div
-    class="flex flex-col max-w-lg items-center px-10 py-20 bg-gradient-to-r shadow-sm rounded-[10px] from-zinc-800 to-zinc-700 xl:bg-transparent"
+    class="flex flex-col max-w-lg items-center "
+    :class="{'px-10 py-20 bg-gradient-to-r shadow-sm rounded-[10px] from-zinc-800 to-zinc-700 xl:bg-transparent':props.styles}"
   >
     <IconEmailSent v-if="props.icon === 'IconEmailSent'" />
     <IconLinkExpired v-if="props.icon === 'IconLinkExpired'" />

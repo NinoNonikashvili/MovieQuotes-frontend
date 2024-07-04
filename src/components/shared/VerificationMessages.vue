@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { VerificationMessageProps } from "@/types/types";
-import AuthLayoutWrapper from "@/components/shared/AuthLayoutWrapper.vue";
 import AuthNotifiaction from "@/components/shared/AuthNotifiaction.vue";
 import type { EmailArgument } from "@/types/types";
 import {
@@ -42,70 +41,17 @@ const handleSendAgainPasswordResset = async () => {
 };
 
 const emailLink = computed(() => {
-  if (props.email.includes("gmail.com")) {
+  if (
+    props.email.includes("gmail.com") ||
+    props.email.includes("redberry.ge")
+  ) {
     return "https://gmail.com";
   }
   return "";
 });
 </script>
 <template>
-  <AuthLayoutWrapper class="xl:hidden">
-    <template #notification>
-      <!-- email successfully verified notification -->
-      <AuthNotifiaction
-        v-if="props.isVerified"
-        :icon="'IconEmailVerified'"
-        header_key="form.notification_success_header"
-        paragraph_key="form.notification_success_email_verified_p"
-        link="login"
-        link_text_key="form.text_go_to_login"
-        :redirect="false"
-      />
-
-      <!-- email verification link expired send again -->
-      <AuthNotifiaction
-        @click="handleSendAgainEmailVerification"
-        v-if="
-          !props.isVerified &&
-          !linkIsResent &&
-          props.handler === 'handleSendAgainEmailVerification'
-        "
-        :icon="'IconLinkExpired'"
-        header_key="form.notification_link_expired_header"
-        paragraph_key="form.notification_link_expired_p"
-        link=""
-        link_text_key="form.notification_link_expired_button_text"
-        :redirect="false"
-      />
-      <!-- password reset link expired send again -->
-      <AuthNotifiaction
-        @click="handleSendAgainPasswordResset"
-        v-if="
-          !props.isVerified &&
-          !linkIsResent &&
-          props.handler === 'handleSendAgainPasswordResset'
-        "
-        :icon="'IconLinkExpired'"
-        header_key="form.notification_link_expired_header"
-        paragraph_key="form.notification_link_expired_p"
-        link=""
-        link_text_key="form.notification_link_expired_button_text"
-        :redirect="false"
-      />
-      <!-- link is resent -->
-      <AuthNotifiaction
-        v-if="linkIsResent"
-        :icon="'IconEmailSent'"
-        header_key="form.notification_success_header"
-        paragraph_key="form.notification_success_email_sent_p"
-        :link="emailLink"
-        link_text_key="form.text_go_to_email"
-        :go_back="false"
-        :redirect="true"
-      />
-    </template>
-  </AuthLayoutWrapper>
-  <div class="hidden xl:block">
+  <div>
     <!-- email successfully verified notification -->
     <AuthNotifiaction
       v-if="props.isVerified"
@@ -115,6 +61,18 @@ const emailLink = computed(() => {
       link="login"
       link_text_key="form.text_go_to_login"
       :redirect="false"
+      :styles="props?.styles"
+    />
+    <!-- password successfully reset notification -->
+    <AuthNotifiaction
+      v-if="props.isPasswordReset"
+      :icon="'IconEmailVerified'"
+      header_key="form.text_success"
+      paragraph_key="form.notification_success_password_reset_p"
+      link="login"
+      link_text_key="form.text_login"
+      :redirect="false"
+      :styles="props?.styles"
     />
 
     <!-- email verification link expired send again -->
@@ -123,6 +81,7 @@ const emailLink = computed(() => {
       v-if="
         !props.isVerified &&
         !linkIsResent &&
+        !props.isPasswordReset &&
         props.handler === 'handleSendAgainEmailVerification'
       "
       :icon="'IconLinkExpired'"
@@ -131,6 +90,7 @@ const emailLink = computed(() => {
       link=""
       link_text_key="form.notification_link_expired_button_text"
       :redirect="false"
+      :styles="props?.styles"
     />
     <!-- password reset link expired send again -->
     <AuthNotifiaction
@@ -138,6 +98,7 @@ const emailLink = computed(() => {
       v-if="
         !props.isVerified &&
         !linkIsResent &&
+        !isPasswordReset &&
         props.handler === 'handleSendAgainPasswordResset'
       "
       :icon="'IconLinkExpired'"
@@ -146,6 +107,7 @@ const emailLink = computed(() => {
       link=""
       link_text_key="form.notification_link_expired_button_text"
       :redirect="false"
+      :styles="props?.styles"
     />
     <!-- link is resent -->
     <AuthNotifiaction
@@ -157,6 +119,7 @@ const emailLink = computed(() => {
       link_text_key="form.text_go_to_email"
       :go_back="false"
       :redirect="true"
+      :styles="props?.styles"
     />
   </div>
 </template>

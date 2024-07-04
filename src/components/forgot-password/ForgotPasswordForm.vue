@@ -24,7 +24,7 @@ const onSubmit = handleSubmit(async (values) => {
   try {
     await forgot_password(emailArgument);
 
-    emailLink.value = emailArgument.email.includes("gmail.com")
+    emailLink.value = emailArgument.email.includes("gmail.com") || emailArgument.email.includes("redberry.ge") 
       ? "https://gmail.com"
       : "";
 
@@ -55,7 +55,7 @@ const onSubmit = handleSubmit(async (values) => {
         :go_back="true"
       >
         <form class="flex flex-col gap-4 my-8 w-full" @submit="onSubmit">
-          <FormInputText name="email" />
+          <FormInputText name="email" :required="true"/>
           <ButtonFilled
             :submit="true"
             text_key="form.text_send_instructions"

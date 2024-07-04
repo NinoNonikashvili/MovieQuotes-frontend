@@ -3,6 +3,7 @@ import "./assets/output.css";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import App from "./App.vue";
+import "@/plugins/pusher";
 
 import i18n from "@/plugins/i18n";
 import router from "./router";

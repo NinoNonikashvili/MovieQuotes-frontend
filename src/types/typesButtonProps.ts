@@ -8,7 +8,7 @@ export default interface Prop {
   line_height?: `leading-${string}`;
   link?: string;
   text_key: string;
-  icon?: string | boolean;
+  icon?: string ;
   submit?: boolean;
   redirect?: boolean;
 }

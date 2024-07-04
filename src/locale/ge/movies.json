@@ -1,0 +1,16 @@
+{
+    "page_header": "ჩემი ფილმების სია",
+    "text_total": "სულ",
+    "text_add_movie": "დაამატე ფილმი",
+    "text_movie_description": "ფილმის აღწერა",
+    "text_all_quotes": "ყველა ციტატა",
+    "text_view_quote": "ციტატა დეტალურად",
+    "text_edit": "შეცვალე",
+    "text_delete": "წაშალე",
+    "text_add_quote": "დაამატე ციტატა",
+    "text_genres": "ჟანრები",
+    "text_edit_movie": "შეცვალე ფილმი",
+    "MOVIE_ADDED": "ფილმი წარმატებით დაემატა",
+    "MOVIE_UPDATED": "ფილმი წარმატებით შეიცვალა",
+    "MOVIE_DELETED": "ფილმი წარმატებით წაიშალა"
+}
